@@ -197,16 +197,22 @@ export default function Pemeriksaan({ students, filters, options }: Props) {
     return (
         <DashboardLayout title="Pemeriksaan Kesehatan Santri">
             <div className="space-y-6 pb-12 font-sans text-slate-800 max-w-7xl mx-auto">
-                {/* 1. Header */}
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-                            <HeartPulse className="w-7 h-7 text-rose-500" />
-                            <span>Pemeriksaan Kesehatan Santri</span>
-                        </h1>
-                        <p className="mt-1 text-sm text-slate-500 max-w-2xl leading-relaxed">
-                            Pencatatan data antropometri fisik (BB, TB, IMT, Tensi) dan riwayat sakit berkala per semester yang otomatis terintegrasi ke lampiran rapor santri.
-                        </p>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <HeartPulse className="h-6 w-6 text-rose-300" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Pemeriksaan Kesehatan Santri
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Pencatatan antropometri fisik (BB, TB, IMT, Tensi) dan riwayat kesehatan berkala
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

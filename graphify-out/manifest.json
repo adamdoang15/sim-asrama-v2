@@ -6,40 +6,40 @@
     "semantic_hash": "25a307335c0719bc9a91b3f7babd186d"
   },
   "app/Http/Controllers/DailyActivityController.php": {
-    "mtime": 1791884134.757318,
-    "seen": 1792054479.4431744,
-    "ast_hash": "85f5272b5e5426a44f0f57534609a1b3",
-    "semantic_hash": "85f5272b5e5426a44f0f57534609a1b3"
+    "mtime": 1792075844.5949876,
+    "seen": 1792122242.0558171,
+    "ast_hash": "3a04c88864cc1b4140295afb7e2901eb",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/GelaraController.php": {
-    "mtime": 1791857731.069247,
-    "seen": 1792054479.443176,
-    "ast_hash": "82a4f0dca9aecb9cf0be4b3bb483a196",
-    "semantic_hash": "82a4f0dca9aecb9cf0be4b3bb483a196"
+    "mtime": 1792075815.300126,
+    "seen": 1792122242.0558188,
+    "ast_hash": "24ec2b8ea1c8e9cb755cbf44fac4bde3",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/KegiatanController.php": {
-    "mtime": 1791795473.4711132,
-    "seen": 1792054479.4431787,
-    "ast_hash": "c9ce5a4ae5ea70ae2b5cbefca742a4bd",
-    "semantic_hash": "c9ce5a4ae5ea70ae2b5cbefca742a4bd"
+    "mtime": 1792075832.296299,
+    "seen": 1792122242.0558205,
+    "ast_hash": "49619fed6245ae11329ed5733e79c5df",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/PegawaiController.php": {
-    "mtime": 1791947540.288952,
-    "seen": 1792054479.443182,
-    "ast_hash": "49766de77e439a6ce070b75e741af25c",
-    "semantic_hash": "49766de77e439a6ce070b75e741af25c"
+    "mtime": 1792075823.1192088,
+    "seen": 1792122242.0558248,
+    "ast_hash": "21e50a628db6ce584c70c09361357806",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/PelanggaranController.php": {
-    "mtime": 1791795473.621218,
-    "seen": 1792054479.4431832,
-    "ast_hash": "1c25f980524cb3e7b82a3d16df5aa3cf",
-    "semantic_hash": "1c25f980524cb3e7b82a3d16df5aa3cf"
+    "mtime": 1792075851.3511875,
+    "seen": 1792122242.0558255,
+    "ast_hash": "fdea6740e99b78efe3187ab052ad48a5",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/PrestasiController.php": {
-    "mtime": 1791795473.6545117,
-    "seen": 1792054479.4431844,
-    "ast_hash": "fe862ec19b32f45209b62ec3d22f3fa2",
-    "semantic_hash": "fe862ec19b32f45209b62ec3d22f3fa2"
+    "mtime": 1792075857.5845983,
+    "seen": 1792122242.0558262,
+    "ast_hash": "79d254b051e99f3663fc0f60a7e5828e",
+    "semantic_hash": ""
   },
   "app/Http/Middleware/HandleInertiaRequests.php": {
     "mtime": 1790000748.0,
@@ -102,10 +102,10 @@
     "semantic_hash": "e66bb13691f6184c762c196427d8e685"
   },
   "bootstrap/app.php": {
-    "mtime": 1790000748.0,
-    "seen": 1791794406.7044234,
-    "ast_hash": "79fe636ca49acc6de850ac13f7964ccb",
-    "semantic_hash": "79fe636ca49acc6de850ac13f7964ccb"
+    "mtime": 1792075665.4489586,
+    "seen": 1792122242.0558493,
+    "ast_hash": "0a27667add2e15c772f582110a611def",
+    "semantic_hash": ""
   },
   "bootstrap/providers.php": {
     "mtime": 1790000748.0,
@@ -384,10 +384,10 @@
     "semantic_hash": "2b7408096028dd336ac6df15682e6555"
   },
   "resources/js/layouts/Sidebar.tsx": {
-    "mtime": 1792038597.452635,
-    "seen": 1792054479.446639,
-    "ast_hash": "a67488e2fafd04f53a263d5239cfeb3e",
-    "semantic_hash": "a67488e2fafd04f53a263d5239cfeb3e"
+    "mtime": 1792142584.5146966,
+    "seen": 1792142907.5392206,
+    "ast_hash": "0d3efece8cdb03f10124b60d89b69b90",
+    "semantic_hash": ""
   },
   "resources/js/lib/utils.ts": {
     "mtime": 1790000748.0,
@@ -396,46 +396,46 @@
     "semantic_hash": "9064e0b4cce97720601c050c79768a7a"
   },
   "resources/js/pages/Dashboard.tsx": {
-    "mtime": 1791509900.890011,
-    "seen": 1791794406.7044544,
-    "ast_hash": "e69896cb5dcc5581d712dd6f9803424f",
-    "semantic_hash": "e69896cb5dcc5581d712dd6f9803424f"
+    "mtime": 1792143489.153898,
+    "seen": 1792143896.7211258,
+    "ast_hash": "30c21084980d07098d37962e8524c17b",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kegelaraan/DailyActivity.tsx": {
-    "mtime": 1791863602.034086,
-    "seen": 1792054479.446862,
-    "ast_hash": "156916c744dcc780e8497f979e9561d5",
-    "semantic_hash": "156916c744dcc780e8497f979e9561d5"
+    "mtime": 1792144352.2796779,
+    "seen": 1792145590.0032804,
+    "ast_hash": "acfe3a3d93545ed6b27ee26d1de5a0d2",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kegelaraan/Kalender.tsx": {
-    "mtime": 1791602488.9327114,
-    "seen": 1791794406.7044556,
-    "ast_hash": "92a1aa5217ccabf1d6cecda9f409c6c7",
-    "semantic_hash": "92a1aa5217ccabf1d6cecda9f409c6c7"
+    "mtime": 1792144332.7195687,
+    "seen": 1792145590.0032818,
+    "ast_hash": "75af3722b3f624c444527feea1427552",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kegelaraan/RekapProgram.tsx": {
-    "mtime": 1791605586.6349154,
-    "seen": 1791794406.7044568,
-    "ast_hash": "df027b6853ecd68eb1ab60d9c6381b9e",
-    "semantic_hash": "df027b6853ecd68eb1ab60d9c6381b9e"
+    "mtime": 1792144406.7859528,
+    "seen": 1792145590.0032833,
+    "ast_hash": "0d6e24cd59cc0f7b03dc0d0e4c654ce6",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kegelaraan/TrackRecord.tsx": {
-    "mtime": 1791602496.8355675,
-    "seen": 1791794406.7044573,
-    "ast_hash": "7cad05ca4c6bc00afbc35ecb844d2a97",
-    "semantic_hash": "7cad05ca4c6bc00afbc35ecb844d2a97"
+    "mtime": 1792144378.7974088,
+    "seen": 1792145590.0032847,
+    "ast_hash": "37d08c98d094bbc2e4612c9db9bbe383",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kesekretariatan/DataGelara.tsx": {
-    "mtime": 1791857799.7785897,
-    "seen": 1792054479.4473104,
-    "ast_hash": "56e065b83c2ae2f20bc9edd93e4ae9f8",
-    "semantic_hash": "56e065b83c2ae2f20bc9edd93e4ae9f8"
+    "mtime": 1792144280.1541471,
+    "seen": 1792145590.0032885,
+    "ast_hash": "775456617e313539d20fdcf0bc043c2b",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kesekretariatan/DataPegawai.tsx": {
-    "mtime": 1791948017.2043016,
-    "seen": 1792054479.447312,
-    "ast_hash": "a8ba836fc508b91a510c83963fde8f72",
-    "semantic_hash": "a8ba836fc508b91a510c83963fde8f72"
+    "mtime": 1792144299.9607456,
+    "seen": 1792145590.00329,
+    "ast_hash": "e1bf7cb8e5b3b38121039c18ff6d174f",
+    "semantic_hash": ""
   },
   "resources/js/types/auth.ts": {
     "mtime": 1790000748.0,
@@ -474,10 +474,10 @@
     "semantic_hash": "3c6ce2e6d16444282b24a9aa63885563"
   },
   "routes/web.php": {
-    "mtime": 1792054009.9078882,
-    "seen": 1792054479.4480593,
-    "ast_hash": "6eea7e94aacc9c3610a71114e7526716",
-    "semantic_hash": "6eea7e94aacc9c3610a71114e7526716"
+    "mtime": 1792141888.2998495,
+    "seen": 1792142004.4213667,
+    "ast_hash": "3792fa5de7c56de7aa8dd91ca5ec84ce",
+    "semantic_hash": ""
   },
   "skills-lock.json": {
     "mtime": 1791791433.3224735,
@@ -528,28 +528,28 @@
     "semantic_hash": "b6531e8a0113ec2ea134ea8b6b96ba4f"
   },
   "app/Http/Controllers/KalenderAkademikController.php": {
-    "mtime": 1791795364.9412346,
-    "seen": 1792054479.4431775,
-    "ast_hash": "dd5613c2880013cf7bebb819ca1536cc",
-    "semantic_hash": "dd5613c2880013cf7bebb819ca1536cc"
+    "mtime": 1792075867.8628006,
+    "seen": 1792122242.0558197,
+    "ast_hash": "9121cd950a58ae64f4550733d37ac0c5",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/KesehatanController.php": {
-    "mtime": 1792039209.0353959,
-    "seen": 1792054479.4431798,
-    "ast_hash": "2bcd1e34b1d676ac3fbcb23006936ff2",
-    "semantic_hash": "2bcd1e34b1d676ac3fbcb23006936ff2"
+    "mtime": 1792075896.114122,
+    "seen": 1792122242.0558217,
+    "ast_hash": "4ee7ff17c0bb559398b8f73df5723fad",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/NilaiAkademikController.php": {
-    "mtime": 1791953420.8722491,
-    "seen": 1792054479.4431808,
-    "ast_hash": "31b9b045c11bc132ffa7b553df33ce8f",
-    "semantic_hash": "31b9b045c11bc132ffa7b553df33ce8f"
+    "mtime": 1792075888.407051,
+    "seen": 1792122242.0558238,
+    "ast_hash": "f3e6a0c360f8f305087287248ce1b5b7",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/SarprasController.php": {
-    "mtime": 1792053960.3515675,
-    "seen": 1792054479.4431853,
-    "ast_hash": "5b5d2fa43688eedc106d0ad48ab43a8f",
-    "semantic_hash": "5b5d2fa43688eedc106d0ad48ab43a8f"
+    "mtime": 1792075991.12648,
+    "seen": 1792122242.055827,
+    "ast_hash": "c5e04770fb311f6fd682aea4cadf5e1e",
+    "semantic_hash": ""
   },
   "app/Http/Middleware/CheckViewOnly.php": {
     "mtime": 1792053463.0039713,
@@ -678,10 +678,10 @@
     "semantic_hash": "420eb7bf12f80161a32207eebb6e391c"
   },
   "database/seeders/UserSeeder.php": {
-    "mtime": 1792053417.2602031,
-    "seen": 1792054479.4457188,
-    "ast_hash": "4fd74cc745c8c132fdc734df87521a3c",
-    "semantic_hash": "4fd74cc745c8c132fdc734df87521a3c"
+    "mtime": 1792075588.1741686,
+    "seen": 1792122242.0558963,
+    "ast_hash": "edb5fbac204618a86f72f8af33bfba65",
+    "semantic_hash": ""
   },
   "resources/js/pages/Auth/Login.tsx": {
     "mtime": 1792053515.6474428,
@@ -690,28 +690,28 @@
     "semantic_hash": "bf8074653214351053478840e5a561b7"
   },
   "resources/js/pages/Kesehatan/Pemeriksaan.tsx": {
-    "mtime": 1792035159.9730785,
-    "seen": 1792054479.4473062,
-    "ast_hash": "bc782bd70b73eaa7d82503a793f3d53c",
-    "semantic_hash": "bc782bd70b73eaa7d82503a793f3d53c"
+    "mtime": 1792144424.1088521,
+    "seen": 1792145590.0032864,
+    "ast_hash": "6566a0777d1c61aef8875fbb017c2579",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kesehatan/RekamMedis.tsx": {
-    "mtime": 1792036204.0880046,
-    "seen": 1792054479.4473083,
-    "ast_hash": "8f788e93dbca5df26d76f78242331418",
-    "semantic_hash": "8f788e93dbca5df26d76f78242331418"
+    "mtime": 1792144439.8005874,
+    "seen": 1792145590.0032873,
+    "ast_hash": "345bf739e395e48624fcd5628255f31d",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kurikulum/KalenderAkademik.tsx": {
-    "mtime": 1791795443.3596134,
-    "seen": 1792054479.4473133,
-    "ast_hash": "e76f7aa60a2d39febf56b2440073a679",
-    "semantic_hash": "e76f7aa60a2d39febf56b2440073a679"
+    "mtime": 1792144231.842483,
+    "seen": 1792145590.0032945,
+    "ast_hash": "c70289ad824d986b1621c601189c943a",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kurikulum/NilaiAkademik.tsx": {
-    "mtime": 1791954736.3418283,
-    "seen": 1792054479.4473147,
-    "ast_hash": "fe0cdb76f685c5618cde306cc418c67c",
-    "semantic_hash": "fe0cdb76f685c5618cde306cc418c67c"
+    "mtime": 1792144257.0154276,
+    "seen": 1792145590.0032957,
+    "ast_hash": "ecb584ad458c937c2a259390b73d93c3",
+    "semantic_hash": ""
   },
   "resources/js/pages/Kurikulum/components/KelolaMapelModal.tsx": {
     "mtime": 1791954076.2424884,
@@ -744,22 +744,22 @@
     "semantic_hash": "27e0051714af017f43f1622bda3922b9"
   },
   "resources/js/pages/Sarpras/Inventaris.tsx": {
-    "mtime": 1792052315.3711514,
-    "seen": 1792054479.447323,
-    "ast_hash": "81944df2c9619c637429da9e22fcbd2f",
-    "semantic_hash": "81944df2c9619c637429da9e22fcbd2f"
+    "mtime": 1792144460.4528313,
+    "seen": 1792145590.0033047,
+    "ast_hash": "1cd92ffd08e90a6a55e016d87c92139e",
+    "semantic_hash": ""
   },
   "resources/js/pages/Sarpras/Pengadaan.tsx": {
-    "mtime": 1792052277.2744803,
-    "seen": 1792054479.4473245,
-    "ast_hash": "bf5a397a90d28df976254ad351923eca",
-    "semantic_hash": "bf5a397a90d28df976254ad351923eca"
+    "mtime": 1792144524.193051,
+    "seen": 1792145590.003306,
+    "ast_hash": "f55faed987c3c694828ae41f838398b9",
+    "semantic_hash": ""
   },
   "resources/js/pages/Sarpras/Perbaikan.tsx": {
-    "mtime": 1792052372.2537322,
-    "seen": 1792054479.4473262,
-    "ast_hash": "6d2bab872c80b9a31acca8262af7553f",
-    "semantic_hash": "6d2bab872c80b9a31acca8262af7553f"
+    "mtime": 1792144490.7618623,
+    "seen": 1792145590.0033073,
+    "ast_hash": "4698250ca7f3c315313e4158d854e748",
+    "semantic_hash": ""
   },
   "tests/Feature/AuthTest.php": {
     "mtime": 1792054009.9299986,
@@ -796,5 +796,185 @@
     "seen": 1792054479.448168,
     "ast_hash": "56bb9ae286550f247502bc97b48a8bb0",
     "semantic_hash": "56bb9ae286550f247502bc97b48a8bb0"
+  },
+  "app/Http/Controllers/KeuanganController.php": {
+    "mtime": 1792125244.7412903,
+    "seen": 1792125639.194626,
+    "ast_hash": "db5c663b60ffcf8a17fe9e381a51c1f6",
+    "semantic_hash": ""
+  },
+  "app/Http/Controllers/UserController.php": {
+    "mtime": 1792076897.4038754,
+    "seen": 1792122242.0558279,
+    "ast_hash": "34622c4e54ea9b44daeb29be2124713d",
+    "semantic_hash": ""
+  },
+  "app/Http/Middleware/CheckRole.php": {
+    "mtime": 1792142547.3905036,
+    "seen": 1792142907.5391407,
+    "ast_hash": "9e086a3579d2b5c111fb0138eb335f09",
+    "semantic_hash": ""
+  },
+  "app/Models/TransaksiKeuangan.php": {
+    "mtime": 1792121158.4822955,
+    "seen": 1792122242.055846,
+    "ast_hash": "950e7f77a7604eef05b0cbfcf59477b4",
+    "semantic_hash": ""
+  },
+  "database/migrations/2026_10_15_160000_add_lembaga_to_core_tables.php": {
+    "mtime": 1792075238.8387306,
+    "seen": 1792122242.0558932,
+    "ast_hash": "da88443a84046bff2222d31e7b78eb9b",
+    "semantic_hash": ""
+  },
+  "database/migrations/2026_10_16_102530_create_transaksi_keuangans_table.php": {
+    "mtime": 1792121139.2102492,
+    "seen": 1792122242.055894,
+    "ast_hash": "5d6c5db1602b1862c87c60c0e516e83e",
+    "semantic_hash": ""
+  },
+  "database/seeders/TransaksiKeuanganSeeder.php": {
+    "mtime": 1792121251.5119445,
+    "seen": 1792122242.0558956,
+    "ast_hash": "61ec3cdcd84fd693296d5e5c93cd73b6",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Admin/Users/Index.tsx": {
+    "mtime": 1792144549.095782,
+    "seen": 1792145590.0032682,
+    "ast_hash": "a2060326d55701e1b712783327ef8727",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Administrasi/Index.tsx": {
+    "mtime": 1792143557.6736448,
+    "seen": 1792143896.72112,
+    "ast_hash": "558e671e0bef4d212215e0a323945c83",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Keuangan/Index.tsx": {
+    "mtime": 1792143517.972287,
+    "seen": 1792143896.7211428,
+    "ast_hash": "efdca5fc9eaf86b56eeff51801b8b90e",
+    "semantic_hash": ""
+  },
+  "tests/Feature/AdminUserTest.php": {
+    "mtime": 1792077268.7448392,
+    "seen": 1792122242.055936,
+    "ast_hash": "e564e673c6f684512dd4ade364405460",
+    "semantic_hash": ""
+  },
+  "tests/Feature/MultiLembagaAndRoleTest.php": {
+    "mtime": 1792076063.4161215,
+    "seen": 1792122242.0559402,
+    "ast_hash": "8e181262a493c02b1b61dcccaedcc349",
+    "semantic_hash": ""
+  },
+  ".github/dependabot.yml": {
+    "mtime": 1790000748.0,
+    "seen": 1792122242.0559475,
+    "ast_hash": "2d1dafbc9ecfd469752dbd29e997d413",
+    "semantic_hash": ""
+  },
+  ".github/workflows/tests.yml": {
+    "mtime": 1791190281.0531485,
+    "seen": 1792122242.0559483,
+    "ast_hash": "f2619f97ff1a45d2a08e5bda915d2554",
+    "semantic_hash": ""
+  },
+  "issue.md": {
+    "mtime": 1792144094.1288981,
+    "seen": 1792145590.0033453,
+    "ast_hash": "60b8a032346a7587d104577df28f521f",
+    "semantic_hash": ""
+  },
+  "pnpm-workspace.yaml": {
+    "mtime": 1790000748.0,
+    "seen": 1792122242.0559492,
+    "ast_hash": "5a2f8aadd5a50b3cee0d6a99075249c5",
+    "semantic_hash": ""
+  },
+  "public/robots.txt": {
+    "mtime": 1790000748.0,
+    "seen": 1792122242.0559502,
+    "ast_hash": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "semantic_hash": ""
+  },
+  "public/apple-touch-icon.png": {
+    "mtime": 1790000748.0,
+    "seen": 1792122242.0559506,
+    "ast_hash": "4ec34bfee5050d402638888ce2e9a968",
+    "semantic_hash": ""
+  },
+  "public/favicon.svg": {
+    "mtime": 1790000748.0,
+    "seen": 1792122242.0559514,
+    "ast_hash": "6d65603fc671e2ab354f3ff070494594",
+    "semantic_hash": ""
+  },
+  "public/images/illustrations/illus_leave_1791193763372.jpg": {
+    "mtime": 1791193763.3735385,
+    "seen": 1792122242.0559518,
+    "ast_hash": "f06a2bf047a3c0ec906078ff04fcd665",
+    "semantic_hash": ""
+  },
+  "public/images/illustrations/illus_sick_1791193752445.jpg": {
+    "mtime": 1791193752.4469981,
+    "seen": 1792122242.0559525,
+    "ast_hash": "2fcdec3ad8be39e98d0de3e120093094",
+    "semantic_hash": ""
+  },
+  "public/images/illustrations/illus_staff_1791193742473.jpg": {
+    "mtime": 1791193742.4744847,
+    "seen": 1792122242.0559533,
+    "ast_hash": "dbaeaae8bddbc6b434165f895f2bfd75",
+    "semantic_hash": ""
+  },
+  "public/images/illustrations/illus_students_1791193731403.jpg": {
+    "mtime": 1791193731.4043553,
+    "seen": 1792122242.055954,
+    "ast_hash": "c46b0896f7ee3f724c34fc497be0cd55",
+    "semantic_hash": ""
+  },
+  "public/logo.png": {
+    "mtime": 1791422696.0441492,
+    "seen": 1792122242.0559545,
+    "ast_hash": "e46f2571b737a4c1d5b83a6c1ad94749",
+    "semantic_hash": ""
+  },
+  "app/Models/AnggaranBop.php": {
+    "mtime": 1792123801.2018788,
+    "seen": 1792124040.296723,
+    "ast_hash": "1c9cca10694a5909b4cab1a2b07efc42",
+    "semantic_hash": ""
+  },
+  "database/migrations/2026_10_16_110930_create_anggaran_bops_table.php": {
+    "mtime": 1792123780.9531617,
+    "seen": 1792124040.296819,
+    "ast_hash": "61f140d0a54e3c8dfb0345847aac1e2c",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Keuangan/Bop.tsx": {
+    "mtime": 1792143537.7656937,
+    "seen": 1792143896.7211413,
+    "ast_hash": "49d82a27252000dc594c364c556d243e",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Administrasi/SuratMenyurat.tsx": {
+    "mtime": 1792143572.0215604,
+    "seen": 1792143896.7211218,
+    "ast_hash": "6058cac9a9a3d41caa3b04a5a92a29e0",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Administrasi/AbsensiPetugas.tsx": {
+    "mtime": 1792143600.508339,
+    "seen": 1792143896.7211168,
+    "ast_hash": "d994b4d1f1de2f6d3f16320e501bd9ef",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/Administrasi/ArsipDokumen.tsx": {
+    "mtime": 1792143583.0734947,
+    "seen": 1792143896.7211185,
+    "ast_hash": "c2eefec2d304ce80a66715cf6e377884",
+    "semantic_hash": ""
   }
 }

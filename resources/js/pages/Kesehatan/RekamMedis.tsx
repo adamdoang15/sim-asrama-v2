@@ -215,32 +215,32 @@ export default function RekamMedis({ students, filters, options, stats }: Props)
     return (
         <DashboardLayout title="Rekam Medis Santri">
             <div className="space-y-6 pb-12 font-sans text-slate-800 max-w-7xl mx-auto">
-                {/* 1. Header & Quick Actions */}
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-600">
-                                <FileText className="w-5 h-5" />
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <FileText className="h-6 w-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                                <h1 className="text-xl font-bold tracking-tight text-white">
                                     Rekam Medis Santri
                                 </h1>
-                                <p className="text-sm text-slate-500">
-                                    Rekapitulasi riwayat kesehatan, antropometri fisik, dan pemantauan medis Poskestren.
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Rekapitulasi riwayat kesehatan, antropometri fisik, dan pemantauan medis Poskestren
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="flex items-center gap-3">
-                        <Link
-                            href="/kesehatan/pemeriksaan"
-                            className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-sm font-semibold shadow-xs hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-teal-500/30"
-                        >
-                            <Stethoscope className="w-4 h-4" />
-                            <span>Pemeriksaan Kesehatan Berkala</span>
-                        </Link>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Link
+                                href="/kesehatan/pemeriksaan"
+                                className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-teal-500 active:scale-[0.98]"
+                            >
+                                <Stethoscope className="h-4 w-4" />
+                                <span>Pemeriksaan Kesehatan Berkala</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

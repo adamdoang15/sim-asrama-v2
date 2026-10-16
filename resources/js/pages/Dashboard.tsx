@@ -18,8 +18,8 @@ const STATS = [
         title: 'Total Gelara',
         value: '75',
         icon: Users,
-        iconBg: 'bg-[#2F65E3] text-white',
-        cardBg: 'bg-[#EBF2FF]',
+        iconBg: 'bg-blue-600 text-white',
+        cardBg: 'bg-blue-50/80 border border-blue-100',
         trend: 'up',
         trendValue: '5%',
         trendLabel: 'Dibanding bulan lalu',
@@ -30,8 +30,8 @@ const STATS = [
         title: 'Total Petugas',
         value: '20',
         icon: User,
-        iconBg: 'bg-[#189F5F] text-white',
-        cardBg: 'bg-[#E7F8F0]',
+        iconBg: 'bg-emerald-600 text-white',
+        cardBg: 'bg-emerald-50/80 border border-emerald-100',
         trend: 'up',
         trendValue: '2%',
         trendLabel: 'Dibanding bulan lalu',
@@ -42,8 +42,8 @@ const STATS = [
         title: 'Gelara Sakit',
         value: '12',
         icon: BriefcaseMedical,
-        iconBg: 'bg-[#F43C5E] text-white',
-        cardBg: 'bg-[#FFE8EC]',
+        iconBg: 'bg-rose-600 text-white',
+        cardBg: 'bg-rose-50/80 border border-rose-100',
         trend: 'down',
         trendValue: '3%',
         trendLabel: 'Dibanding bulan lalu',
@@ -54,8 +54,8 @@ const STATS = [
         title: 'Gelara Izin',
         value: '8',
         icon: CircleUser,
-        iconBg: 'bg-[#7B52CE] text-white',
-        cardBg: 'bg-[#F2EEFA]',
+        iconBg: 'bg-amber-600 text-white',
+        cardBg: 'bg-amber-50/80 border border-amber-100',
         trend: 'down',
         trendValue: '2%',
         trendLabel: 'Dibanding bulan lalu',
@@ -98,7 +98,7 @@ const AGENDA = [
         time: '07.00 - 10.00 WIB',
         location: 'Lapangan Sekolah',
         badge: 'Upacara',
-        badgeColor: 'bg-blue-100 text-blue-600',
+        badgeColor: 'bg-blue-50 text-blue-700 border border-blue-200',
         icon: Users,
     },
     {
@@ -107,7 +107,7 @@ const AGENDA = [
         time: '08.00 - 11.00 WIB',
         location: 'Gedung Serbaguna',
         badge: 'Ekstrakurikuler',
-        badgeColor: 'bg-emerald-100 text-emerald-600',
+        badgeColor: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
         icon: UserPlus,
     },
     {
@@ -116,7 +116,7 @@ const AGENDA = [
         time: '09.00 - 12.00 WIB',
         location: 'Aula Sekolah',
         badge: 'Kegiatan Sekolah',
-        badgeColor: 'bg-purple-100 text-purple-600',
+        badgeColor: 'bg-indigo-50 text-indigo-700 border border-indigo-200',
         icon: Users,
     },
     {
@@ -125,8 +125,8 @@ const AGENDA = [
         time: '07.00 - 15.00 WIB',
         location: 'Perpustakaan',
         badge: 'Kurikulum',
-        badgeColor: 'bg-orange-100 text-orange-600',
-        icon: BookOpen, // I should import BookOpen or just use a fallback, I'll use Calendar for now
+        badgeColor: 'bg-amber-50 text-amber-700 border border-amber-200',
+        icon: BookOpen,
     },
     {
         date: '20 Okt',
@@ -134,7 +134,7 @@ const AGENDA = [
         time: '08.30 - 12.00 WIB',
         location: 'Ruang Serbaguna',
         badge: 'Kesiswaan',
-        badgeColor: 'bg-cyan-100 text-cyan-600',
+        badgeColor: 'bg-sky-50 text-sky-700 border border-sky-200',
         icon: Calendar,
     },
 ];
@@ -179,10 +179,10 @@ export default function Dashboard({ stats }: { stats?: any }) {
 
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Pengumuman */}
-                    <div className="rounded-xl bg-white shadow-sm border border-gray-100">
+                    <div className="rounded-xl bg-white shadow-xs border border-gray-200/80">
                         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
                             <div className="flex items-center space-x-3">
-                                <div className="text-blue-500">
+                                <div className="text-blue-600">
                                     <Megaphone size={24} />
                                 </div>
                                 <div>
@@ -190,7 +190,7 @@ export default function Dashboard({ stats }: { stats?: any }) {
                                     <p className="text-sm text-gray-500">Informasi terbaru asrama</p>
                                 </div>
                             </div>
-                            <button className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center">
+                            <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center">
                                 Lihat Semua &rarr;
                             </button>
                         </div>
@@ -204,7 +204,7 @@ export default function Dashboard({ stats }: { stats?: any }) {
                                     <div className="flex-1">
                                         <span className={`text-xs font-semibold ${item.type === 'Akademik' ? 'text-blue-600' :
                                             item.type === 'Kesiswaan' ? 'text-emerald-600' :
-                                                item.type === 'Keuangan' ? 'text-orange-600' : 'text-purple-600'
+                                                item.type === 'Keuangan' ? 'text-amber-600' : 'text-indigo-600'
                                             }`}>{item.type}</span>
                                         <h3 className="text-sm font-bold text-gray-900 mt-1 mb-1">{item.title}</h3>
                                         <p className="text-xs text-gray-500 leading-relaxed">{item.description}</p>
@@ -218,10 +218,10 @@ export default function Dashboard({ stats }: { stats?: any }) {
                     </div>
 
                     {/* Agenda */}
-                    <div className="rounded-xl bg-white shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div className="rounded-xl bg-white shadow-xs border border-gray-200/80 relative overflow-hidden">
                         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5 relative z-10">
                             <div className="flex items-center space-x-3">
-                                <div className="text-blue-500">
+                                <div className="text-blue-600">
                                     <Calendar size={24} />
                                 </div>
                                 <div>
@@ -229,7 +229,7 @@ export default function Dashboard({ stats }: { stats?: any }) {
                                     <p className="text-sm text-gray-500">Kegiatan penting dan jadwal asrama</p>
                                 </div>
                             </div>
-                            <button className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center">
+                            <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center">
                                 Lihat Semua &rarr;
                             </button>
                         </div>

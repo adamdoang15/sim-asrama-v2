@@ -79,10 +79,7 @@ const MENU_ITEMS = [
         icon: CreditCard,
         role: 'keuangan',
         subItems: [
-            { name: 'Dashboard Keuangan', href: '/keuangan' },
-            { name: 'Pembayaran SPP', href: '/keuangan' },
-            { name: 'Donasi', href: '/keuangan' },
-            { name: 'Laporan Keuangan', href: '/keuangan' },
+            { name: 'Anggaran BOP', href: '/keuangan/bop' },
         ],
     },
     {
@@ -91,8 +88,9 @@ const MENU_ITEMS = [
         role: 'administrasi',
         subItems: [
             { name: 'Dashboard Administrasi', href: '/administrasi' },
-            { name: 'Surat Menyurat', href: '/administrasi' },
-            { name: 'Arsip & Dokumen', href: '/administrasi' },
+            { name: 'Surat Menyurat', href: '/administrasi/surat' },
+            { name: 'Arsip Dokumen', href: '/administrasi/arsip' },
+            { name: 'Absensi Petugas', href: '/administrasi/absensi' },
         ],
     },
     {
@@ -124,8 +122,14 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         return item.role === userRole;
     });
 
+    const isUrlMatch = (href: string) => {
+        if (!href || href === '#') return false;
+        if (href === '/administrasi') return url === '/administrasi';
+        return url.startsWith(href);
+    };
+
     const activeParent = visibleMenuItems.find(item =>
-        item.subItems?.some(sub => typeof sub !== 'string' && url.startsWith(sub.href))
+        item.subItems?.some(sub => typeof sub !== 'string' && isUrlMatch(sub.href))
     )?.name || null;
 
     const [openMenu, setOpenMenu] = useState<string | null>(activeParent);
@@ -208,11 +212,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                                     {item.subItems.map((subItem, index) => {
                                                         const name = typeof subItem === 'string' ? subItem : subItem.name;
                                                         const href = typeof subItem === 'string' ? '#' : subItem.href;
-                                                        const isActive = href !== '#' && url.startsWith(href);
+                                                        const isActive = isUrlMatch(href);
                                                         return (
                                                             <li key={name + index}>
                                                                 <Link
                                                                     href={href}
+                                                                    onClick={() => setIsOpen(false)}
                                                                     className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-primary-hover hover:text-white ${isActive ? 'bg-primary-hover text-white font-bold' : 'text-blue-200'
                                                                         }`}
                                                                 >
@@ -227,7 +232,8 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                     ) : (
                                         <Link
                                             href={item.href || '#'}
-                                            className={`flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${item.href && url.startsWith(item.href) ? 'bg-primary-hover text-white' : ''
+                                            onClick={() => setIsOpen(false)}
+                                            className={`flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${item.href && isUrlMatch(item.href) ? 'bg-primary-hover text-white' : ''
                                                 }`}
                                         >
                                             <item.icon size={18} />

@@ -166,33 +166,33 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
     return (
         <DashboardLayout>
             <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-800">
-                                <ShoppingCart className="h-6 w-6" />
-                            </span>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <ShoppingCart className="h-6 w-6 text-white" />
+                            </div>
                             <div>
-                                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                                <h1 className="text-xl font-bold tracking-tight text-white">
                                     Pengadaan & Pembelian Aset
                                 </h1>
-                                <p className="text-sm text-slate-500">
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
                                     Catat pembelian dan belanja aset baru — otomatis langsung masuk ke Inventaris aktif
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <button
-                            type="button"
-                            onClick={() => setIsAddModalOpen(true)}
-                            className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 transition"
-                        >
-                            <Plus className="h-4 w-4" />
-                            <span>Catat Pengadaan Aset Baru</span>
-                        </button>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => setIsAddModalOpen(true)}
+                                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                            >
+                                <Plus className="h-4 w-4" />
+                                <span>Catat Pengadaan Aset Baru</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -211,19 +211,19 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                         <p className="mt-1 text-xs text-slate-500">Transaksi pengadaan tercatat</p>
                     </div>
 
-                    <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-5 shadow-sm">
+                    <div className="rounded-xl border border-blue-100 bg-blue-50/40 p-5 shadow-sm">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-teal-800">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-blue-800">
                                 Total Nilai Belanja
                             </span>
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-700">
+                            <span className="rounded-lg bg-blue-100 p-2 text-blue-700">
                                 <Coins className="h-4 w-4" />
                             </span>
                         </div>
-                        <p className="mt-3 text-xl font-bold text-teal-900 truncate">
+                        <p className="mt-3 text-xl font-bold text-blue-900 truncate">
                             {formatCurrency(stats.estimasi_total)}
                         </p>
-                        <p className="mt-1 text-xs text-teal-700">Akumulasi biaya perolehan</p>
+                        <p className="mt-1 text-xs text-blue-700">Akumulasi biaya perolehan</p>
                     </div>
 
                     <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">

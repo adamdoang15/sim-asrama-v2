@@ -7,6 +7,7 @@ import {
     Plus, 
     Download, 
     BarChart2, 
+    Calendar,
     MapPin, 
     Info,
     X,
@@ -141,27 +142,50 @@ export default function Kalender({ kegiatans = [] }: { kegiatans?: any[] }) {
     return (
         <DashboardLayout title="Kalender Kegelaraan">
             <div className="font-sans text-slate-800">
-                {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-                    <div>
-                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Kalender Kegelaraan</h1>
-                        <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700 border border-emerald-100 transition-all hover:bg-emerald-100">
-                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                            {currentDate.getMonth() >= 6 ? 'Semester Ganjil Aktif' : 'Semester Genap Aktif'}
+                {/* Header Banner Berwarna */}
+                <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Calendar className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-3">
+                                    <h1 className="text-xl font-bold tracking-tight text-white">Kalender Kegelaraan</h1>
+                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-medium text-emerald-200 border border-emerald-400/30">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        {currentDate.getMonth() >= 6 ? 'Semester Ganjil Aktif' : 'Semester Genap Aktif'}
+                                    </span>
+                                </div>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Jadwal kegiatan pembinaan, ibadah, dan agenda kesantrian asrama
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                        <select className="rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-300 transition-colors cursor-pointer">
-                            <option>T.A. 2026/2027 (Aktif)</option>
-                        </select>
-                        <button className="flex flex-1 md:flex-none justify-center items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-all shadow-sm">
-                            <Download size={16} />
-                            Unduh PDF
-                        </button>
-                        <button onClick={openCreateModal} className="flex flex-1 md:flex-none justify-center items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5 transition-all shadow-sm">
-                            <Plus size={16} />
-                            Tambah Kegiatan
-                        </button>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            <div className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 backdrop-blur-md">
+                                <select className="cursor-pointer rounded-lg bg-transparent text-xs font-bold text-white focus:outline-hidden">
+                                    <option className="text-gray-900">T.A. 2026/2027 (Aktif)</option>
+                                </select>
+                            </div>
+                            <button 
+                                type="button"
+                                onClick={() => window.print()}
+                                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-900 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                                <Download className="h-4 w-4" />
+                                Unduh PDF
+                            </button>
+                            <button 
+                                type="button"
+                                onClick={openCreateModal} 
+                                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                            >
+                                <Plus className="h-4 w-4" />
+                                Tambah Kegiatan
+                            </button>
+                        </div>
                     </div>
                 </div>
 

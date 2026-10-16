@@ -21,8 +21,8 @@ class CheckRole
             return $next($request);
         }
 
-        // Modul khusus super admin (administrasi/admin) tidak dapat diakses oleh role lain termasuk Yayasan
-        if (in_array('administrasi', $roles, true) || in_array('admin', $roles, true)) {
+        // Modul manajemen user (admin) khusus Super Admin, tidak dapat diakses role lain termasuk Yayasan
+        if (in_array('admin', $roles, true)) {
             return redirect()->route('dashboard')->with('error', 'Akses ditolak: Modul ini hanya untuk Super Admin.');
         }
 

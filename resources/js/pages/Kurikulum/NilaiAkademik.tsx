@@ -276,43 +276,49 @@ export default function NilaiAkademik({
     return (
         <DashboardLayout title="Manajemen Nilai Akademik Gelara">
             <div className="space-y-6 pb-12 font-sans text-slate-800 max-w-7xl mx-auto">
-                {/* 1. Page Header */}
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                            Manajemen Nilai Akademik Gelara
-                        </h1>
-                        <p className="mt-1 text-sm text-slate-500 max-w-2xl leading-relaxed">
-                            Pencatatan asesmen berkala, rekap capaian per mata pelajaran, konversi mutu standar kelulusan, dan sinkronisasi data santri langsung dari database Data Gelara.
-                        </p>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <BookOpen className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Manajemen Nilai Akademik Gelara
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Pencatatan asesmen berkala, rekap capaian, konversi mutu, dan sinkronisasi data santri
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('nilai')}
+                                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition active:scale-[0.98] cursor-pointer ${activeTab === 'nilai'
+                                    ? 'bg-blue-600 text-white shadow-xs'
+                                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md'
+                                    }`}
+                            >
+                                <FileSpreadsheet className="w-4 h-4" />
+                                <span>Nilai Mata Pelajaran</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('rapor')}
+                                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition active:scale-[0.98] cursor-pointer ${activeTab === 'rapor'
+                                    ? 'bg-blue-600 text-white shadow-xs'
+                                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md'
+                                    }`}
+                            >
+                                <Printer className="w-4 h-4" />
+                                <span>Cetak Rapor & Ledger</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-
-                {/* 2. View Switcher Tabs */}
-                <div className="flex flex-wrap items-center gap-2.5">
-                    <button
-                        type="button"
-                        onClick={() => setActiveTab('nilai')}
-                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${activeTab === 'nilai'
-                            ? 'bg-blue-600 text-white shadow-xs'
-                            : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
-                            }`}
-                    >
-                        <FileSpreadsheet className="w-4 h-4" />
-                        <span>Nilai Mata Pelajaran</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={() => setActiveTab('rapor')}
-                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${activeTab === 'rapor'
-                            ? 'bg-blue-600 text-white shadow-xs'
-                            : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
-                            }`}
-                    >
-                        <Printer className="w-4 h-4 text-slate-500" />
-                        <span>Cetak Rapor & Ledger</span>
-                    </button>
                 </div>
 
                 {/* 3. Filter Bar (Hanya tampil pada tab Nilai Mata Pelajaran) */}

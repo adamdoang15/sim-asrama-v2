@@ -6,6 +6,7 @@ use App\Http\Controllers\GelaraController;
 use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KesehatanController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\NilaiAkademikController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PelanggaranController;
@@ -126,8 +127,12 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
     // Keuangan
     Route::prefix('keuangan')->name('keuangan.')->middleware('role:keuangan')->group(function () {
         Route::get('/', function () {
-            return Inertia::render('Keuangan/Index');
+            return redirect()->route('keuangan.bop');
         })->name('index');
+        Route::get('/bop', [KeuanganController::class, 'bop'])->name('bop');
+        Route::post('/bop', [KeuanganController::class, 'storeBop'])->name('bop.store');
+        Route::delete('/bop/{bop}', [KeuanganController::class, 'destroyBop'])->name('bop.destroy');
+        Route::post('/bop/seed-template', [KeuanganController::class, 'seedTemplateBop'])->name('bop.seed-template');
     });
 
     // Administrasi
@@ -135,6 +140,24 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
         Route::get('/', function () {
             return Inertia::render('Administrasi/Index');
         })->name('index');
+        Route::get('/surat', function () {
+            return Inertia::render('Administrasi/SuratMenyurat');
+        })->name('surat');
+        Route::get('/arsip', function () {
+            return Inertia::render('Administrasi/ArsipDokumen');
+        })->name('arsip');
+        Route::get('/absensi', function (Request $request) {
+            $user = $request->user();
+            $query = Pegawai::query();
+            if ($user && $user->lembaga !== 'Yayasan') {
+                $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
+            }
+            $petugasList = $query->orderBy('name')->get(['id', 'name', 'jabatan', 'lembaga']);
+
+            return Inertia::render('Administrasi/AbsensiPetugas', [
+                'petugasList' => $petugasList,
+            ]);
+        })->name('absensi');
     });
 
     // Manajemen User (Khusus Super Admin)

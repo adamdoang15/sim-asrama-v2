@@ -202,31 +202,40 @@ export default function UsersIndex({
                     </div>
                 )}
 
-                {/* Header Banner */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                                <Shield className="h-3.5 w-3.5" />
-                                Super Admin Control
-                            </span>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Users className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <h1 className="text-xl font-bold tracking-tight text-white">
+                                        Manajemen Pengguna
+                                    </h1>
+                                    <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/20 px-2.5 py-0.5 text-xs font-medium text-blue-200 border border-blue-400/30">
+                                        <Shield className="h-3 w-3 text-blue-300" />
+                                        Super Admin Control
+                                    </span>
+                                </div>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Kelola seluruh akun pengguna, lembaga, dan pembagian hak akses role di dalam sistem
+                                </p>
+                            </div>
                         </div>
-                        <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                            Manajemen Pengguna
-                        </h1>
-                        <p className="mt-1 text-sm text-gray-500">
-                            Kelola seluruh akun pengguna, lembaga, dan pembagian hak akses role di dalam sistem.
-                        </p>
-                    </div>
 
-                    <button
-                        type="button"
-                        onClick={openCreateModal}
-                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-95 active:scale-[0.98] transition"
-                    >
-                        <Plus className="h-4 w-4" />
-                        <span>Tambah Pengguna</span>
-                    </button>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={openCreateModal}
+                                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                            >
+                                <Plus className="h-4 w-4" />
+                                <span>Tambah Pengguna</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Stats Overview */}

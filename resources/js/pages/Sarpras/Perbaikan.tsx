@@ -353,64 +353,64 @@ export default function Perbaikan({ perbaikans, activeAsets, filters, options, s
     return (
         <DashboardLayout>
             <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-800">
-                                <Wrench className="h-6 w-6" />
-                            </span>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Wrench className="h-6 w-6 text-white" />
+                            </div>
                             <div>
-                                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                                <h1 className="text-xl font-bold tracking-tight text-white">
                                     Pemeriksaan & Perbaikan Aset
                                 </h1>
-                                <p className="text-sm text-slate-500">
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
                                     Pusat monitoring kondisi fisik berkala, penanganan perbaikan, dan afkir aset
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="flex items-center gap-2">
-                        {activeTab === 'pemeriksaan' ? (
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    const firstAset = activeAsets[0];
-                                    setSelectedPeriksaAset(null);
-                                    setPeriksaForm({
-                                        aset_id: firstAset?.id?.toString() || '',
-                                        kondisi: firstAset?.kondisi || 'Baik',
-                                        status: (firstAset?.status as any) || 'Tersedia',
-                                        catatan_pemeriksaan: '',
-                                        tanggal_pemeriksaan_terakhir: new Date().toISOString().split('T')[0],
-                                    });
-                                    setIsPeriksaModalOpen(true);
-                                }}
-                                className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 transition"
-                            >
-                                <Plus className="h-4 w-4" />
-                                <span>Catat Pemeriksaan</span>
-                            </button>
-                        ) : (
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setPerbaikanForm({
-                                        aset_id: activeAsets[0]?.id?.toString() || '',
-                                        pelapor: 'Petugas Sarpras',
-                                        prioritas: 'Sedang',
-                                        deskripsi_kerusakan: '',
-                                        tanggal_pengajuan: new Date().toISOString().split('T')[0],
-                                    });
-                                    setIsPerbaikanModalOpen(true);
-                                }}
-                                className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 transition"
-                            >
-                                <Plus className="h-4 w-4" />
-                                <span>Catat Perbaikan Baru</span>
-                            </button>
-                        )}
+                        <div className="flex flex-wrap items-center gap-2">
+                            {activeTab === 'pemeriksaan' ? (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const firstAset = activeAsets[0];
+                                        setSelectedPeriksaAset(null);
+                                        setPeriksaForm({
+                                            aset_id: firstAset?.id?.toString() || '',
+                                            kondisi: firstAset?.kondisi || 'Baik',
+                                            status: (firstAset?.status as any) || 'Tersedia',
+                                            catatan_pemeriksaan: '',
+                                            tanggal_pemeriksaan_terakhir: new Date().toISOString().split('T')[0],
+                                        });
+                                        setIsPeriksaModalOpen(true);
+                                    }}
+                                    className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                                >
+                                    <Plus className="h-4 w-4" />
+                                    <span>Catat Pemeriksaan</span>
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPerbaikanForm({
+                                            aset_id: activeAsets[0]?.id?.toString() || '',
+                                            pelapor: 'Petugas Sarpras',
+                                            prioritas: 'Sedang',
+                                            deskripsi_kerusakan: '',
+                                            tanggal_pengajuan: new Date().toISOString().split('T')[0],
+                                        });
+                                        setIsPerbaikanModalOpen(true);
+                                    }}
+                                    className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                                >
+                                    <Plus className="h-4 w-4" />
+                                    <span>Catat Perbaikan Baru</span>
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -455,19 +455,19 @@ export default function Perbaikan({ perbaikans, activeAsets, filters, options, s
                         <p className="mt-1 text-xs text-blue-700">Dalam proses teknisi</p>
                     </div>
 
-                    <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-5 shadow-sm">
+                    <div className="rounded-xl border border-blue-100 bg-blue-50/40 p-5 shadow-sm">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-teal-800">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-blue-800">
                                 Biaya Perbaikan
                             </span>
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-700">
+                            <span className="rounded-lg bg-blue-100 p-2 text-blue-700">
                                 <DollarSign className="h-4 w-4" />
                             </span>
                         </div>
-                        <p className="mt-3 text-xl font-bold text-teal-900 truncate">
+                        <p className="mt-3 text-xl font-bold text-blue-900 truncate">
                             {formatCurrency(stats.total_biaya)}
                         </p>
-                        <p className="mt-1 text-xs text-teal-700">{stats.selesai_perbaikan} perbaikan selesai</p>
+                        <p className="mt-1 text-xs text-blue-700">{stats.selesai_perbaikan} perbaikan selesai</p>
                     </div>
                 </div>
 
@@ -480,13 +480,13 @@ export default function Perbaikan({ perbaikans, activeAsets, filters, options, s
                                 type="button"
                                 onClick={() => handleTabChange('pemeriksaan')}
                                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'pemeriksaan'
-                                        ? 'bg-teal-700 text-white shadow-sm'
+                                        ? 'bg-blue-600 text-white shadow-xs'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                     }`}
                             >
                                 <CheckCircle2 className="h-4 w-4" />
                                 <span>1. Pemeriksaan Berkala</span>
-                                <span className={`ml-1 rounded-full px-2 py-0.5 text-xs ${activeTab === 'pemeriksaan' ? 'bg-teal-800 text-teal-100' : 'bg-slate-200 text-slate-700'}`}>
+                                <span className={`ml-1 rounded-full px-2 py-0.5 text-xs ${activeTab === 'pemeriksaan' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-700'}`}>
                                     {activeAsets.length}
                                 </span>
                             </button>
@@ -494,13 +494,13 @@ export default function Perbaikan({ perbaikans, activeAsets, filters, options, s
                                 type="button"
                                 onClick={() => handleTabChange('perbaikan')}
                                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'perbaikan'
-                                        ? 'bg-teal-700 text-white shadow-sm'
+                                        ? 'bg-blue-600 text-white shadow-xs'
                                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                     }`}
                             >
                                 <Wrench className="h-4 w-4" />
                                 <span>2. Perbaikan & Perawatan</span>
-                                <span className={`ml-1 rounded-full px-2 py-0.5 text-xs ${activeTab === 'perbaikan' ? 'bg-teal-800 text-teal-100' : 'bg-slate-200 text-slate-700'}`}>
+                                <span className={`ml-1 rounded-full px-2 py-0.5 text-xs ${activeTab === 'perbaikan' ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-700'}`}>
                                     {perbaikans.length}
                                 </span>
                             </button>

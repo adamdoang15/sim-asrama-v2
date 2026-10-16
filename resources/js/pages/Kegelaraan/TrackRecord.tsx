@@ -165,26 +165,49 @@ export default function TrackRecord({ pelanggarans = [], prestasis = [], gelaras
     return (
         <DashboardLayout title="Track Record">
             <div className="font-sans text-slate-800 pb-10 max-w-[1400px] mx-auto">
-                {/* Header Area */}
-                <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-6 mb-8">
-                    <div>
-                        <h1 className="text-3xl font-extrabold text-slate-900 leading-tight mb-2 tracking-tight">
-                            Track Record Kedisiplinan &<br />Prestasi Gelara
-                        </h1>
-                        <p className="text-sm text-slate-500 max-w-lg leading-relaxed">
-                            Rekam jejak, akumulasi pelanggaran tata tertib, serta prestasi Gelara asrama.
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 shrink-0">
-                        <button onClick={openCreateModal} className="flex items-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-700 hover:shadow-md hover:shadow-red-600/20 transition-all">
-                            <AlertTriangle size={16} /> Catat Pelanggaran
-                        </button>
-                        <button onClick={openPrestasiModal} className="flex items-center gap-2 rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-teal-800 hover:shadow-md hover:shadow-teal-700/20 transition-all">
-                            <Trophy size={16} /> Tambah Prestasi
-                        </button>
-                        <button className="flex items-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-white transition-colors">
-                            <Download size={16} /> Ekspor Rekap Laporan
-                        </button>
+                {/* Header Banner Berwarna */}
+                <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Trophy className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Track Record Kedisiplinan & Prestasi
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Rekam jejak, akumulasi pelanggaran tata tertib, serta catatan prestasi Gelara
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => window.print()}
+                                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-900 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                                <Download className="h-4 w-4" />
+                                <span>Ekspor Rekap</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={openPrestasiModal}
+                                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-emerald-500 active:scale-[0.98]"
+                            >
+                                <Trophy className="h-4 w-4" />
+                                <span>Tambah Prestasi</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={openCreateModal}
+                                className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-red-500 active:scale-[0.98]"
+                            >
+                                <AlertTriangle className="h-4 w-4" />
+                                <span>Catat Pelanggaran</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 

@@ -139,17 +139,31 @@ export default function DailyActivity({
     return (
         <DashboardLayout title="Daily Activity">
             <div className="font-sans text-slate-800 pb-10">
-                {/* Header */}
-                <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-6 mb-6">
-                    <div>
-                        <h1 className="text-3xl font-extrabold text-slate-900 leading-tight mb-2 tracking-tight">
-                            Daily Activity Gelara<br />Lembar Presensi & Rekap Mentor
-                        </h1>
-                        <p className="text-sm text-slate-500 max-w-md">
-                            Pencatatan kehadiran dan aktivitas harian Gelara berbasis lembar kerja oleh Mentor Asrama
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 shrink-0">
+                {/* Header Banner Berwarna */}
+                <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Clock className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Daily Activity Gelara
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Lembar presensi, monitoring aktivitas harian santri, dan rekapitulasi mentor
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            {monthLabel && (
+                                <div className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 backdrop-blur-md text-xs font-semibold text-white">
+                                    <Calendar className="h-4 w-4 text-blue-200" />
+                                    <span className="capitalize">{monthLabel}</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 

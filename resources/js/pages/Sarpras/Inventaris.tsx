@@ -161,19 +161,19 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
     return (
         <DashboardLayout>
             <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-800">
-                                <Package className="h-6 w-6" />
-                            </span>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Package className="h-6 w-6 text-white" />
+                            </div>
                             <div>
-                                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                                <h1 className="text-xl font-bold tracking-tight text-white">
                                     Data Inventaris Aset
                                 </h1>
-                                <p className="text-sm text-slate-500">
-                                    Katalog dan pemantauan data seluruh aset sarana prasarana asrama.
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Katalog dan pemantauan data seluruh aset sarana prasarana asrama
                                 </p>
                             </div>
                         </div>

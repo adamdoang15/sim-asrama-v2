@@ -110,64 +110,66 @@ export default function DataGelara({
     return (
         <DashboardLayout title="Data Induk Gelara">
             <div className="space-y-6">
-                {/* 1. Header Section */}
-                <div className="flex flex-col justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center">
-                    <div>
-                        <div className="flex items-center gap-2 text-xs font-semibold text-gray-500">
-                            <span>Kesekretariatan</span>
-                            <span className="text-gray-300">/</span>
-                            <span className="text-blue-600 font-bold">Data Gelara</span>
+                {/* Header Banner Berwarna */}
+                <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Users className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Data Induk Gelara
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Pusat inventarisasi arsip identitas, riwayat angkatan, dan biodata santri Gelara
+                                </p>
+                            </div>
                         </div>
-                        <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                            Data Induk Gelara
-                        </h1>
-                        <p className="mt-1 text-sm text-gray-500">
-                            Pusat inventarisasi arsip identitas, riwayat angkatan, dan biodata Gelara.
-                        </p>
-                    </div>
 
-                    <div className="flex flex-wrap items-center gap-3">
-                        <button
-                            type="button"
-                            onClick={() => window.print()}
-                            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 active:scale-[0.98]"
-                        >
-                            <Download size={16} className="text-gray-500" />
-                            <span>Ekspor Buku Induk</span>
-                        </button>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => window.print()}
+                                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-900 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                                <Download className="h-4 w-4" />
+                                <span>Ekspor Buku Induk</span>
+                            </button>
 
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setFormStudent(null);
-                                setIsFormOpen(true);
-                            }}
-                            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-[0.98]"
-                        >
-                            <UserPlus size={16} />
-                            <span>Tambah Data Gelara</span>
-                        </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setFormStudent(null);
+                                    setIsFormOpen(true);
+                                }}
+                                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                            >
+                                <UserPlus className="h-4 w-4" />
+                                <span>Tambah Data Gelara</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 {/* 2. Key Metrics Bar */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-[#1e293b]">Total Terdaftar</span>
+                            <span className="text-sm font-bold text-gray-800">Total Terdaftar</span>
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 shadow-xs">
                                 <Users size={18} />
                             </div>
                         </div>
                         <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-[28px] font-extrabold text-[#0f172a] leading-tight">{stats.total}</span>
+                            <span className="text-[28px] font-extrabold text-gray-900 leading-tight">{stats.total}</span>
                             <span className="text-sm font-medium text-gray-500">Gelara Aktif</span>
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-[#1e293b]">Gelara Putra</span>
+                            <span className="text-sm font-bold text-gray-800">Gelara Putra</span>
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600 shadow-xs">
                                 <User size={18} />
                             </div>
@@ -178,9 +180,9 @@ export default function DataGelara({
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-[#1e293b]">Gelara Putri</span>
+                            <span className="text-sm font-bold text-gray-800">Gelara Putri</span>
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600 shadow-xs">
                                 <UserCheck size={18} />
                             </div>
@@ -193,7 +195,7 @@ export default function DataGelara({
                 </div>
 
                 {/* 3. Filter & Controls Toolbar */}
-                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="rounded-xl border border-gray-200/80 bg-white p-4 shadow-xs">
                     <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
                             <div className="relative flex-1">

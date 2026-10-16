@@ -110,29 +110,48 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
     return (
         <DashboardLayout title="Data Pegawai">
             <div className="font-sans text-slate-800 pb-10 max-w-[1400px] mx-auto">
-                {/* Header Area */}
-                <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-6 mb-8">
-                    <div>
-                        <h1 className="text-3xl font-extrabold text-slate-900 leading-tight mb-2 tracking-tight">
-                            Kesekretariatan <span className="text-slate-300 mx-1">-</span> Data Pegawai
-                        </h1>
-                        <p className="text-sm text-slate-500 max-w-3xl leading-relaxed">
-                            Pengelolaan data induk pendidik, dan staf kependidikan Asrama.
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 shrink-0">
-                        <button className="flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:shadow-sm transition-all">
-                            <Download size={16} className="text-emerald-600" /> Ekspor Data Pegawai
-                        </button>
-                        <button onClick={openAddModal} className="flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/20 transition-all">
-                            <UserPlus size={16} /> Tambah Pegawai Baru
-                        </button>
+                {/* Header Banner Berwarna */}
+                <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <Briefcase className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Data Pegawai & Staf
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Pengelolaan data induk pendidik dan staf kependidikan Asrama
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => window.print()}
+                                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-900 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                                <Download className="h-4 w-4" />
+                                <span>Ekspor Data Pegawai</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={openAddModal}
+                                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-blue-500 active:scale-[0.98]"
+                            >
+                                <UserPlus className="h-4 w-4" />
+                                <span>Tambah Pegawai Baru</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 {/* KPI Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex items-start justify-between">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs flex items-start justify-between">
                         <div>
                             <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Total Pegawai Aktif</h4>
                             <div className="flex items-baseline gap-2">
@@ -141,7 +160,7 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
                             </div>
                         </div>
                     </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
                         <div className="flex items-start justify-between mb-2">
                             <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Distribusi Gender</h4>
                         </div>
@@ -161,7 +180,7 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
                             <span>Perempuan {stats?.total ? ((stats.perempuan / stats.total) * 100).toFixed(1) : 0}%</span>
                         </div>
                     </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex items-start justify-between">
+                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs flex items-start justify-between">
                         <div>
                             <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status Kepegawaian</h4>
                             <div className="text-2xl font-extrabold text-slate-800 mb-2">{stats?.tetap || 0} Tetap Yayasan</div>
@@ -172,7 +191,7 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
 
 
                 {/* Filters Section */}
-                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 mb-6 p-3 flex flex-col md:flex-row md:items-center gap-4">
+                <div className="bg-white rounded-xl shadow-xs border border-gray-200/80 mb-6 p-3 flex flex-col md:flex-row md:items-center gap-4">
                     <div className="relative flex-1 md:max-w-md">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                         <input value={search} onChange={e => setSearch(e.target.value)} type="text" placeholder="Cari berdasarkan NIY, Nama Pegawai..." className="w-full rounded-xl bg-slate-50 border border-slate-200 py-2 pl-9 pr-4 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />

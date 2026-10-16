@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { Download, Search, LayoutList, LayoutGrid } from 'lucide-react';
+import { Download, Search, LayoutList, LayoutGrid, ClipboardList } from 'lucide-react';
 import { KegiatanItem } from '@/components/rekap/types';
 import PaginationBar from '@/components/rekap/PaginationBar';
 import EditLaporanModal from '@/components/rekap/EditLaporanModal';
@@ -98,21 +98,33 @@ export default function RekapProgram({ kegiatans = [] }: { kegiatans?: any[] }) 
     return (
         <DashboardLayout title="Rekap Kegiatan Asrama">
             <div className="font-sans text-slate-800 pb-12 max-w-[1400px] mx-auto">
-                {/* Header Section */}
-                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h1 className="text-2xl sm:text-[28px] font-extrabold text-slate-900 tracking-tight leading-tight">
-                            Rekap Kegiatan Asrama
-                        </h1>
-                        <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                            Arsip pelaporan dan rekapitulasi keterlaksanaan kegiatan khusus asrama: program harian, mingguan, serta perayaan PHBN &amp; PHBI.
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-                        <button className="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200/90 px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-xs transition-colors">
-                            <Download size={14} className="text-slate-600" />
-                            <span>Ekspor Rekap Laporan</span>
-                        </button>
+                {/* Header Banner Berwarna */}
+                <div className="mb-6 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
+                                <ClipboardList className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    Rekap Kegiatan Asrama
+                                </h1>
+                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
+                                    Arsip pelaporan dan rekapitulasi keterlaksanaan kegiatan santri asrama
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2">
+                            <button 
+                                type="button"
+                                onClick={() => window.print()}
+                                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-blue-900 shadow-xs transition hover:bg-blue-50 active:scale-[0.98]"
+                            >
+                                <Download className="h-4 w-4" />
+                                <span>Ekspor Rekap Laporan</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
