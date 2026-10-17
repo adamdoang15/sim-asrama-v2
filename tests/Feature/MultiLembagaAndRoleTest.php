@@ -91,7 +91,7 @@ test('check role middleware blocks unauthorized roles and allows authorized role
     ]);
     $this->actingAs($adminUser)->get('/kurikulum/nilai-akademik')->assertStatus(200);
     $this->actingAs($adminUser)->get('/sarpras/inventaris')->assertStatus(200);
-    $this->actingAs($adminUser)->get('/keuangan')->assertStatus(200);
+    $this->actingAs($adminUser)->get('/keuangan/bop')->assertStatus(200);
     $this->actingAs($adminUser)->get('/administrasi')->assertStatus(200);
 });
 
@@ -101,6 +101,6 @@ test('keuangan and administrasi pages render correctly', function () {
         'role' => 'administrasi',
     ]);
 
-    $this->actingAs($adminUser)->get('/keuangan')->assertStatus(200);
+    $this->actingAs($adminUser)->get('/keuangan/bop')->assertStatus(200);
     $this->actingAs($adminUser)->get('/administrasi')->assertStatus(200);
 });

@@ -157,11 +157,6 @@ export default function TrackRecord({ pelanggarans = [], prestasis = [], gelaras
         return matchesSearch;
     });
 
-    const pelanggaranSedang = pelanggarans.filter((p: any) => p.category === 'Sedang').length;
-    const pelanggaranBerat = pelanggarans.filter((p: any) => p.category === 'Berat').length;
-    const pelanggaranSangatBerat = pelanggarans.filter((p: any) => p.category === 'Sangat Berat').length;
-    const totalPrestasi = prestasis.length;
-
     return (
         <DashboardLayout title="Track Record">
             <div className="font-sans text-slate-800 pb-10 max-w-[1400px] mx-auto">
@@ -226,26 +221,6 @@ export default function TrackRecord({ pelanggarans = [], prestasis = [], gelaras
                                 Pelanggaran Kategori <b>Sedang</b> terakumulasi langsung dari status <i>Alfa (A)</i> pada presensi. Pelanggaran <b>Berat, Sangat Berat,</b> dan <b>Prestasi</b> diverifikasi manual oleh bidang kegelaraan.
                             </p>
                         </div>
-                    </div>
-                </div>
-
-                {/* KPI Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <h4 className="text-sm font-bold text-slate-600 mb-3">Pelanggaran Sedang</h4>
-                        <div className="text-4xl font-extrabold text-slate-800">{pelanggaranSedang}</div>
-                    </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <h4 className="text-sm font-bold text-slate-600 mb-3">Pelanggaran Berat</h4>
-                        <div className="text-4xl font-extrabold text-slate-800">{pelanggaranBerat}</div>
-                    </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <h4 className="text-sm font-bold text-slate-600 mb-3">Sangat Berat</h4>
-                        <div className="text-4xl font-extrabold text-red-600">{pelanggaranSangatBerat}</div>
-                    </div>
-                    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <h4 className="text-sm font-bold text-slate-600 mb-3">Total Prestasi</h4>
-                        <div className="text-4xl font-extrabold text-teal-600">{totalPrestasi}</div>
                     </div>
                 </div>
 

@@ -37,13 +37,15 @@ class NilaiAkademikController extends Controller
             $selectedKelas = $kelasOptions[0];
         }
 
-        $mapelOptions = KelasMapel::where('kelas', $selectedKelas)->value('mapels') ?? [
+        $kelasMapel = KelasMapel::where('kelas', $selectedKelas)->first();
+        $mapelOptions = $kelasMapel?->mapels ?? [
             'Bahasa Arab',
             'Pendidikan Agama Islam',
             'Matematika',
             'Literasi',
             'Numerasi',
         ];
+        $kkm = (float) ($kelasMapel?->kkm ?? 75.0);
 
         $selectedMapel = $request->input('mata_pelajaran');
         if (! in_array($selectedMapel, $mapelOptions, true)) {
@@ -195,7 +197,7 @@ class NilaiAkademikController extends Controller
                 ->orWhereIn('name', $gelaraNames);
         })->get();
 
-        $ledgerStudents = $gelaras->map(function ($gelara) use ($classGrades, $mapelOptions, $pelengkaps, $kesehatans, $prestasis) {
+        $ledgerStudents = $gelaras->map(function ($gelara) use ($classGrades, $mapelOptions, $pelengkaps, $kesehatans, $prestasis, $kkm) {
             $grades = $classGrades->get($gelara->id, collect());
             $scores = [];
             $total = 0;
@@ -211,7 +213,7 @@ class NilaiAkademikController extends Controller
                 $scores[$mapel] = [
                     'nilai_akhir' => $na,
                     'predikat' => ($g && $na > 0) ? $this->calculatePredikat($na) : '-',
-                    'kkm' => 70,
+                    'kkm' => $kkm,
                     'deskripsi' => $g?->deskripsi ?? 'Memiliki kemampuan dan pemahaman yang baik pada kompetensi materi yang dipelajari.',
                     'keterampilan_nilai' => $na > 0 ? min(100, round($na + 2, 1)) : 0,
                     'keterampilan_predikat' => ($g && $na > 0) ? $this->calculatePredikat(min(100, $na + 2)) : '-',
@@ -310,7 +312,7 @@ class NilaiAkademikController extends Controller
                 'kelas' => $kelasOptions,
                 'mata_pelajaran' => $mapelOptions,
             ],
-            'kkm' => 75.0,
+            'kkm' => $kkm,
             'subjectKds' => array_values(array_filter($subjectKds)),
             'students' => $students,
             'allGelaras' => $allGelaras,
@@ -492,12 +494,56 @@ class NilaiAkademikController extends Controller
 
         $cleanMapels = array_values(array_unique(array_filter(array_map('trim', $validated['mapels']))));
 
+        $updateData = ['mapels' => $cleanMapels];
+        if ($request->has('kkm') && is_numeric($request->input('kkm'))) {
+            $updateData['kkm'] = (float) $request->input('kkm');
+        }
+
         KelasMapel::updateOrCreate(
             ['kelas' => $validated['kelas']],
-            ['mapels' => $cleanMapels]
+            $updateData
         );
 
         return redirect()->back()->with('success', 'Mata pelajaran kelas berhasil diperbarui.');
+    }
+
+    public function saveKkm(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'kelas' => 'nullable|string',
+            'kkm' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $user = $request->user();
+        $lembaga = ($user && $user->lembaga !== 'Yayasan') ? $user->lembaga : null;
+        $kkmValue = (float) $validated['kkm'];
+
+        $query = KelasMapel::query();
+        if ($lembaga) {
+            $query->where(fn ($q) => $q->where('lembaga', $lembaga)->orWhereNull('lembaga'));
+        }
+
+        $count = $query->update(['kkm' => $kkmValue]);
+
+        if ($count === 0) {
+            $defaultClasses = ['Kelas 10', 'Kelas 11', 'Kelas 12'];
+            foreach ($defaultClasses as $cls) {
+                KelasMapel::create([
+                    'kelas' => $cls,
+                    'kkm' => $kkmValue,
+                    'lembaga' => $lembaga,
+                    'mapels' => [
+                        'Bahasa Arab',
+                        'Pendidikan Agama Islam',
+                        'Matematika',
+                        'Literasi',
+                        'Numerasi',
+                    ],
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Standar KKM berhasil diterapkan untuk semua mata pelajaran.');
     }
 
     public function storePelengkap(Request $request): RedirectResponse

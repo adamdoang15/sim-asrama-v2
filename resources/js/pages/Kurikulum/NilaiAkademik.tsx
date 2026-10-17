@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { router } from '@inertiajs/react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import {
@@ -18,6 +18,7 @@ import {
     Plus,
     Trash2,
     ClipboardList,
+    Edit2,
 } from 'lucide-react';
 import {
     StudentGrade,
@@ -121,6 +122,33 @@ export default function NilaiAkademik({
 
     // State untuk Kelola Mapel per Kelas
     const [isMapelModalOpen, setIsMapelModalOpen] = useState(false);
+
+    // State untuk Atur Standar KKM
+    const [isKkmModalOpen, setIsKkmModalOpen] = useState(false);
+    const [inputKkm, setInputKkm] = useState<number>(kkm);
+    const [isSavingKkm, setIsSavingKkm] = useState(false);
+
+    useEffect(() => {
+        setInputKkm(kkm);
+    }, [kkm]);
+
+    const handleSaveKkm = () => {
+        setIsSavingKkm(true);
+        router.post(
+            '/kurikulum/nilai-akademik/kkm',
+            {
+                kkm: inputKkm,
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setIsKkmModalOpen(false);
+                    setIsSavingKkm(false);
+                },
+                onError: () => setIsSavingKkm(false),
+            }
+        );
+    };
 
     const handleOpenKdModal = () => {
         setKdList(subjectKds && subjectKds.length > 0 ? [...subjectKds] : ['']);
@@ -708,8 +736,22 @@ export default function NilaiAkademik({
                                             {gradedCount} dari {filteredStudents.length} Santri Dinilai
                                         </strong>
                                     </div>
-                                    <div className="text-[11px] text-slate-400">
-                                        Standar KKM: <span className="font-semibold text-slate-700">75.0</span>
+                                    <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                                        <span>
+                                            Standar KKM: <strong className="font-bold text-slate-800">{kkm.toFixed(1)}</strong>
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setInputKkm(kkm);
+                                                setIsKkmModalOpen(true);
+                                            }}
+                                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold transition cursor-pointer active:scale-95"
+                                            title="Ubah Standar KKM untuk semua mata pelajaran"
+                                        >
+                                            <Edit2 className="w-3 h-3" />
+                                            <span>Atur KKM (Semua Pelajaran)</span>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -1168,6 +1210,66 @@ export default function NilaiAkademik({
                     initialMapels={options.mata_pelajaran}
                     onClose={() => setIsMapelModalOpen(false)}
                 />
+
+                {/* Modal: Atur KKM Universal */}
+                {isKkmModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+                        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <h3 className="text-base font-bold text-slate-900">Atur Standar KKM Universal</h3>
+                                    <p className="text-xs text-slate-500">
+                                        Berlaku untuk <strong className="text-blue-900 font-semibold">semua mata pelajaran &amp; kelas</strong>
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsKkmModalOpen(false)}
+                                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-semibold text-slate-700">
+                                    Nilai KKM Minimal (0 - 100)
+                                </label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    step="0.5"
+                                    value={inputKkm}
+                                    onChange={(e) => setInputKkm(parseFloat(e.target.value) || 0)}
+                                    className="w-full px-3 py-2 text-sm font-bold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-center"
+                                />
+                                <p className="text-[11px] text-slate-400">
+                                    Santri dengan nilai akhir &ge; nilai ini akan dianggap tuntas KKM.
+                                </p>
+                            </div>
+
+                            <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsKkmModalOpen(false)}
+                                    className="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl transition cursor-pointer"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    type="button"
+                                    disabled={isSavingKkm}
+                                    onClick={handleSaveKkm}
+                                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-xs transition cursor-pointer disabled:opacity-50 inline-flex items-center gap-1.5"
+                                >
+                                    {isSavingKkm && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                                    <span>Simpan KKM</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* 7. Modal: Pratinjau Rapor Santri (A4 Portrait) */}
                 <RaporPrintModal

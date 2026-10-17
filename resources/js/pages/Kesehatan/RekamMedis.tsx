@@ -244,72 +244,7 @@ export default function RekamMedis({ students, filters, options, stats }: Props)
                     </div>
                 </div>
 
-                {/* 2. Ringkasan Statistik */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500">Total Santri</span>
-                            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
-                                <Users className="w-4 h-4" />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                                {stats.total_santri}
-                            </span>
-                            <span className="text-xs text-slate-500">santri terdaftar</span>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-emerald-700">Santri Sehat</span>
-                            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
-                                <CheckCircle2 className="w-4 h-4" />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-3xl font-extrabold text-emerald-600 tracking-tight">
-                                {stats.santri_sehat}
-                            </span>
-                            <span className="text-xs text-slate-500">tanpa keluhan sakit</span>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-rose-700">Perlu Perhatian</span>
-                            <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600">
-                                <AlertCircle className="w-4 h-4" />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-3xl font-extrabold text-rose-600 tracking-tight">
-                                {stats.perlu_perhatian}
-                            </span>
-                            <span className="text-xs text-slate-500">ada riwayat sakit</span>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-blue-700">Sudah Diperiksa</span>
-                            <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
-                                <Stethoscope className="w-4 h-4" />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-3xl font-extrabold text-blue-600 tracking-tight">
-                                {stats.total_santri - stats.belum_diperiksa}
-                            </span>
-                            <span className="text-xs text-slate-500">
-                                / {stats.total_santri} santri
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* 3. Filter & Pencarian Bar */}
+                {/* Filter & Pencarian Bar */}
                 <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 items-end">
                         <div className="md:col-span-4 space-y-1.5">

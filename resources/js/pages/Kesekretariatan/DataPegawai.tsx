@@ -157,47 +157,6 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
                     </div>
                 </div>
 
-                {/* KPI Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs flex items-start justify-between">
-                        <div>
-                            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Total Pegawai Aktif</h4>
-                            <div className="flex items-baseline gap-2">
-                                <div className="text-4xl font-extrabold text-blue-700">{stats?.total || 0}</div>
-                                <div className="text-sm font-bold text-slate-500">Orang</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-start justify-between mb-2">
-                            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Distribusi Gender</h4>
-                        </div>
-                        <div className="flex items-baseline gap-1.5 mb-3">
-                            <div className="text-3xl font-extrabold text-slate-800">{stats?.laki || 0}</div>
-                            <div className="text-sm font-bold text-slate-500">L</div>
-                            <div className="text-xl font-bold text-slate-300 mx-1">/</div>
-                            <div className="text-3xl font-extrabold text-slate-800">{stats?.perempuan || 0}</div>
-                            <div className="text-sm font-bold text-slate-500">P</div>
-                        </div>
-                        <div className="w-full flex h-1.5 rounded-full overflow-hidden mb-1.5">
-                            <div className="bg-blue-500" style={{ width: `${stats?.total ? (stats.laki / stats.total) * 100 : 0}%` }}></div>
-                            <div className="bg-amber-400" style={{ width: `${stats?.total ? (stats.perempuan / stats.total) * 100 : 0}%` }}></div>
-                        </div>
-                        <div className="flex justify-between text-[10px] font-bold text-slate-400">
-                            <span>Laki-laki {stats?.total ? ((stats.laki / stats.total) * 100).toFixed(1) : 0}%</span>
-                            <span>Perempuan {stats?.total ? ((stats.perempuan / stats.total) * 100).toFixed(1) : 0}%</span>
-                        </div>
-                    </div>
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs flex items-start justify-between">
-                        <div>
-                            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Status Kepegawaian</h4>
-                            <div className="text-2xl font-extrabold text-slate-800 mb-2">{stats?.tetap || 0} Tetap Yayasan</div>
-                            <div className="text-xs font-medium text-slate-500">{stats?.kontrak || 0} Kontrak Kerja</div>
-                        </div>
-                    </div>
-                </div>
-
-
                 {/* Filters Section */}
                 <div className="bg-white rounded-xl shadow-xs border border-gray-200/80 mb-6 p-3 flex flex-col md:flex-row md:items-center gap-4">
                     <div className="relative flex-1 md:max-w-md">

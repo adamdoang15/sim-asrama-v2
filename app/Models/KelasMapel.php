@@ -10,5 +10,6 @@ class KelasMapel extends Model
 
     protected $casts = [
         'mapels' => 'array',
+        'kkm' => 'float',
     ];
 }

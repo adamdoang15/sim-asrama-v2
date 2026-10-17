@@ -12,9 +12,7 @@ import {
     Printer,
     Trash2,
     X,
-    User,
     XCircle,
-    UserCheck,
     Users
 } from 'lucide-react';
 import { Link, router } from '@inertiajs/react';
@@ -104,9 +102,6 @@ export default function DataGelara({
         }
     };
 
-    const putraPct = stats.total > 0 ? Math.round((stats.putra / stats.total) * 100) : 0;
-    const putriPct = stats.total > 0 ? Math.round((stats.putri / stats.total) * 100) : 0;
-
     return (
         <DashboardLayout title="Data Induk Gelara">
             <div className="space-y-6">
@@ -152,49 +147,7 @@ export default function DataGelara({
                     </div>
                 </div>
 
-                {/* 2. Key Metrics Bar */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-gray-800">Total Terdaftar</span>
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 shadow-xs">
-                                <Users size={18} />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-[28px] font-extrabold text-gray-900 leading-tight">{stats.total}</span>
-                            <span className="text-sm font-medium text-gray-500">Gelara Aktif</span>
-                        </div>
-                    </div>
-
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-gray-800">Gelara Putra</span>
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600 shadow-xs">
-                                <User size={18} />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-[28px] font-extrabold text-sky-900 leading-tight">{stats.putra}</span>
-                            <span className="rounded-full bg-sky-100 px-2 py-0.5 text-xs font-bold text-sky-700">{putraPct}%</span>
-                        </div>
-                    </div>
-
-                    <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-gray-800">Gelara Putri</span>
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600 shadow-xs">
-                                <UserCheck size={18} />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-2">
-                            <span className="text-[28px] font-extrabold text-amber-900 leading-tight">{stats.putri}</span>
-                            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-bold text-amber-800">{putriPct}%</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* 3. Filter & Controls Toolbar */}
+                {/* Filter & Controls Toolbar */}
                 <div className="rounded-xl border border-gray-200/80 bg-white p-4 shadow-xs">
                     <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">

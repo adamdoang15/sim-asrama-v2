@@ -3,9 +3,6 @@ import { router } from '@inertiajs/react';
 import {
     Building,
     CheckCircle2,
-    Coins,
-    DollarSign,
-    Layers,
     MapPin,
     Package,
     Plus,
@@ -193,50 +190,6 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                                 <span>Catat Pengadaan Aset Baru</span>
                             </button>
                         </div>
-                    </div>
-                </div>
-
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                                Total Pembelian
-                            </span>
-                            <span className="rounded-lg bg-slate-100 p-2 text-slate-600">
-                                <Package className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-2xl font-bold text-slate-900">{stats.total_pengadaan}</p>
-                        <p className="mt-1 text-xs text-slate-500">Transaksi pengadaan tercatat</p>
-                    </div>
-
-                    <div className="rounded-xl border border-blue-100 bg-blue-50/40 p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-blue-800">
-                                Total Nilai Belanja
-                            </span>
-                            <span className="rounded-lg bg-blue-100 p-2 text-blue-700">
-                                <Coins className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-xl font-bold text-blue-900 truncate">
-                            {formatCurrency(stats.estimasi_total)}
-                        </p>
-                        <p className="mt-1 text-xs text-blue-700">Akumulasi biaya perolehan</p>
-                    </div>
-
-                    <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
-                                Masuk ke Inventaris
-                            </span>
-                            <span className="rounded-lg bg-emerald-100 p-2 text-emerald-700">
-                                <CheckCircle2 className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-2xl font-bold text-emerald-900">{stats.diterima}</p>
-                        <p className="mt-1 text-xs text-emerald-700">Aset aktif dan tersedia</p>
                     </div>
                 </div>
 

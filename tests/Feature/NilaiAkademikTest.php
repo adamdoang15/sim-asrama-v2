@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Gelara;
+use App\Models\KelasMapel;
 use App\Models\NilaiAkademik;
 use App\Models\Pegawai;
 use App\Models\Prestasi;
@@ -385,5 +386,31 @@ test('memuat data prestasi dan biodata santri dengan benar pada classLedger tanp
     $response->assertInertia(fn (Assert $page) => $page
         ->component('Kurikulum/NilaiAkademik')
         ->has('classLedger.students')
+    );
+});
+
+test('guru dapat menyimpan dan memperbarui standar kkm secara universal untuk semua pelajaran', function () {
+    KelasMapel::create(['kelas' => 'Kelas 10', 'kkm' => 70.0, 'mapels' => ['Matematika']]);
+    KelasMapel::create(['kelas' => 'Kelas 11', 'kkm' => 70.0, 'mapels' => ['Bahasa Arab']]);
+
+    $response = $this->post(route('kurikulum.nilai-akademik.kkm'), [
+        'kkm' => 80.0,
+    ]);
+
+    $response->assertRedirect();
+    $this->assertDatabaseHas('kelas_mapels', [
+        'kelas' => 'Kelas 10',
+        'kkm' => 80.0,
+    ]);
+    $this->assertDatabaseHas('kelas_mapels', [
+        'kelas' => 'Kelas 11',
+        'kkm' => 80.0,
+    ]);
+
+    $pageResponse = $this->get(route('kurikulum.nilai-akademik', ['kelas' => 'Kelas 10']));
+    $pageResponse->assertStatus(200);
+    $pageResponse->assertInertia(fn (Assert $page) => $page
+        ->component('Kurikulum/NilaiAkademik')
+        ->where('kkm', 80)
     );
 });

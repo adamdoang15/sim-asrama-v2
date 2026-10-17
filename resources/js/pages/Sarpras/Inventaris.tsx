@@ -1,13 +1,10 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { router } from '@inertiajs/react';
 import {
-    AlertTriangle,
     Building,
     CheckCircle2,
-    Coins,
     Eye,
     Filter,
-    Layers,
     MapPin,
     Package,
     Search,
@@ -177,63 +174,6 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                {/* Stats Cards */}
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                                Total Aset Aktif
-                            </span>
-                            <span className="rounded-lg bg-slate-100 p-2 text-slate-600">
-                                <Layers className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-2xl font-bold text-slate-900">{stats.total_aset}</p>
-                        <p className="mt-1 text-xs text-slate-500">Item tercatat dalam sistem</p>
-                    </div>
-
-                    <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
-                                Kondisi Baik
-                            </span>
-                            <span className="rounded-lg bg-emerald-100 p-2 text-emerald-700">
-                                <CheckCircle2 className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-2xl font-bold text-emerald-900">{stats.kondisi_baik}</p>
-                        <p className="mt-1 text-xs text-emerald-700">Siap & layak digunakan</p>
-                    </div>
-
-                    <div className="rounded-xl border border-amber-100 bg-amber-50/40 p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-amber-800">
-                                Perlu Penanganan
-                            </span>
-                            <span className="rounded-lg bg-amber-100 p-2 text-amber-700">
-                                <AlertTriangle className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-2xl font-bold text-amber-900">{stats.kondisi_rusak}</p>
-                        <p className="mt-1 text-xs text-amber-700">Rusak ringan & berat</p>
-                    </div>
-
-                    <div className="rounded-xl border border-teal-100 bg-teal-50/40 p-5 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-teal-800">
-                                Total Nilai Aset
-                            </span>
-                            <span className="rounded-lg bg-teal-100 p-2 text-teal-700">
-                                <Coins className="h-4 w-4" />
-                            </span>
-                        </div>
-                        <p className="mt-3 text-xl font-bold text-teal-900 truncate">
-                            {formatCurrency(stats.total_nilai)}
-                        </p>
-                        <p className="mt-1 text-xs text-teal-700">Estimasi aset aktif</p>
                     </div>
                 </div>
 

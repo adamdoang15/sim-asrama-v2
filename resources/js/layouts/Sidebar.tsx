@@ -31,6 +31,7 @@ const MENU_ITEMS = [
         icon: Users,
         role: 'kesekretariatan',
         subItems: [
+            { name: 'Analytics', href: '/kesekretariatan/analytics' },
             { name: 'Data Gelara', href: '/kesekretariatan/data-gelara' },
             { name: 'Data Pegawai', href: '/kesekretariatan/data-pegawai' }
         ],
@@ -40,6 +41,7 @@ const MENU_ITEMS = [
         icon: Briefcase,
         role: 'kegelaraan',
         subItems: [
+            { name: 'Analytics', href: '/kegelaraan/analytics' },
             { name: 'Kalender Program', href: '/kegelaraan/kalender' },
             { name: 'Daily Activity', href: '/kegelaraan/daily-activity' },
             { name: 'Track Record', href: '/kegelaraan/track-record' },
@@ -51,6 +53,7 @@ const MENU_ITEMS = [
         icon: BookOpen,
         role: 'kurikulum',
         subItems: [
+            { name: 'Analytics', href: '/kurikulum/analytics' },
             { name: 'Kalender Akademik', href: '/kurikulum/kalender' },
             { name: 'Nilai Akademik', href: '/kurikulum/nilai-akademik' },
         ],
@@ -60,6 +63,7 @@ const MENU_ITEMS = [
         icon: HeartPulse,
         role: 'kesehatan',
         subItems: [
+            { name: 'Analytics', href: '/kesehatan/analytics' },
             { name: 'Pemeriksaan Kesehatan', href: '/kesehatan/pemeriksaan' },
             { name: 'Rekam Medis', href: '/kesehatan/rekam-medis' },
         ],
@@ -69,6 +73,7 @@ const MENU_ITEMS = [
         icon: Building,
         role: 'sarpras',
         subItems: [
+            { name: 'Analytics', href: '/sarpras/analytics' },
             { name: 'Inventaris Aset', href: '/sarpras/inventaris' },
             { name: 'Pemeriksaan & Perbaikan', href: '/sarpras/perbaikan' },
             { name: 'Pengadaan Aset', href: '/sarpras/pengadaan' },
@@ -79,6 +84,7 @@ const MENU_ITEMS = [
         icon: CreditCard,
         role: 'keuangan',
         subItems: [
+            { name: 'Analytics', href: '/keuangan/analytics' },
             { name: 'Anggaran BOP', href: '/keuangan/bop' },
         ],
     },

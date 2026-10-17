@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DailyActivityController;
 use App\Http\Controllers\GelaraController;
@@ -47,6 +48,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
     })->name('dashboard');
 
     Route::prefix('kegelaraan')->name('kegelaraan.')->middleware('role:kegelaraan')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'kegelaraan'])->name('analytics');
         Route::get('/kalender', [KegiatanController::class, 'index'])->name('kalender');
         Route::post('/kalender', [KegiatanController::class, 'store'])->name('kalender.store');
         Route::put('/kalender/{kegiatan}', [KegiatanController::class, 'update'])->name('kalender.update');
@@ -74,6 +76,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
     });
 
     Route::prefix('kurikulum')->name('kurikulum.')->middleware('role:kurikulum')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'kurikulum'])->name('analytics');
         Route::get('/kalender', [KalenderAkademikController::class, 'index'])->name('kalender');
         Route::post('/kalender', [KalenderAkademikController::class, 'store'])->name('kalender.store');
         Route::put('/kalender/{kalender}', [KalenderAkademikController::class, 'update'])->name('kalender.update');
@@ -83,16 +86,19 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
         Route::post('/nilai-akademik/batch', [NilaiAkademikController::class, 'storeBatch'])->name('nilai-akademik.batch');
         Route::post('/nilai-akademik/kd', [NilaiAkademikController::class, 'storeKd'])->name('nilai-akademik.kd');
         Route::post('/nilai-akademik/mapel', [NilaiAkademikController::class, 'saveMapel'])->name('nilai-akademik.mapel');
+        Route::post('/nilai-akademik/kkm', [NilaiAkademikController::class, 'saveKkm'])->name('nilai-akademik.kkm');
         Route::post('/nilai-akademik/pelengkap', [NilaiAkademikController::class, 'storePelengkap'])->name('nilai-akademik.pelengkap');
     });
 
     Route::prefix('kesehatan')->name('kesehatan.')->middleware('role:kesehatan')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'kesehatan'])->name('analytics');
         Route::get('/pemeriksaan', [KesehatanController::class, 'index'])->name('pemeriksaan');
         Route::post('/pemeriksaan', [KesehatanController::class, 'store'])->name('pemeriksaan.store');
         Route::get('/rekam-medis', [KesehatanController::class, 'rekamMedis'])->name('rekam-medis');
     });
 
     Route::prefix('kesekretariatan')->name('kesekretariatan.')->middleware('role:kesekretariatan')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'kesekretariatan'])->name('analytics');
         Route::get('/data-gelara', [GelaraController::class, 'index'])->name('data-gelara');
         Route::post('/data-gelara', [GelaraController::class, 'store'])->name('data-gelara.store');
         Route::post('/data-gelara/{gelara}/update', [GelaraController::class, 'update'])->name('data-gelara.update');
@@ -104,6 +110,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
     });
 
     Route::prefix('sarpras')->name('sarpras.')->middleware('role:sarpras')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'sarpras'])->name('analytics');
         // 1. Inventaris, Pemeriksaan Berkala & Penghapusan
         Route::get('/inventaris', [SarprasController::class, 'inventaris'])->name('inventaris');
         Route::post('/inventaris', [SarprasController::class, 'storeAset'])->name('inventaris.store');
@@ -127,6 +134,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
 
     // Keuangan
     Route::prefix('keuangan')->name('keuangan.')->middleware('role:keuangan')->group(function () {
+        Route::get('/analytics', [AnalyticsController::class, 'keuangan'])->name('analytics');
         Route::get('/', function () {
             return redirect()->route('keuangan.bop');
         })->name('index');
