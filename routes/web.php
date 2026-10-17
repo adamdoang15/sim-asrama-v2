@@ -100,6 +100,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
         Route::get('/data-pegawai', [PegawaiController::class, 'index'])->name('data-pegawai');
         Route::post('/data-pegawai', [PegawaiController::class, 'store'])->name('data-pegawai.store');
         Route::post('/data-pegawai/{pegawai}/update', [PegawaiController::class, 'update'])->name('data-pegawai.update');
+        Route::delete('/data-pegawai/{pegawai}', [PegawaiController::class, 'destroy'])->name('data-pegawai.destroy');
     });
 
     Route::prefix('sarpras')->name('sarpras.')->middleware('role:sarpras')->group(function () {

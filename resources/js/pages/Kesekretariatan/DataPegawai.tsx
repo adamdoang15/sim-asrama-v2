@@ -8,7 +8,7 @@ import {
     RefreshCcw,
     Eye,
     Edit2,
-    Printer,
+    Trash2,
     Users,
     UserCheck,
     Contact,
@@ -80,6 +80,14 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
                 setEditingId(null);
             }
         });
+    };
+
+    const handleDelete = (pegawai: any) => {
+        if (confirm(`Apakah Anda yakin ingin menghapus data pegawai "${pegawai.name}"? Data yang dihapus tidak dapat dikembalikan.`)) {
+            router.delete(`/kesekretariatan/data-pegawai/${pegawai.id}`, {
+                preserveScroll: true,
+            });
+        }
     };
 
     const openAddModal = () => {
@@ -310,7 +318,14 @@ export default function DataPegawai({ employees, stats, jabatans, filters }: { e
                                                 <div className="flex items-center justify-center gap-2 text-slate-400">
                                                     <button onClick={() => setDetailModalPegawai(emp)} className="p-1.5 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Detail"><Eye size={16} /></button>
                                                     <button onClick={() => openEditModal(emp)} className="p-1.5 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors" title="Edit"><Edit2 size={16} /></button>
-                                                    <button className="p-1.5 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors" title="Cetak"><Printer size={16} /></button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDelete(emp)}
+                                                        className="p-1.5 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors active:scale-95"
+                                                        title="Hapus Pegawai"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>

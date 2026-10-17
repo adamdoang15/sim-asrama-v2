@@ -17,8 +17,12 @@ class CheckViewOnly
             return $next($request);
         }
 
-        // Jika akun Yayasan mencoba melakukan mutasi data (POST, PUT, PATCH, DELETE)
-        if ($user && ($user->lembaga === 'Yayasan' || $user->role === 'viewer') && ! in_array($request->method(), ['GET', 'HEAD'])) {
+        $userRoles = array_map('trim', explode(',', (string) $user?->role));
+        $isViewer = in_array('viewer', $userRoles, true) || $user?->lembaga === 'Yayasan';
+        $hasOperationalRole = ! empty(array_diff($userRoles, ['viewer']));
+
+        // Jika akun Yayasan atau akun murni viewer (tanpa role operasional lain) mencoba melakukan mutasi data (POST, PUT, PATCH, DELETE)
+        if ($user && $isViewer && ! $hasOperationalRole && ! in_array($request->method(), ['GET', 'HEAD'])) {
             return back()->with('error', 'Akses Ditolak: Akun Yayasan hanya memiliki izin View Only.');
         }
 

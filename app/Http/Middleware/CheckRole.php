@@ -16,8 +16,10 @@ class CheckRole
             return redirect()->route('login');
         }
 
+        $userRoles = array_map('trim', explode(',', (string) $user->role));
+
         // Super admin (administrasi / admin) memiliki akses penuh ke seluruh modul
-        if ($user->role === 'administrasi' || $user->role === 'admin') {
+        if (in_array('administrasi', $userRoles, true) || in_array('admin', $userRoles, true)) {
             return $next($request);
         }
 
@@ -27,12 +29,12 @@ class CheckRole
         }
 
         // Yayasan (viewer) boleh melihat modul operasional lainnya
-        if ($user->role === 'viewer' || $user->lembaga === 'Yayasan') {
+        if (in_array('viewer', $userRoles, true) || $user->lembaga === 'Yayasan') {
             return $next($request);
         }
 
-        // Cek apakah role user ada di daftar role yang diizinkan untuk modul ini
-        if (in_array($user->role, $roles, true)) {
+        // Cek apakah ada irisan antara role user dengan daftar role yang diizinkan untuk modul ini
+        if (! empty(array_intersect($userRoles, $roles))) {
             return $next($request);
         }
 

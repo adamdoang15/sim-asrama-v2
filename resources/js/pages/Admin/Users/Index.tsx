@@ -72,7 +72,7 @@ export default function UsersIndex({
         email: '',
         password: '',
         lembaga: lembagaOptions[0] || 'LKP Doa Bangsa Cicantayan',
-        role: 'kesekretariatan',
+        roles: ['kesekretariatan'] as string[],
     });
 
     // Handle filter submit
@@ -102,7 +102,7 @@ export default function UsersIndex({
             email: '',
             password: '',
             lembaga: lembagaOptions[0] || 'LKP Doa Bangsa Cicantayan',
-            role: 'kesekretariatan',
+            roles: ['kesekretariatan'],
         });
         setIsModalOpen(true);
     };
@@ -110,14 +110,28 @@ export default function UsersIndex({
     const openEditModal = (targetUser: UserData) => {
         setEditingUser(targetUser);
         form.clearErrors();
+        const parsedRoles = targetUser.role
+            ? targetUser.role.split(',').map((r) => r.trim()).filter(Boolean)
+            : ['kesekretariatan'];
         form.setData({
             name: targetUser.name,
             email: targetUser.email,
             password: '',
             lembaga: targetUser.lembaga,
-            role: targetUser.role,
+            roles: parsedRoles.length > 0 ? parsedRoles : ['kesekretariatan'],
         });
         setIsModalOpen(true);
+    };
+
+    const toggleRole = (roleKey: string) => {
+        const current = form.data.roles || [];
+        if (current.includes(roleKey)) {
+            if (current.length > 1) {
+                form.setData('roles', current.filter((r) => r !== roleKey));
+            }
+        } else {
+            form.setData('roles', [...current, roleKey]);
+        }
     };
 
     const closeModal = () => {
@@ -175,12 +189,21 @@ export default function UsersIndex({
         if (role === 'viewer') {
             return 'bg-purple-50 text-purple-700 border-purple-200';
         }
+        if (role === 'pengajar') {
+            return 'bg-teal-50 text-teal-700 border-teal-200 font-medium';
+        }
+        if (role === 'kurikulum' || role === 'kesekretariatan') {
+            return 'bg-blue-50 text-blue-700 border-blue-200 font-medium';
+        }
         return 'bg-slate-50 text-slate-700 border-slate-200';
     };
 
     // Stats calculations
     const totalUsers = users.length;
-    const totalSuperAdmins = users.filter((u) => u.role === 'administrasi' || u.role === 'admin').length;
+    const totalSuperAdmins = users.filter((u) => {
+        const roles = u.role.split(',').map((r) => r.trim());
+        return roles.includes('administrasi') || roles.includes('admin');
+    }).length;
     const totalYayasan = users.filter((u) => u.lembaga === 'Yayasan').length;
 
     return (
@@ -386,13 +409,18 @@ export default function UsersIndex({
                                                 </td>
 
                                                 <td className="px-6 py-4">
-                                                    <span
-                                                        className={`inline-flex items-center rounded-md border px-2.5 py-1 text-xs ${getRoleBadge(
-                                                            item.role
-                                                        )}`}
-                                                    >
-                                                        {roleOptions[item.role] || item.role}
-                                                    </span>
+                                                    <div className="flex flex-wrap gap-1.5 max-w-xs">
+                                                        {item.role.split(',').map((r) => r.trim()).filter(Boolean).map((r) => (
+                                                            <span
+                                                                key={r}
+                                                                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs ${getRoleBadge(
+                                                                    r
+                                                                )}`}
+                                                            >
+                                                                {roleOptions[r] || r}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </td>
 
                                                 <td className="px-6 py-4 text-xs text-gray-500">
@@ -548,50 +576,65 @@ export default function UsersIndex({
                                 )}
                             </div>
 
-                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                <div>
-                                    <label className="block text-xs font-semibold text-gray-700 uppercase">
-                                        Lembaga
-                                    </label>
-                                    <select
-                                        value={form.data.lembaga}
-                                        onChange={(e) => form.setData('lembaga', e.target.value)}
-                                        className="mt-1 w-full rounded-xl border border-gray-300 bg-white py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                                    >
-                                        {lembagaOptions.map((lem) => (
-                                            <option key={lem} value={lem}>
-                                                {lem}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {form.errors.lembaga && (
-                                        <span className="mt-1 block text-xs text-rose-600 font-medium">
-                                            {form.errors.lembaga}
-                                        </span>
-                                    )}
-                                </div>
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-700 uppercase">
+                                    Lembaga
+                                </label>
+                                <select
+                                    value={form.data.lembaga}
+                                    onChange={(e) => form.setData('lembaga', e.target.value)}
+                                    className="mt-1 w-full rounded-xl border border-gray-300 bg-white py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                >
+                                    {lembagaOptions.map((lem) => (
+                                        <option key={lem} value={lem}>
+                                            {lem}
+                                        </option>
+                                    ))}
+                                </select>
+                                {form.errors.lembaga && (
+                                    <span className="mt-1 block text-xs text-rose-600 font-medium">
+                                        {form.errors.lembaga}
+                                    </span>
+                                )}
+                            </div>
 
-                                <div>
+                            <div>
+                                <div className="flex items-center justify-between mb-1">
                                     <label className="block text-xs font-semibold text-gray-700 uppercase">
-                                        Role / Akses
+                                        Role / Hak Akses <span className="text-rose-500">*</span>
                                     </label>
-                                    <select
-                                        value={form.data.role}
-                                        onChange={(e) => form.setData('role', e.target.value)}
-                                        className="mt-1 w-full rounded-xl border border-gray-300 bg-white py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                                    >
-                                        {Object.entries(roleOptions).map(([key, label]) => (
-                                            <option key={key} value={key}>
-                                                {label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {form.errors.role && (
-                                        <span className="mt-1 block text-xs text-rose-600 font-medium">
-                                            {form.errors.role}
-                                        </span>
-                                    )}
+                                    <span className="text-[11px] text-gray-400 font-medium">
+                                        {form.data.roles?.length || 0} role dipilih (bisa lebih dari 1)
+                                    </span>
                                 </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1.5">
+                                    {Object.entries(roleOptions).map(([key, label]) => {
+                                        const isSelected = form.data.roles?.includes(key);
+                                        return (
+                                            <label
+                                                key={key}
+                                                className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-xs cursor-pointer select-none transition-all active:scale-[0.99] ${
+                                                    isSelected
+                                                        ? 'border-blue-500 bg-blue-50/60 text-blue-900 font-semibold shadow-xs ring-1 ring-blue-500/20'
+                                                        : 'border-gray-200 bg-white text-gray-700 hover:bg-slate-50 hover:border-gray-300'
+                                                }`}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isSelected}
+                                                    onChange={() => toggleRole(key)}
+                                                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span className="truncate">{label}</span>
+                                            </label>
+                                        );
+                                    })}
+                                </div>
+                                {(form.errors.roles || (form.errors as any).role) && (
+                                    <span className="mt-1.5 block text-xs text-rose-600 font-medium">
+                                        {form.errors.roles || (form.errors as any).role}
+                                    </span>
+                                )}
                             </div>
 
                             {/* Modal Footer */}

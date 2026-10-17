@@ -110,8 +110,9 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     const { url, props } = usePage<any>();
     const user = props.auth?.user;
     const userRole = user?.role || '';
-    const isSuperAdmin = userRole === 'administrasi' || userRole === 'admin';
-    const isSuper = isSuperAdmin || userRole === 'viewer' || user?.lembaga === 'Yayasan';
+    const userRoles = userRole.split(',').map((r: string) => r.trim());
+    const isSuperAdmin = userRoles.includes('administrasi') || userRoles.includes('admin');
+    const isSuper = isSuperAdmin || userRoles.includes('viewer') || user?.lembaga === 'Yayasan';
 
     const visibleMenuItems = MENU_ITEMS.filter(item => {
         if ((item as any).superAdminOnly) {
@@ -119,7 +120,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         }
 
         if (!item.role || isSuper) return true;
-        return item.role === userRole;
+        return userRoles.includes(item.role);
     });
 
     const isUrlMatch = (href: string) => {

@@ -163,4 +163,18 @@ class PegawaiController extends Controller
 
         return back()->with('success', 'Data pegawai berhasil diperbarui');
     }
+
+    public function destroy(Pegawai $pegawai)
+    {
+        if ($pegawai->foto && $pegawai->foto !== 'Belum Ada Foto') {
+            $oldPath = storage_path('app/public/pegawai/'.$pegawai->foto);
+            if (file_exists($oldPath)) {
+                @unlink($oldPath);
+            }
+        }
+
+        $pegawai->delete();
+
+        return back()->with('success', 'Data pegawai berhasil dihapus');
+    }
 }
