@@ -41,4 +41,15 @@ yarn-error.log
 /boost.json
 /opencode.json
 /opencode.jsonc
-/graphify-out/202*
+/graphify-out/
+skills-lock.json
+issue*.md
+/storage/*.xlsx
+/storage/*.xls
+/storage/*.csv
+/storage/*.pdf
+/storage/inertia-devtools/
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
