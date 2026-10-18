@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToLembaga;
 use Illuminate\Database\Eloquent\Model;
 
 class DailyActivity extends Model
 {
+    use BelongsToLembaga;
+
     protected $guarded = [];
 
     protected $casts = [

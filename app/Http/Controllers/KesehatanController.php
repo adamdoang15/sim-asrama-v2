@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\HealthBiometrics;
 use App\Models\Gelara;
 use App\Models\Kesehatan;
 use Illuminate\Http\RedirectResponse;
@@ -36,11 +37,7 @@ class KesehatanController extends Controller
         $semester = str_contains($selectedTahun, 'Genap') ? '2' : '1';
 
         $user = $request->user();
-        $gelaraQuery = Gelara::where('kelas', $selectedKelas);
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $gelaraQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
-        $gelaras = $gelaraQuery->orderBy('name', 'asc')->get();
+        $gelaras = Gelara::forUser($user)->where('kelas', $selectedKelas)->orderBy('name', 'asc')->get();
 
         $kesehatans = Kesehatan::where('tahun_akademik', $selectedTahun)
             ->where('semester', $semester)
@@ -48,31 +45,7 @@ class KesehatanController extends Controller
             ->get()
             ->keyBy('gelara_id');
 
-        $students = $gelaras->map(function ($g) use ($kesehatans) {
-            $k = $kesehatans->get($g->id);
-
-            return [
-                'id' => $g->id,
-                'name' => $g->name,
-                'nig' => $g->nig,
-                'kelas' => $g->kelas,
-                'kesehatan' => $k ? [
-                    'id' => $k->id,
-                    'berat_badan' => $k->berat_badan,
-                    'tinggi_badan' => $k->tinggi_badan,
-                    'imt' => $k->imt,
-                    'imt_kategori' => $k->imt_kategori,
-                    'tensi' => $k->tensi,
-                    'tensi_kategori' => $k->tensi_kategori,
-                    'riwayat_sakit' => $k->riwayat_sakit ?? [
-                        'ringan' => ['jumlah' => 0, 'keterangan' => ''],
-                        'sedang' => ['jumlah' => 0, 'keterangan' => ''],
-                        'berat' => ['jumlah' => 0, 'keterangan' => ''],
-                    ],
-                    'catatan_kesehatan' => $k->catatan_kesehatan,
-                ] : null,
-            ];
-        });
+        $students = HealthBiometrics::mapStudentsForExamination($gelaras, $kesehatans);
 
         return Inertia::render('Kesehatan/Pemeriksaan', [
             'students' => $students,
@@ -116,10 +89,7 @@ class KesehatanController extends Controller
         $semester = str_contains($selectedTahun, 'Genap') ? '2' : '1';
 
         $user = $request->user();
-        $gelaraQuery = Gelara::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $gelaraQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $gelaraQuery = Gelara::forUser($user);
         if ($selectedKelas !== 'Semua') {
             $gelaraQuery->where('kelas', $selectedKelas);
         }
@@ -147,70 +117,8 @@ class KesehatanController extends Controller
             ->get()
             ->groupBy('gelara_id');
 
-        $students = $gelaras->map(function ($g) use ($kesehatans, $allHistories) {
-            $k = $kesehatans->get($g->id);
-            $historyList = $allHistories->get($g->id, collect());
-
-            $ringanCount = (int) ($k?->riwayat_sakit['ringan']['jumlah'] ?? 0);
-            $sedangCount = (int) ($k?->riwayat_sakit['sedang']['jumlah'] ?? 0);
-            $beratCount = (int) ($k?->riwayat_sakit['berat']['jumlah'] ?? 0);
-            $totalSakit = $ringanCount + $sedangCount + $beratCount;
-
-            $sudahDiperiksa = $k !== null && ($k->berat_badan !== null || $k->tensi !== null);
-
-            return [
-                'id' => $g->id,
-                'name' => $g->name,
-                'nig' => $g->nig,
-                'kelas' => $g->kelas,
-                'sudah_diperiksa' => $sudahDiperiksa,
-                'total_sakit' => $totalSakit,
-                'kesehatan' => $k ? [
-                    'id' => $k->id,
-                    'berat_badan' => $k->berat_badan,
-                    'tinggi_badan' => $k->tinggi_badan,
-                    'imt' => $k->imt,
-                    'imt_kategori' => $k->imt_kategori,
-                    'tensi' => $k->tensi,
-                    'tensi_kategori' => $k->tensi_kategori,
-                    'riwayat_sakit' => $k->riwayat_sakit ?? [
-                        'ringan' => ['jumlah' => 0, 'keterangan' => ''],
-                        'sedang' => ['jumlah' => 0, 'keterangan' => ''],
-                        'berat' => ['jumlah' => 0, 'keterangan' => ''],
-                    ],
-                    'catatan_kesehatan' => $k->catatan_kesehatan,
-                    'updated_at' => $k->updated_at?->timezone('Asia/Jakarta')->format('d M Y, H:i').' WIB',
-                ] : null,
-                'riwayat_pemeriksaan' => $historyList->map(function ($h) {
-                    return [
-                        'id' => $h->id,
-                        'tahun_akademik' => $h->tahun_akademik,
-                        'semester' => $h->semester,
-                        'berat_badan' => $h->berat_badan,
-                        'tinggi_badan' => $h->tinggi_badan,
-                        'imt' => $h->imt,
-                        'imt_kategori' => $h->imt_kategori,
-                        'tensi' => $h->tensi,
-                        'tensi_kategori' => $h->tensi_kategori,
-                        'riwayat_sakit' => $h->riwayat_sakit,
-                        'catatan_kesehatan' => $h->catatan_kesehatan,
-                        'tanggal' => $h->updated_at?->timezone('Asia/Jakarta')->format('d/m/Y') ?? '-',
-                    ];
-                })->values()->all(),
-            ];
-        });
-
-        $totalSantri = $students->count();
-        $santriSehat = $students->filter(fn ($s) => $s['sudah_diperiksa'] && $s['total_sakit'] === 0)->count();
-        $perluPerhatian = $students->filter(fn ($s) => $s['total_sakit'] > 0)->count();
-        $belumDiperiksa = $students->filter(fn ($s) => ! $s['sudah_diperiksa'])->count();
-
-        $stats = [
-            'total_santri' => $totalSantri,
-            'santri_sehat' => $santriSehat,
-            'perlu_perhatian' => $perluPerhatian,
-            'belum_diperiksa' => $belumDiperiksa,
-        ];
+        $students = HealthBiometrics::mapStudentsForMedicalRecord($gelaras, $kesehatans, $allHistories);
+        $stats = HealthBiometrics::aggregateCohortStats($students);
 
         return Inertia::render('Kesehatan/RekamMedis', [
             'students' => $students,
@@ -244,33 +152,11 @@ class KesehatanController extends Controller
             'catatan_kesehatan' => 'nullable|string',
         ]);
 
-        // Auto hitung IMT jika belum ada dan TB/BB valid
-        if ((empty($validated['imt']) || $validated['imt'] == 0) && ! empty($validated['berat_badan']) && ! empty($validated['tinggi_badan'])) {
-            $tbM = $validated['tinggi_badan'] / 100;
-            $imt = round($validated['berat_badan'] / ($tbM * $tbM), 2);
-            $validated['imt'] = $imt;
-            if ($imt < 18.5) {
-                $validated['imt_kategori'] = 'Kurus';
-            } elseif ($imt <= 24.9) {
-                $validated['imt_kategori'] = 'Ideal';
-            } elseif ($imt <= 29.9) {
-                $validated['imt_kategori'] = 'Gemuk';
-            } else {
-                $validated['imt_kategori'] = 'Obesitas';
-            }
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
         }
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
-
-        Kesehatan::updateOrCreate(
-            [
-                'gelara_id' => $validated['gelara_id'],
-                'tahun_akademik' => $validated['tahun_akademik'],
-                'semester' => $validated['semester'],
-            ],
-            $validated
-        );
+        HealthBiometrics::recordExamination($validated);
 
         return back()->with('success', 'Data pemeriksaan kesehatan berhasil disimpan.');
     }

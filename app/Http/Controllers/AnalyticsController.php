@@ -25,15 +25,8 @@ class AnalyticsController extends Controller
     public function kesekretariatan(Request $request): Response
     {
         $user = $request->user();
-        $isYayasan = $user && $user->lembaga === 'Yayasan';
-
-        $gelaraQuery = Gelara::query();
-        $pegawaiQuery = Pegawai::query();
-
-        if (! $isYayasan && $user?->lembaga) {
-            $gelaraQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $pegawaiQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $gelaraQuery = Gelara::forUser($user);
+        $pegawaiQuery = Pegawai::forUser($user);
 
         $totalGelara = (clone $gelaraQuery)->count();
         $totalPegawai = (clone $pegawaiQuery)->count();
@@ -88,19 +81,10 @@ class AnalyticsController extends Controller
     public function kegelaraan(Request $request): Response
     {
         $user = $request->user();
-        $isYayasan = $user && $user->lembaga === 'Yayasan';
-
-        $kegiatanQuery = Kegiatan::query();
-        $dailyQuery = DailyActivity::query();
-        $pelanggaranQuery = Pelanggaran::query();
-        $prestasiQuery = Prestasi::query();
-
-        if (! $isYayasan && $user?->lembaga) {
-            $kegiatanQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $dailyQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $pelanggaranQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $prestasiQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $kegiatanQuery = Kegiatan::forUser($user);
+        $dailyQuery = DailyActivity::forUser($user);
+        $pelanggaranQuery = Pelanggaran::forUser($user);
+        $prestasiQuery = Prestasi::forUser($user);
 
         $totalKegiatan = (clone $kegiatanQuery)->count();
         $kegiatanSelesai = (clone $kegiatanQuery)->where('is_completed', true)->count();
@@ -151,17 +135,9 @@ class AnalyticsController extends Controller
     public function kurikulum(Request $request): Response
     {
         $user = $request->user();
-        $isYayasan = $user && $user->lembaga === 'Yayasan';
-
-        $kalenderQuery = KalenderAkademik::query();
-        $nilaiQuery = NilaiAkademik::query();
-        $mapelQuery = KelasMapel::query();
-
-        if (! $isYayasan && $user?->lembaga) {
-            $kalenderQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $nilaiQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $mapelQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $kalenderQuery = KalenderAkademik::forUser($user);
+        $nilaiQuery = NilaiAkademik::forUser($user);
+        $mapelQuery = KelasMapel::forUser($user);
 
         $totalAgenda = (clone $kalenderQuery)->count();
         $totalMapel = (clone $mapelQuery)->count();
@@ -216,7 +192,7 @@ class AnalyticsController extends Controller
 
     public function kesehatan(Request $request): Response
     {
-        $kesehatanQuery = Kesehatan::query();
+        $kesehatanQuery = Kesehatan::forUser($request->user());
 
         $totalPemeriksaan = (clone $kesehatanQuery)->count();
         $imtNormal = (clone $kesehatanQuery)->where('imt_kategori', 'like', '%Normal%')->count();
@@ -279,16 +255,9 @@ class AnalyticsController extends Controller
     public function sarpras(Request $request): Response
     {
         $user = $request->user();
-        $isYayasan = $user && $user->lembaga === 'Yayasan';
-
-        $asetQuery = Aset::query();
-        $perbaikanQuery = PerbaikanAset::query();
-        $pengadaanQuery = PengadaanAset::query();
-
-        if (! $isYayasan && $user?->lembaga) {
-            $asetQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $pengadaanQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $asetQuery = Aset::forUser($user);
+        $perbaikanQuery = PerbaikanAset::whereHas('aset', fn ($qa) => $qa->forUser($user));
+        $pengadaanQuery = PengadaanAset::forUser($user);
 
         $totalAset = (clone $asetQuery)->count();
         $asetBaik = (clone $asetQuery)->where('kondisi', 'Baik')->count();
@@ -352,12 +321,7 @@ class AnalyticsController extends Controller
     public function keuangan(Request $request): Response
     {
         $user = $request->user();
-        $isYayasan = $user && $user->lembaga === 'Yayasan';
-
-        $bopQuery = AnggaranBop::query();
-        if (! $isYayasan && $user?->lembaga) {
-            $bopQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $bopQuery = AnggaranBop::forUser($user);
 
         $totalPlan = (float) (clone $bopQuery)->sum('plan');
         $totalAktual = (float) (clone $bopQuery)->sum('aktual');

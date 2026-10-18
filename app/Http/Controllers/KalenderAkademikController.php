@@ -9,15 +9,8 @@ class KalenderAkademikController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-        $query = KalenderAkademik::orderBy('start_date', 'asc');
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
-        $kegiatans = $query->get();
-
         return inertia('Kurikulum/KalenderAkademik', [
-            'kegiatans' => $kegiatans,
+            'kegiatans' => KalenderAkademik::forUser($request->user())->orderBy('start_date', 'asc')->get(),
         ]);
     }
 
@@ -33,8 +26,9 @@ class KalenderAkademikController extends Controller
             'is_completed' => 'boolean',
         ]);
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         KalenderAkademik::create($validated);
 

@@ -10,15 +10,8 @@ class KegiatanController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-        $query = Kegiatan::orderBy('start_date', 'asc');
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
-        $kegiatans = $query->get();
-
         return inertia('Kegelaraan/Kalender', [
-            'kegiatans' => $kegiatans,
+            'kegiatans' => Kegiatan::forUser($request->user())->orderBy('start_date', 'asc')->get(),
         ]);
     }
 
@@ -34,8 +27,9 @@ class KegiatanController extends Controller
             'is_completed' => 'boolean',
         ]);
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         Kegiatan::create($validated);
 

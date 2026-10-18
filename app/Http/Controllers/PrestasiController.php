@@ -24,8 +24,9 @@ class PrestasiController extends Controller
             $validated['attachment'] = $request->file('attachment')->store('attachments', 'public');
         }
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         Prestasi::create($validated);
 
