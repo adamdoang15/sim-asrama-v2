@@ -1,6 +1,12 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Head, Link } from '@inertiajs/react';
-import { ClipboardList, FileText, Archive, UserCheck, ArrowRight } from 'lucide-react';
+import {
+    ClipboardList,
+    FileText,
+    Archive,
+    UserCheck,
+    ArrowRight,
+} from 'lucide-react';
 
 export default function AdministrasiIndex() {
     const modules = [
@@ -45,9 +51,12 @@ export default function AdministrasiIndex() {
                             <ClipboardList className="h-7 w-7 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold">Modul Administrasi Lembaga</h1>
+                            <h1 className="text-xl font-bold">
+                                Modul Administrasi Lembaga
+                            </h1>
                             <p className="text-sm text-slate-200">
-                                Pengelolaan surat menyurat, pengarsipan dokumen resmi, dan pengawasan operasional lembaga.
+                                Pengelolaan surat menyurat, pengarsipan dokumen
+                                resmi, dan pengawasan operasional lembaga.
                             </p>
                         </div>
                     </div>
@@ -59,30 +68,38 @@ export default function AdministrasiIndex() {
                         <Link
                             key={m.title}
                             href={m.href}
-                            className="group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md cursor-pointer"
+                            className="group flex cursor-pointer flex-col justify-between rounded-xl border border-gray-200/80 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md"
                         >
                             <div>
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                <div className="mb-3 flex items-center justify-between">
+                                    <span className="text-base font-bold text-gray-900 transition-colors group-hover:text-blue-600">
                                         {m.title}
                                     </span>
-                                    <div className={`rounded-xl ${m.bg} p-2.5 ${m.color} transition-transform group-hover:scale-110`}>
+                                    <div
+                                        className={`rounded-xl ${m.bg} p-2.5 ${m.color} transition-transform group-hover:scale-110`}
+                                    >
                                         <m.icon size={22} />
                                     </div>
                                 </div>
-                                <p className="text-xs leading-relaxed text-gray-600">{m.desc}</p>
+                                <p className="text-xs leading-relaxed text-gray-600">
+                                    {m.desc}
+                                </p>
                             </div>
 
                             <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-3 text-xs font-semibold text-blue-600">
                                 <span>{m.badge}</span>
-                                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                                <ArrowRight
+                                    size={15}
+                                    className="transition-transform group-hover:translate-x-1"
+                                />
                             </div>
                         </Link>
                     ))}
                 </div>
 
                 <div className="rounded-xl border border-dashed border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
-                    Klik kartu di atas atau gunakan menu pada sidebar untuk membuka halaman modul administrasi yang diinginkan.
+                    Klik kartu di atas atau gunakan menu pada sidebar untuk
+                    membuka halaman modul administrasi yang diinginkan.
                 </div>
             </div>
         </DashboardLayout>

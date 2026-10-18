@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToLembaga;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AnggaranBop extends Model
 {
-    use HasFactory;
+    use BelongsToLembaga, HasFactory;
 
     protected $guarded = ['id'];
 

@@ -21,16 +21,26 @@ export default function PaginationBar({
     const totalPages = Math.ceil(totalItems / perPage) || 1;
 
     const getVisiblePages = () => {
-        if (totalPages <= 5) return Array.from({ length: totalPages }, (_, i) => i + 1);
+        if (totalPages <= 5)
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
         if (currentPage <= 3) return [1, 2, 3, '...', totalPages];
-        if (currentPage >= totalPages - 2) return [1, '...', totalPages - 2, totalPages - 1, totalPages];
+        if (currentPage >= totalPages - 2)
+            return [1, '...', totalPages - 2, totalPages - 1, totalPages];
         return [1, '...', currentPage, '...', totalPages];
     };
 
     return (
-        <div className={`p-4 bg-white flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 ${className}`}>
+        <div
+            className={`flex flex-col items-center justify-between gap-4 bg-white p-4 text-xs text-slate-500 sm:flex-row ${className}`}
+        >
             <div className="font-medium">
-                Menampilkan <b className="text-slate-800">{totalItems === 0 ? 0 : (currentPage - 1) * perPage + 1} - {Math.min(currentPage * perPage, totalItems)}</b> dari <b className="text-slate-800">{totalItems}</b> total agenda kegiatan
+                Menampilkan{' '}
+                <b className="text-slate-800">
+                    {totalItems === 0 ? 0 : (currentPage - 1) * perPage + 1} -{' '}
+                    {Math.min(currentPage * perPage, totalItems)}
+                </b>{' '}
+                dari <b className="text-slate-800">{totalItems}</b> total agenda
+                kegiatan
                 <span className="mx-2">•</span>
                 Tampilkan
                 <select
@@ -39,7 +49,7 @@ export default function PaginationBar({
                         setPerPage(Number(e.target.value));
                         setCurrentPage(1);
                     }}
-                    className="mx-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2 py-0.5 text-xs font-bold text-slate-700 outline-none cursor-pointer focus:bg-white focus:border-blue-400"
+                    className="mx-1.5 cursor-pointer rounded-lg border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-bold text-slate-700 outline-none focus:border-blue-400 focus:bg-white"
                 >
                     <option value={10}>10</option>
                     <option value={25}>25</option>
@@ -49,23 +59,28 @@ export default function PaginationBar({
             </div>
             <div className="flex items-center gap-1">
                 <button
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
                     disabled={currentPage === 1}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 disabled:opacity-50"
                 >
                     <ChevronLeft size={14} />
                 </button>
 
                 {getVisiblePages().map((page, idx) =>
                     page === '...' ? (
-                        <span key={`dots-${idx}`} className="w-6 text-center text-slate-400 font-bold">
+                        <span
+                            key={`dots-${idx}`}
+                            className="w-6 text-center font-bold text-slate-400"
+                        >
                             ...
                         </span>
                     ) : (
                         <button
                             key={page}
                             onClick={() => setCurrentPage(page as number)}
-                            className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold transition-colors ${
+                            className={`flex h-7 w-7 items-center justify-center rounded-lg font-bold transition-colors ${
                                 currentPage === page
                                     ? 'bg-blue-600 text-white shadow-xs'
                                     : 'text-slate-600 hover:bg-slate-100'
@@ -73,13 +88,15 @@ export default function PaginationBar({
                         >
                             {page}
                         </button>
-                    )
+                    ),
                 )}
 
                 <button
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
                     disabled={currentPage === totalPages}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 disabled:opacity-50"
                 >
                     <ChevronRight size={14} />
                 </button>

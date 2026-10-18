@@ -14,11 +14,7 @@ class PegawaiController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $query = Pegawai::latest();
-
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $query = Pegawai::forUser($user)->latest();
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
@@ -39,10 +35,7 @@ class PegawaiController extends Controller
             $query->where('jenis_kelamin', $request->gender);
         }
 
-        $baseQuery = Pegawai::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $baseQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $baseQuery = Pegawai::forUser($user);
 
         $perPage = $request->input('per_page', 25);
         $employees = $query->paginate($perPage)->withQueryString();
@@ -102,8 +95,9 @@ class PegawaiController extends Controller
             $validated['foto'] = 'Belum Ada Foto';
         }
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         Pegawai::create($validated);
 

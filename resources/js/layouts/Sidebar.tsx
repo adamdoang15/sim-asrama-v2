@@ -20,7 +20,7 @@ import {
     Shield,
     ShieldCheck,
     Users,
-    X
+    X,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -33,7 +33,7 @@ const MENU_ITEMS = [
         subItems: [
             { name: 'Analytics', href: '/kesekretariatan/analytics' },
             { name: 'Data Gelara', href: '/kesekretariatan/data-gelara' },
-            { name: 'Data Pegawai', href: '/kesekretariatan/data-pegawai' }
+            { name: 'Data Pegawai', href: '/kesekretariatan/data-pegawai' },
         ],
     },
     {
@@ -117,10 +117,14 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     const user = props.auth?.user;
     const userRole = user?.role || '';
     const userRoles = userRole.split(',').map((r: string) => r.trim());
-    const isSuperAdmin = userRoles.includes('administrasi') || userRoles.includes('admin');
-    const isSuper = isSuperAdmin || userRoles.includes('viewer') || user?.lembaga === 'Yayasan';
+    const isSuperAdmin =
+        userRoles.includes('administrasi') || userRoles.includes('admin');
+    const isSuper =
+        isSuperAdmin ||
+        userRoles.includes('viewer') ||
+        user?.lembaga === 'Yayasan';
 
-    const visibleMenuItems = MENU_ITEMS.filter(item => {
+    const visibleMenuItems = MENU_ITEMS.filter((item) => {
         if ((item as any).superAdminOnly) {
             return isSuperAdmin;
         }
@@ -135,9 +139,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         return url.startsWith(href);
     };
 
-    const activeParent = visibleMenuItems.find(item =>
-        item.subItems?.some(sub => typeof sub !== 'string' && isUrlMatch(sub.href))
-    )?.name || null;
+    const activeParent =
+        visibleMenuItems.find((item) =>
+            item.subItems?.some(
+                (sub) => typeof sub !== 'string' && isUrlMatch(sub.href),
+            ),
+        )?.name || null;
 
     const [openMenu, setOpenMenu] = useState<string | null>(activeParent);
 
@@ -148,7 +155,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     }, [activeParent]);
 
     const toggleMenu = (name: string) => {
-        setOpenMenu(prev => prev === name ? null : name);
+        setOpenMenu((prev) => (prev === name ? null : name));
     };
 
     return (
@@ -163,22 +170,31 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
             {/* Sidebar */}
             <aside
-                className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-primary text-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                    }`}
+                className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-primary text-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+                    isOpen ? 'translate-x-0' : '-translate-x-full'
+                }`}
             >
                 {/* Logo Area */}
-                <div className="flex h-20 items-center justify-between px-4 mb-2">
+                <div className="mb-2 flex h-20 items-center justify-between px-4">
                     <div className="flex items-center space-x-3">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white p-1 shadow-md transition-transform hover:scale-105">
-                            <img src="/logo.png" alt="Logo LKP Doa Bangsa" className="h-full w-full object-contain" />
+                            <img
+                                src="/logo.png"
+                                alt="Logo LKP Doa Bangsa"
+                                className="h-full w-full object-contain"
+                            />
                         </div>
                         <div className="flex flex-col overflow-hidden">
-                            <span className="text-[13px] font-extrabold leading-tight tracking-wide text-white truncate">LKP DOA BANGSA</span>
-                            <span className="text-[10px] text-blue-200 font-medium tracking-wider uppercase mt-0.5 truncate">Jujur, Ikhlas, Amanah</span>
+                            <span className="truncate text-[13px] leading-tight font-extrabold tracking-wide text-white">
+                                LKP DOA BANGSA
+                            </span>
+                            <span className="mt-0.5 truncate text-[10px] font-medium tracking-wider text-blue-200 uppercase">
+                                Jujur, Ikhlas, Amanah
+                            </span>
                         </div>
                     </div>
                     <button
-                        className="lg:hidden text-white"
+                        className="text-white lg:hidden"
                         onClick={() => setIsOpen(false)}
                     >
                         <X size={24} />
@@ -186,10 +202,16 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 </div>
 
                 {/* Navigation */}
-                <nav className="h-[calc(100vh-4rem)] overflow-y-auto px-3 pb-4 pt-4 custom-scrollbar">
+                <nav className="custom-scrollbar h-[calc(100vh-4rem)] overflow-y-auto px-3 pt-4 pb-4">
                     <ul className="space-y-1 text-sm font-medium">
                         {visibleMenuItems.map((item) => {
-                            const isCurrentActive = Boolean(item.subItems?.some(sub => typeof sub !== 'string' && url.startsWith(sub.href)));
+                            const isCurrentActive = Boolean(
+                                item.subItems?.some(
+                                    (sub) =>
+                                        typeof sub !== 'string' &&
+                                        url.startsWith(sub.href),
+                                ),
+                            );
                             const isExpanded = openMenu === item.name;
 
                             return (
@@ -198,9 +220,15 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                         <>
                                             {/* Parent Menu Item */}
                                             <button
-                                                onClick={() => toggleMenu(item.name)}
-                                                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${isExpanded || isCurrentActive ? 'bg-primary-hover text-white' : ''
-                                                    }`}
+                                                onClick={() =>
+                                                    toggleMenu(item.name)
+                                                }
+                                                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${
+                                                    isExpanded ||
+                                                    isCurrentActive
+                                                        ? 'bg-primary-hover text-white'
+                                                        : ''
+                                                }`}
                                             >
                                                 <div className="flex items-center space-x-3">
                                                     <item.icon size={18} />
@@ -216,23 +244,50 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                             {/* Sub menu items */}
                                             {isExpanded && (
                                                 <ul className="mt-1 space-y-1 pl-9">
-                                                    {item.subItems.map((subItem, index) => {
-                                                        const name = typeof subItem === 'string' ? subItem : subItem.name;
-                                                        const href = typeof subItem === 'string' ? '#' : subItem.href;
-                                                        const isActive = isUrlMatch(href);
-                                                        return (
-                                                            <li key={name + index}>
-                                                                <Link
-                                                                    href={href}
-                                                                    onClick={() => setIsOpen(false)}
-                                                                    className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-primary-hover hover:text-white ${isActive ? 'bg-primary-hover text-white font-bold' : 'text-blue-200'
-                                                                        }`}
+                                                    {item.subItems.map(
+                                                        (subItem, index) => {
+                                                            const name =
+                                                                typeof subItem ===
+                                                                'string'
+                                                                    ? subItem
+                                                                    : subItem.name;
+                                                            const href =
+                                                                typeof subItem ===
+                                                                'string'
+                                                                    ? '#'
+                                                                    : subItem.href;
+                                                            const isActive =
+                                                                isUrlMatch(
+                                                                    href,
+                                                                );
+                                                            return (
+                                                                <li
+                                                                    key={
+                                                                        name +
+                                                                        index
+                                                                    }
                                                                 >
-                                                                    {name}
-                                                                </Link>
-                                                            </li>
-                                                        );
-                                                    })}
+                                                                    <Link
+                                                                        href={
+                                                                            href
+                                                                        }
+                                                                        onClick={() =>
+                                                                            setIsOpen(
+                                                                                false,
+                                                                            )
+                                                                        }
+                                                                        className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-primary-hover hover:text-white ${
+                                                                            isActive
+                                                                                ? 'bg-primary-hover font-bold text-white'
+                                                                                : 'text-blue-200'
+                                                                        }`}
+                                                                    >
+                                                                        {name}
+                                                                    </Link>
+                                                                </li>
+                                                            );
+                                                        },
+                                                    )}
                                                 </ul>
                                             )}
                                         </>
@@ -240,8 +295,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                         <Link
                                             href={item.href || '#'}
                                             onClick={() => setIsOpen(false)}
-                                            className={`flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${item.href && isUrlMatch(item.href) ? 'bg-primary-hover text-white' : ''
-                                                }`}
+                                            className={`flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors hover:bg-primary-hover ${
+                                                item.href &&
+                                                isUrlMatch(item.href)
+                                                    ? 'bg-primary-hover text-white'
+                                                    : ''
+                                            }`}
                                         >
                                             <item.icon size={18} />
                                             <span>{item.name}</span>

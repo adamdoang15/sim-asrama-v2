@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\AssetRegistry;
 use App\Models\Aset;
 use App\Models\PengadaanAset;
 use App\Models\PerbaikanAset;
@@ -12,6 +13,9 @@ use Inertia\Response;
 
 class SarprasController extends Controller
 {
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function getLembagaOptions(): array
     {
         return [
@@ -21,6 +25,9 @@ class SarprasController extends Controller
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAllLokasiOptions(): array
     {
         $all = [];
@@ -59,7 +66,8 @@ class SarprasController extends Controller
         $lokasi = $request->input('lokasi', '');
         $kondisi = $request->input('kondisi', '');
 
-        $query = Aset::query();
+        $user = $request->user();
+        $query = Aset::forUser($user, $lembaga);
 
         if ($tab === 'dihapuskan') {
             $query->where('status', 'Dihapuskan');
@@ -73,13 +81,6 @@ class SarprasController extends Controller
                     ->orWhere('nama_aset', 'like', "%{$search}%")
                     ->orWhere('lokasi', 'like', "%{$search}%");
             });
-        }
-
-        $user = $request->user();
-        if (! empty($lembaga)) {
-            $query->where('lembaga', $lembaga);
-        } elseif ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
         }
 
         if (! empty($kategori)) {
@@ -96,10 +97,7 @@ class SarprasController extends Controller
 
         $asets = $query->orderBy('updated_at', 'desc')->get();
 
-        $statsBase = Aset::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $statsBase->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $statsBase = Aset::forUser($user);
 
         $stats = [
             'total_aset' => (clone $statsBase)->where('status', '!=', 'Dihapuskan')->count(),
@@ -145,14 +143,9 @@ class SarprasController extends Controller
             'nilai_perolehan' => 'nullable|numeric|min:0',
         ]);
 
-        $nextId = (Aset::max('id') ?? 0) + 1;
-        $validated['kode_aset'] = 'AST-'.date('Y').'-'.str_pad((string) $nextId, 4, '0', STR_PAD_LEFT);
-        $validated['status'] = 'Tersedia';
+        $validated['lembaga'] = Aset::resolveLembagaForUser($request->user(), $request->input('lembaga'));
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
-
-        Aset::create($validated);
+        AssetRegistry::registerAsset($validated);
 
         return back()->with('success', 'Aset baru berhasil ditambahkan ke inventaris.');
     }
@@ -186,21 +179,7 @@ class SarprasController extends Controller
             'tanggal_pemeriksaan_terakhir' => 'nullable|date',
         ]);
 
-        $updateData = [
-            'kondisi' => $validated['kondisi'],
-            'catatan_pemeriksaan' => $validated['catatan_pemeriksaan'] ?? null,
-            'tanggal_pemeriksaan_terakhir' => $validated['tanggal_pemeriksaan'] ?? $validated['tanggal_pemeriksaan_terakhir'] ?? now()->toDateString(),
-        ];
-
-        if (! empty($validated['status'])) {
-            $updateData['status'] = $validated['status'];
-            if ($validated['status'] === 'Dihapuskan') {
-                $updateData['tanggal_penghapusan'] = now()->toDateString();
-                $updateData['alasan_penghapusan'] = $validated['catatan_pemeriksaan'] ?? 'Dihapuskan hasil pemeriksaan berkala.';
-            }
-        }
-
-        $aset->update($updateData);
+        AssetRegistry::recordInspection($aset, $validated);
 
         return back()->with('success', 'Hasil pemeriksaan berkala aset berhasil dicatat.');
     }
@@ -219,11 +198,11 @@ class SarprasController extends Controller
             'tanggal_penghapusan' => 'nullable|date',
         ]);
 
-        $aset->update([
-            'status' => 'Dihapuskan',
-            'alasan_penghapusan' => $validated['alasan_penghapusan'],
-            'tanggal_penghapusan' => $validated['tanggal_penghapusan'] ?? now()->toDateString(),
-        ]);
+        AssetRegistry::decommission(
+            $aset,
+            $validated['alasan_penghapusan'],
+            $validated['tanggal_penghapusan'] ?? null
+        );
 
         return back()->with('success', 'Aset telah dipindahkan ke daftar aset dihapuskan.');
     }
@@ -258,24 +237,11 @@ class SarprasController extends Controller
             });
         }
 
-        // Ambil daftar aset aktif untuk modal pengajuan perbaikan
-        $activeAsetQuery = Aset::where('status', '!=', 'Dihapuskan')
-            ->orderBy('nama_aset', 'asc');
-
         $user = $request->user();
-        if (! empty($lembaga)) {
-            $query->whereHas('aset', function ($qa) use ($lembaga) {
-                $qa->where('lembaga', $lembaga);
-            });
-            $activeAsetQuery->where('lembaga', $lembaga);
-        } elseif ($user && $user->lembaga !== 'Yayasan') {
-            $query->whereHas('aset', function ($qa) use ($user) {
-                $qa->where('lembaga', $user->lembaga)->orWhereNull('lembaga');
-            });
-            $activeAsetQuery->where(function ($qa) use ($user) {
-                $qa->where('lembaga', $user->lembaga)->orWhereNull('lembaga');
-            });
-        }
+        $query->whereIn('aset_id', Aset::forUser($user, $lembaga)->select('id'));
+        $activeAsetQuery = Aset::forUser($user, $lembaga)
+            ->where('status', '!=', 'Dihapuskan')
+            ->orderBy('nama_aset', 'asc');
 
         if (! empty($prioritas)) {
             $query->where('prioritas', $prioritas);
@@ -284,10 +250,7 @@ class SarprasController extends Controller
         $perbaikans = $query->orderBy('created_at', 'desc')->get();
         $activeAsets = $activeAsetQuery->get();
 
-        $statsBase = PerbaikanAset::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $statsBase->whereHas('aset', fn ($qa) => $qa->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $statsBase = PerbaikanAset::whereIn('aset_id', Aset::forUser($user)->select('id'));
 
         $stats = [
             'total_laporan' => (clone $statsBase)->count(),
@@ -376,8 +339,8 @@ class SarprasController extends Controller
         $search = $request->input('search', '');
         $status = $request->input('status', '');
         $lembaga = $request->input('lembaga', '');
-
-        $query = PengadaanAset::query();
+        $user = $request->user();
+        $query = PengadaanAset::forUser($user, $lembaga);
 
         if (! empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -391,19 +354,9 @@ class SarprasController extends Controller
             $query->where('status', $status);
         }
 
-        $user = $request->user();
-        if (! empty($lembaga)) {
-            $query->where('lembaga', $lembaga);
-        } elseif ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
-
         $pengadaans = $query->orderBy('created_at', 'desc')->get();
 
-        $statsBase = PengadaanAset::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $statsBase->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $statsBase = PengadaanAset::forUser($user);
 
         $stats = [
             'total_pengadaan' => (clone $statsBase)->count(),
@@ -459,49 +412,9 @@ class SarprasController extends Controller
             'tanggal_pengajuan' => 'nullable|date',
         ]);
 
-        $nextId = (PengadaanAset::max('id') ?? 0) + 1;
-        $nomorPengadaan = 'PGD-'.date('Y').'-'.str_pad((string) $nextId, 4, '0', STR_PAD_LEFT);
-        $tgl = $validated['tanggal_pengajuan'] ?? now()->toDateString();
+        $validated['lembaga'] = PengadaanAset::resolveLembagaForUser($request->user(), $validated['lembaga'] ?? null);
 
-        $user = $request->user();
-        $lembaga = $validated['lembaga'] ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
-
-        // 1. Simpan riwayat transaksi pengadaan dengan status langsung Diterima
-        $pengadaan = PengadaanAset::create([
-            'nomor_pengadaan' => $nomorPengadaan,
-            'nama_barang' => $validated['nama_barang'],
-            'lembaga' => $lembaga,
-            'kategori' => $validated['kategori'],
-            'lokasi_tujuan' => $validated['lokasi_tujuan'],
-            'jumlah' => $validated['jumlah'],
-            'satuan' => $validated['satuan'],
-            'estimasi_biaya' => $validated['estimasi_biaya'] ?? null,
-            'sumber_dana' => $validated['sumber_dana'] ?? null,
-            'keterangan' => $validated['keterangan'] ?? null,
-            'tanggal_pengajuan' => $tgl,
-            'status' => 'Diterima',
-            'tanggal_diterima' => $tgl,
-        ]);
-
-        // 2. Langsung masukkan ke inventaris aktif
-        $nextAsetId = (Aset::max('id') ?? 0) + 1;
-        $kodeAset = 'AST-'.date('Y').'-'.str_pad((string) $nextAsetId, 4, '0', STR_PAD_LEFT);
-
-        Aset::create([
-            'kode_aset' => $kodeAset,
-            'nama_aset' => $validated['nama_barang'],
-            'lembaga' => $lembaga,
-            'kategori' => $validated['kategori'],
-            'lokasi' => $validated['lokasi_tujuan'],
-            'jumlah' => $validated['jumlah'],
-            'satuan' => $validated['satuan'],
-            'kondisi' => 'Baik',
-            'status' => 'Tersedia',
-            'tanggal_perolehan' => $tgl,
-            'nilai_perolehan' => $validated['estimasi_biaya'],
-            'catatan_pemeriksaan' => 'Aset baru dari pengadaan nomor '.$nomorPengadaan,
-            'tanggal_pemeriksaan_terakhir' => $tgl,
-        ]);
+        AssetRegistry::recordProcurement($validated, autoReceive: true);
 
         return back()->with('success', 'Pembelian aset baru berhasil dicatat dan langsung otomatis masuk ke Inventaris aktif.');
     }
@@ -519,29 +432,7 @@ class SarprasController extends Controller
 
     public function terimaPengadaan(Request $request, PengadaanAset $pengadaan): RedirectResponse
     {
-        $pengadaan->update([
-            'status' => 'Diterima',
-            'tanggal_diterima' => now()->toDateString(),
-        ]);
-
-        // Otomatis masukkan ke inventaris aktif
-        $nextId = (Aset::max('id') ?? 0) + 1;
-        $kodeAset = 'AST-'.date('Y').'-'.str_pad((string) $nextId, 4, '0', STR_PAD_LEFT);
-
-        Aset::create([
-            'kode_aset' => $kodeAset,
-            'nama_aset' => $pengadaan->nama_barang,
-            'kategori' => $pengadaan->kategori,
-            'lokasi' => $pengadaan->lokasi_tujuan,
-            'jumlah' => $pengadaan->jumlah,
-            'satuan' => $pengadaan->satuan,
-            'kondisi' => 'Baik',
-            'status' => 'Tersedia',
-            'tanggal_perolehan' => now()->toDateString(),
-            'nilai_perolehan' => $pengadaan->estimasi_biaya,
-            'catatan_pemeriksaan' => 'Barang baru dari pengadaan nomor '.$pengadaan->nomor_pengadaan,
-            'tanggal_pemeriksaan_terakhir' => now()->toDateString(),
-        ]);
+        AssetRegistry::receiveProcurement($pengadaan);
 
         return back()->with('success', 'Barang pengadaan berhasil diterima dan otomatis dimasukkan ke inventaris aktif.');
     }

@@ -1,0 +1,331 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Http\\Controllers\\GelaraController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/GelaraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\GelaraController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/GelaraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\GelaraController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/GelaraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\GelaraController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/GelaraController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KalenderAkademikController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KalenderAkademikController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KalenderAkademikController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KalenderAkademikController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KalenderAkademikController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KalenderAkademikController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KalenderAkademikController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KalenderAkademikController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KegiatanController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KegiatanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KegiatanController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KegiatanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KegiatanController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KegiatanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\KegiatanController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/KegiatanController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\AnggaranBop\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\AnggaranBop\>\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/KeuanganController.php
+
+		-
+			message: '#^Parameter \#1 \$rekapBop of static method App\\Domain\\BudgetLedger\:\:calculateCumulativeBalance\(\) expects array\<string, array\{mandiri\: array\{saldo\: float\}\}\>, array\<string, array\{fkdb\: array\<string, float\>, mandiri\: array\<string, float\>\}\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/KeuanganController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PegawaiController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PegawaiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PegawaiController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PegawaiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PegawaiController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PegawaiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PegawaiController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PegawaiController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Pelanggaran\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Pelanggaran\>\:\:\$attachment\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Pelanggaran\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Pelanggaran\>\:\:delete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Pelanggaran\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Pelanggaran\>\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:destroy\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PelanggaranController\:\:update\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/PelanggaranController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Prestasi\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Prestasi\>\:\:\$attachment\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Prestasi\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Prestasi\>\:\:delete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Call to an undefined method App\\Models\\Prestasi\|Illuminate\\Database\\Eloquent\\Collection\<\(int\|string\), App\\Models\\Prestasi\>\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PrestasiController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PrestasiController\:\:destroy\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PrestasiController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PrestasiController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\PrestasiController\:\:update\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Http/Controllers/PrestasiController.php
+
+		-
+			message: '#^Class App\\Models\\AnggaranBop uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/AnggaranBop.php
+
+		-
+			message: '#^Class App\\Models\\Aset uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Aset.php
+
+		-
+			message: '#^Method App\\Models\\Aset\:\:perbaikans\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Aset.php
+
+		-
+			message: '#^Method App\\Models\\DailyActivity\:\:gelara\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/DailyActivity.php
+
+		-
+			message: '#^Class App\\Models\\Gelara uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Gelara.php
+
+		-
+			message: '#^Method App\\Models\\Gelara\:\:kesehatans\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Gelara.php
+
+		-
+			message: '#^Method App\\Models\\Gelara\:\:nilaiAkademiks\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Gelara.php
+
+		-
+			message: '#^Method App\\Models\\Gelara\:\:prestasis\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Gelara.php
+
+		-
+			message: '#^Method App\\Models\\Gelara\:\:raporPelengkaps\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Gelara.php
+
+		-
+			message: '#^Class App\\Models\\Kesehatan uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Kesehatan.php
+
+		-
+			message: '#^Method App\\Models\\Kesehatan\:\:gelara\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Kesehatan.php
+
+		-
+			message: '#^Class App\\Models\\NilaiAkademik uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/NilaiAkademik.php
+
+		-
+			message: '#^Method App\\Models\\NilaiAkademik\:\:gelara\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/NilaiAkademik.php
+
+		-
+			message: '#^Method App\\Models\\Pegawai\:\:getStatusBerkasAttribute\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Pegawai.php
+
+		-
+			message: '#^Class App\\Models\\PengadaanAset uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/PengadaanAset.php
+
+		-
+			message: '#^Class App\\Models\\PerbaikanAset uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/PerbaikanAset.php
+
+		-
+			message: '#^Method App\\Models\\PerbaikanAset\:\:aset\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/PerbaikanAset.php
+
+		-
+			message: '#^Class App\\Models\\RaporPelengkap uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/RaporPelengkap.php
+
+		-
+			message: '#^Method App\\Models\\RaporPelengkap\:\:gelara\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/RaporPelengkap.php
+
+		-
+			message: '#^Class App\\Models\\TransaksiKeuangan uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/TransaksiKeuangan.php

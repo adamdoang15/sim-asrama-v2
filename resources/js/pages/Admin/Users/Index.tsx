@@ -59,7 +59,9 @@ export default function UsersIndex({
     const currentUserId = auth?.user?.id;
 
     const [search, setSearch] = useState(filters.search || '');
-    const [selectedLembaga, setSelectedLembaga] = useState(filters.lembaga || '');
+    const [selectedLembaga, setSelectedLembaga] = useState(
+        filters.lembaga || '',
+    );
     const [selectedRole, setSelectedRole] = useState(filters.role || '');
 
     // Modal state
@@ -76,7 +78,11 @@ export default function UsersIndex({
     });
 
     // Handle filter submit
-    const handleFilter = (newLembaga = selectedLembaga, newRole = selectedRole, newSearch = search) => {
+    const handleFilter = (
+        newLembaga = selectedLembaga,
+        newRole = selectedRole,
+        newSearch = search,
+    ) => {
         router.get(
             '/admin/users',
             {
@@ -84,7 +90,7 @@ export default function UsersIndex({
                 lembaga: newLembaga || undefined,
                 role: newRole || undefined,
             },
-            { preserveState: true, replace: true }
+            { preserveState: true, replace: true },
         );
     };
 
@@ -111,7 +117,10 @@ export default function UsersIndex({
         setEditingUser(targetUser);
         form.clearErrors();
         const parsedRoles = targetUser.role
-            ? targetUser.role.split(',').map((r) => r.trim()).filter(Boolean)
+            ? targetUser.role
+                  .split(',')
+                  .map((r) => r.trim())
+                  .filter(Boolean)
             : ['kesekretariatan'];
         form.setData({
             name: targetUser.name,
@@ -127,7 +136,10 @@ export default function UsersIndex({
         const current = form.data.roles || [];
         if (current.includes(roleKey)) {
             if (current.length > 1) {
-                form.setData('roles', current.filter((r) => r !== roleKey));
+                form.setData(
+                    'roles',
+                    current.filter((r) => r !== roleKey),
+                );
             }
         } else {
             form.setData('roles', [...current, roleKey]);
@@ -160,7 +172,11 @@ export default function UsersIndex({
             return;
         }
 
-        if (confirm(`Apakah Anda yakin ingin menghapus akun "${targetUser.name}" (${targetUser.email})?`)) {
+        if (
+            confirm(
+                `Apakah Anda yakin ingin menghapus akun "${targetUser.name}" (${targetUser.email})?`,
+            )
+        ) {
             router.delete(`/admin/users/${targetUser.id}`);
         }
     };
@@ -237,13 +253,14 @@ export default function UsersIndex({
                                     <h1 className="text-xl font-bold tracking-tight text-white">
                                         Manajemen Pengguna
                                     </h1>
-                                    <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/20 px-2.5 py-0.5 text-xs font-medium text-blue-200 border border-blue-400/30">
+                                    <span className="inline-flex items-center gap-1 rounded-full border border-blue-400/30 bg-blue-500/20 px-2.5 py-0.5 text-xs font-medium text-blue-200">
                                         <Shield className="h-3 w-3 text-blue-300" />
                                         Super Admin Control
                                     </span>
                                 </div>
-                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
-                                    Kelola seluruh akun pengguna, lembaga, dan pembagian hak akses role di dalam sistem
+                                <p className="mt-0.5 text-xs text-slate-200 sm:text-sm">
+                                    Kelola seluruh akun pengguna, lembaga, dan
+                                    pembagian hak akses role di dalam sistem
                                 </p>
                             </div>
                         </div>
@@ -268,8 +285,12 @@ export default function UsersIndex({
                             <Users className="h-6 w-6" />
                         </div>
                         <div>
-                            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Pengguna</span>
-                            <p className="text-2xl font-bold text-gray-900">{totalUsers}</p>
+                            <span className="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                Total Pengguna
+                            </span>
+                            <p className="text-2xl font-bold text-gray-900">
+                                {totalUsers}
+                            </p>
                         </div>
                     </div>
 
@@ -278,8 +299,12 @@ export default function UsersIndex({
                             <Shield className="h-6 w-6" />
                         </div>
                         <div>
-                            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Super Admin</span>
-                            <p className="text-2xl font-bold text-gray-900">{totalSuperAdmins}</p>
+                            <span className="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                Super Admin
+                            </span>
+                            <p className="text-2xl font-bold text-gray-900">
+                                {totalSuperAdmins}
+                            </p>
                         </div>
                     </div>
 
@@ -288,22 +313,29 @@ export default function UsersIndex({
                             <UserCheck className="h-6 w-6" />
                         </div>
                         <div>
-                            <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Pengawas Yayasan</span>
-                            <p className="text-2xl font-bold text-gray-900">{totalYayasan}</p>
+                            <span className="text-xs font-medium tracking-wider text-gray-500 uppercase">
+                                Pengawas Yayasan
+                            </span>
+                            <p className="text-2xl font-bold text-gray-900">
+                                {totalYayasan}
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 {/* Filter and Search Bar */}
                 <div className="flex flex-col gap-3 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
-                    <form onSubmit={handleSearchSubmit} className="relative flex-1">
+                    <form
+                        onSubmit={handleSearchSubmit}
+                        className="relative flex-1"
+                    >
                         <Search className="absolute inset-y-0 left-0 my-auto ml-3 h-4 w-4 text-gray-400" />
                         <input
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Cari nama atau email pengguna..."
-                            className="w-full rounded-xl border border-gray-200 py-2 pl-9 pr-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                            className="w-full rounded-xl border border-gray-200 py-2 pr-3 pl-9 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                         />
                     </form>
 
@@ -312,9 +344,13 @@ export default function UsersIndex({
                             value={selectedLembaga}
                             onChange={(e) => {
                                 setSelectedLembaga(e.target.value);
-                                handleFilter(e.target.value, selectedRole, search);
+                                handleFilter(
+                                    e.target.value,
+                                    selectedRole,
+                                    search,
+                                );
                             }}
-                            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                         >
                             <option value="">Semua Lembaga</option>
                             {lembagaOptions.map((lem) => (
@@ -328,9 +364,13 @@ export default function UsersIndex({
                             value={selectedRole}
                             onChange={(e) => {
                                 setSelectedRole(e.target.value);
-                                handleFilter(selectedLembaga, e.target.value, search);
+                                handleFilter(
+                                    selectedLembaga,
+                                    e.target.value,
+                                    search,
+                                );
                             }}
-                            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                         >
                             <option value="">Semua Role</option>
                             {Object.entries(roleOptions).map(([key, label]) => (
@@ -349,7 +389,7 @@ export default function UsersIndex({
                                     setSelectedRole('');
                                     handleFilter('', '', '');
                                 }}
-                                className="inline-flex items-center gap-1 rounded-xl border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 active:scale-[0.98] transition"
+                                className="inline-flex items-center gap-1 rounded-xl border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 active:scale-[0.98]"
                             >
                                 <X className="h-3.5 w-3.5" />
                                 Reset
@@ -362,25 +402,35 @@ export default function UsersIndex({
                 <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-xs">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm text-gray-600">
-                            <thead className="border-b border-gray-100 bg-gray-50/75 text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                            <thead className="border-b border-gray-100 bg-gray-50/75 text-[11px] font-bold tracking-wider text-gray-500 uppercase">
                                 <tr>
                                     <th className="px-6 py-4">Pengguna</th>
                                     <th className="px-6 py-4">Lembaga</th>
-                                    <th className="px-6 py-4">Role / Hak Akses</th>
+                                    <th className="px-6 py-4">
+                                        Role / Hak Akses
+                                    </th>
                                     <th className="px-6 py-4">Terdaftar</th>
-                                    <th className="px-6 py-4 text-right">Aksi</th>
+                                    <th className="px-6 py-4 text-right">
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {users.length > 0 ? (
                                     users.map((item) => {
-                                        const isSelf = item.id === currentUserId;
+                                        const isSelf =
+                                            item.id === currentUserId;
                                         return (
-                                            <tr key={item.id} className="hover:bg-gray-50/60 transition">
+                                            <tr
+                                                key={item.id}
+                                                className="transition hover:bg-gray-50/60"
+                                            >
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary uppercase">
-                                                            {item.name.charAt(0)}
+                                                            {item.name.charAt(
+                                                                0,
+                                                            )}
                                                         </div>
                                                         <div className="flex flex-col">
                                                             <div className="flex items-center gap-1.5">
@@ -388,12 +438,15 @@ export default function UsersIndex({
                                                                     {item.name}
                                                                 </span>
                                                                 {isSelf && (
-                                                                    <span className="rounded bg-blue-100 px-1.5 py-0.2 text-[10px] font-semibold text-blue-700">
-                                                                        Akun Anda
+                                                                    <span className="py-0.2 rounded bg-blue-100 px-1.5 text-[10px] font-semibold text-blue-700">
+                                                                        Akun
+                                                                        Anda
                                                                     </span>
                                                                 )}
                                                             </div>
-                                                            <span className="text-xs text-gray-500">{item.email}</span>
+                                                            <span className="text-xs text-gray-500">
+                                                                {item.email}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -401,43 +454,61 @@ export default function UsersIndex({
                                                 <td className="px-6 py-4">
                                                     <span
                                                         className={`inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium ${getLembagaBadge(
-                                                            item.lembaga
+                                                            item.lembaga,
                                                         )}`}
                                                     >
-                                                        {item.lembaga || 'Tidak Ditentukan'}
+                                                        {item.lembaga ||
+                                                            'Tidak Ditentukan'}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-6 py-4">
-                                                    <div className="flex flex-wrap gap-1.5 max-w-xs">
-                                                        {item.role.split(',').map((r) => r.trim()).filter(Boolean).map((r) => (
-                                                            <span
-                                                                key={r}
-                                                                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs ${getRoleBadge(
-                                                                    r
-                                                                )}`}
-                                                            >
-                                                                {roleOptions[r] || r}
-                                                            </span>
-                                                        ))}
+                                                    <div className="flex max-w-xs flex-wrap gap-1.5">
+                                                        {item.role
+                                                            .split(',')
+                                                            .map((r) =>
+                                                                r.trim(),
+                                                            )
+                                                            .filter(Boolean)
+                                                            .map((r) => (
+                                                                <span
+                                                                    key={r}
+                                                                    className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs ${getRoleBadge(
+                                                                        r,
+                                                                    )}`}
+                                                                >
+                                                                    {roleOptions[
+                                                                        r
+                                                                    ] || r}
+                                                                </span>
+                                                            ))}
                                                     </div>
                                                 </td>
 
                                                 <td className="px-6 py-4 text-xs text-gray-500">
-                                                    {new Date(item.created_at).toLocaleDateString('id-ID', {
-                                                        day: 'numeric',
-                                                        month: 'short',
-                                                        year: 'numeric',
-                                                    })}
+                                                    {new Date(
+                                                        item.created_at,
+                                                    ).toLocaleDateString(
+                                                        'id-ID',
+                                                        {
+                                                            day: 'numeric',
+                                                            month: 'short',
+                                                            year: 'numeric',
+                                                        },
+                                                    )}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex items-center justify-end gap-1.5">
                                                         <button
                                                             type="button"
-                                                            onClick={() => openEditModal(item)}
+                                                            onClick={() =>
+                                                                openEditModal(
+                                                                    item,
+                                                                )
+                                                            }
                                                             title="Edit Pengguna"
-                                                            className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition"
+                                                            className="rounded-lg p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
                                                         >
                                                             <Edit2 className="h-4 w-4" />
                                                         </button>
@@ -445,9 +516,17 @@ export default function UsersIndex({
                                                         <button
                                                             type="button"
                                                             disabled={isSelf}
-                                                            onClick={() => handleDelete(item)}
-                                                            title={isSelf ? 'Tidak dapat menghapus akun sendiri' : 'Hapus Pengguna'}
-                                                            className="rounded-lg p-1.5 text-gray-400 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-gray-400 transition"
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    item,
+                                                                )
+                                                            }
+                                                            title={
+                                                                isSelf
+                                                                    ? 'Tidak dapat menghapus akun sendiri'
+                                                                    : 'Hapus Pengguna'
+                                                            }
+                                                            className="rounded-lg p-1.5 text-gray-400 transition hover:bg-rose-50 hover:text-rose-600 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-gray-400"
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                         </button>
@@ -458,14 +537,20 @@ export default function UsersIndex({
                                     })
                                 ) : (
                                     <tr>
-                                        <td colSpan={5} className="py-12 text-center">
+                                        <td
+                                            colSpan={5}
+                                            className="py-12 text-center"
+                                        >
                                             <div className="flex flex-col items-center justify-center gap-2">
                                                 <Users className="h-8 w-8 text-gray-300" />
                                                 <span className="text-sm font-medium text-gray-900">
-                                                    Tidak ada data pengguna yang ditemukan
+                                                    Tidak ada data pengguna yang
+                                                    ditemukan
                                                 </span>
                                                 <span className="text-xs text-gray-400">
-                                                    Coba sesuaikan kata kunci pencarian atau filter lembaga/role.
+                                                    Coba sesuaikan kata kunci
+                                                    pencarian atau filter
+                                                    lembaga/role.
                                                 </span>
                                             </div>
                                         </td>
@@ -479,15 +564,17 @@ export default function UsersIndex({
 
             {/* Modal Dialog: Tambah / Edit Pengguna */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-xs">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4 backdrop-blur-xs">
                     <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-xl sm:p-7">
                         {/* Modal Header */}
                         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
                             <div>
                                 <h3 className="text-lg font-bold text-gray-900">
-                                    {editingUser ? 'Edit Data Pengguna' : 'Tambah Pengguna Baru'}
+                                    {editingUser
+                                        ? 'Edit Data Pengguna'
+                                        : 'Tambah Pengguna Baru'}
                                 </h3>
-                                <p className="text-xs text-gray-500 mt-0.5">
+                                <p className="mt-0.5 text-xs text-gray-500">
                                     {editingUser
                                         ? 'Perbarui informasi profil, unit lembaga, atau hak akses role.'
                                         : 'Buat akun baru untuk staf atau pengawas lembaga.'}
@@ -496,14 +583,17 @@ export default function UsersIndex({
                             <button
                                 type="button"
                                 onClick={closeModal}
-                                className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition"
+                                className="rounded-lg p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
                             >
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
 
                         {/* Modal Form */}
-                        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="mt-5 space-y-4"
+                        >
                             <div>
                                 <label className="block text-xs font-semibold text-gray-700 uppercase">
                                     Nama Lengkap
@@ -515,14 +605,16 @@ export default function UsersIndex({
                                     <input
                                         type="text"
                                         value={form.data.name}
-                                        onChange={(e) => form.setData('name', e.target.value)}
+                                        onChange={(e) =>
+                                            form.setData('name', e.target.value)
+                                        }
                                         placeholder="Contoh: Budi Santoso"
                                         required
-                                        className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                        className="w-full rounded-xl border border-gray-300 py-2.5 pr-3 pl-9 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                     />
                                 </div>
                                 {form.errors.name && (
-                                    <span className="mt-1 block text-xs text-rose-600 font-medium">
+                                    <span className="mt-1 block text-xs font-medium text-rose-600">
                                         {form.errors.name}
                                     </span>
                                 )}
@@ -539,14 +631,19 @@ export default function UsersIndex({
                                     <input
                                         type="email"
                                         value={form.data.email}
-                                        onChange={(e) => form.setData('email', e.target.value)}
+                                        onChange={(e) =>
+                                            form.setData(
+                                                'email',
+                                                e.target.value,
+                                            )
+                                        }
                                         placeholder="nama@doabangsa.sch.id"
                                         required
-                                        className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                        className="w-full rounded-xl border border-gray-300 py-2.5 pr-3 pl-9 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                     />
                                 </div>
                                 {form.errors.email && (
-                                    <span className="mt-1 block text-xs text-rose-600 font-medium">
+                                    <span className="mt-1 block text-xs font-medium text-rose-600">
                                         {form.errors.email}
                                     </span>
                                 )}
@@ -563,14 +660,23 @@ export default function UsersIndex({
                                     <input
                                         type="password"
                                         value={form.data.password}
-                                        onChange={(e) => form.setData('password', e.target.value)}
-                                        placeholder={editingUser ? 'Kosongkan jika tidak ingin mengubah' : 'Minimal 6 karakter'}
+                                        onChange={(e) =>
+                                            form.setData(
+                                                'password',
+                                                e.target.value,
+                                            )
+                                        }
+                                        placeholder={
+                                            editingUser
+                                                ? 'Kosongkan jika tidak ingin mengubah'
+                                                : 'Minimal 6 karakter'
+                                        }
                                         required={!editingUser}
-                                        className="w-full rounded-xl border border-gray-300 py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                        className="w-full rounded-xl border border-gray-300 py-2.5 pr-3 pl-9 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                     />
                                 </div>
                                 {form.errors.password && (
-                                    <span className="mt-1 block text-xs text-rose-600 font-medium">
+                                    <span className="mt-1 block text-xs font-medium text-rose-600">
                                         {form.errors.password}
                                     </span>
                                 )}
@@ -582,8 +688,10 @@ export default function UsersIndex({
                                 </label>
                                 <select
                                     value={form.data.lembaga}
-                                    onChange={(e) => form.setData('lembaga', e.target.value)}
-                                    className="mt-1 w-full rounded-xl border border-gray-300 bg-white py-2.5 px-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                    onChange={(e) =>
+                                        form.setData('lembaga', e.target.value)
+                                    }
+                                    className="mt-1 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                 >
                                     {lembagaOptions.map((lem) => (
                                         <option key={lem} value={lem}>
@@ -592,66 +700,81 @@ export default function UsersIndex({
                                     ))}
                                 </select>
                                 {form.errors.lembaga && (
-                                    <span className="mt-1 block text-xs text-rose-600 font-medium">
+                                    <span className="mt-1 block text-xs font-medium text-rose-600">
                                         {form.errors.lembaga}
                                     </span>
                                 )}
                             </div>
 
                             <div>
-                                <div className="flex items-center justify-between mb-1">
+                                <div className="mb-1 flex items-center justify-between">
                                     <label className="block text-xs font-semibold text-gray-700 uppercase">
-                                        Role / Hak Akses <span className="text-rose-500">*</span>
+                                        Role / Hak Akses{' '}
+                                        <span className="text-rose-500">*</span>
                                     </label>
-                                    <span className="text-[11px] text-gray-400 font-medium">
-                                        {form.data.roles?.length || 0} role dipilih (bisa lebih dari 1)
+                                    <span className="text-[11px] font-medium text-gray-400">
+                                        {form.data.roles?.length || 0} role
+                                        dipilih (bisa lebih dari 1)
                                     </span>
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1.5">
-                                    {Object.entries(roleOptions).map(([key, label]) => {
-                                        const isSelected = form.data.roles?.includes(key);
-                                        return (
-                                            <label
-                                                key={key}
-                                                className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-xs cursor-pointer select-none transition-all active:scale-[0.99] ${
-                                                    isSelected
-                                                        ? 'border-blue-500 bg-blue-50/60 text-blue-900 font-semibold shadow-xs ring-1 ring-blue-500/20'
-                                                        : 'border-gray-200 bg-white text-gray-700 hover:bg-slate-50 hover:border-gray-300'
-                                                }`}
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    checked={isSelected}
-                                                    onChange={() => toggleRole(key)}
-                                                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span className="truncate">{label}</span>
-                                            </label>
-                                        );
-                                    })}
+                                <div className="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                    {Object.entries(roleOptions).map(
+                                        ([key, label]) => {
+                                            const isSelected =
+                                                form.data.roles?.includes(key);
+                                            return (
+                                                <label
+                                                    key={key}
+                                                    className={`flex cursor-pointer items-center gap-2.5 rounded-xl border p-2.5 text-xs transition-all select-none active:scale-[0.99] ${
+                                                        isSelected
+                                                            ? 'border-blue-500 bg-blue-50/60 font-semibold text-blue-900 shadow-xs ring-1 ring-blue-500/20'
+                                                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-slate-50'
+                                                    }`}
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={isSelected}
+                                                        onChange={() =>
+                                                            toggleRole(key)
+                                                        }
+                                                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                    />
+                                                    <span className="truncate">
+                                                        {label}
+                                                    </span>
+                                                </label>
+                                            );
+                                        },
+                                    )}
                                 </div>
-                                {(form.errors.roles || (form.errors as any).role) && (
-                                    <span className="mt-1.5 block text-xs text-rose-600 font-medium">
-                                        {form.errors.roles || (form.errors as any).role}
+                                {(form.errors.roles ||
+                                    (form.errors as any).role) && (
+                                    <span className="mt-1.5 block text-xs font-medium text-rose-600">
+                                        {form.errors.roles ||
+                                            (form.errors as any).role}
                                     </span>
                                 )}
                             </div>
 
                             {/* Modal Footer */}
-                            <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                            <div className="mt-6 flex items-center justify-end gap-3 border-t border-gray-100 pt-3">
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition"
+                                    className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={form.processing}
-                                    className="rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:opacity-95 disabled:opacity-50 active:scale-[0.98] transition"
+                                    className="rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-white shadow transition hover:opacity-95 active:scale-[0.98] disabled:opacity-50"
                                 >
-                                    {form.processing ? 'Menyimpan...' : editingUser ? 'Perbarui User' : 'Simpan User'}
+                                    {form.processing
+                                        ? 'Menyimpan...'
+                                        : editingUser
+                                          ? 'Perbarui User'
+                                          : 'Simpan User'}
                                 </button>
                             </div>
                         </form>

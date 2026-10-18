@@ -8,7 +8,11 @@ interface GelaraDetailModalProps {
     onEdit: (student: Student) => void;
 }
 
-export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDetailModalProps) {
+export default function GelaraDetailModal({
+    student,
+    onClose,
+    onEdit,
+}: GelaraDetailModalProps) {
     if (!student) return null;
 
     const isLengkap = student.status_berkas === 'Berkas Lengkap';
@@ -26,14 +30,16 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
                 onClick={onClose}
             />
 
-            <div className="relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-white shadow-2xl border border-gray-100 z-10">
+            <div className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
                 {/* Header Strip */}
-                <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-gray-50/80">
+                <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50/80 px-6 py-4">
                     <div className="flex items-center gap-2">
                         <span className="rounded-md bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-600">
                             {student.nig}
                         </span>
-                        <span className="text-xs font-medium text-gray-500">Profil Arsip Gelara</span>
+                        <span className="text-xs font-medium text-gray-500">
+                            Profil Arsip Gelara
+                        </span>
                     </div>
                     <button
                         type="button"
@@ -45,7 +51,7 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
                 </div>
 
                 {/* Body */}
-                <div className="overflow-y-auto p-6 custom-scrollbar space-y-5">
+                <div className="custom-scrollbar space-y-5 overflow-y-auto p-6">
                     {/* Top Identity Card */}
                     <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-gray-50/60 p-4">
                         <div className="shrink-0">
@@ -53,7 +59,7 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
                                 <img
                                     src={`/storage/gelara/${student.foto}`}
                                     alt={student.name}
-                                    className="h-28 w-20 rounded-xl object-cover border border-gray-200 shadow-sm"
+                                    className="h-28 w-20 rounded-xl border border-gray-200 object-cover shadow-sm"
                                 />
                             ) : (
                                 <div className="flex h-28 w-20 items-center justify-center rounded-xl border border-gray-200 bg-white text-2xl font-bold text-gray-400 shadow-xs">
@@ -64,9 +70,11 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
 
                         <div className="flex-1 space-y-1">
                             <div className="inline-block rounded-full bg-gray-200/80 px-2.5 py-0.5 text-xs font-semibold text-gray-700">
-                                {student.kelas || 'Kelas 10'} • Angkatan {student.angkatan} • Masuk {student.tahun_diterima}
+                                {student.kelas || 'Kelas 10'} • Angkatan{' '}
+                                {student.angkatan} • Masuk{' '}
+                                {student.tahun_diterima}
                             </div>
-                            <h2 className="text-lg font-bold text-gray-900 leading-snug">
+                            <h2 className="text-lg leading-snug font-bold text-gray-900">
                                 {student.name}
                             </h2>
                             <div className="text-xs font-medium text-gray-500">
@@ -74,13 +82,21 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
                             </div>
                             <div className="pt-1">
                                 <span
-                                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${isLengkap
-                                        ? 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20'
-                                        : 'bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/20'
-                                        }`}
+                                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                                        isLengkap
+                                            ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20 ring-inset'
+                                            : 'bg-rose-50 text-rose-700 ring-1 ring-rose-600/20 ring-inset'
+                                    }`}
                                 >
-                                    {isLengkap ? <CheckCircle2 size={12} /> : <XCircle size={12} />}
-                                    <span>{student.status_berkas || 'Berkas Terdaftar'}</span>
+                                    {isLengkap ? (
+                                        <CheckCircle2 size={12} />
+                                    ) : (
+                                        <XCircle size={12} />
+                                    )}
+                                    <span>
+                                        {student.status_berkas ||
+                                            'Berkas Terdaftar'}
+                                    </span>
                                 </span>
                             </div>
                         </div>
@@ -89,18 +105,27 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
                     {/* Information Sections */}
                     <div className="space-y-4">
                         {/* Data Kelahiran & Domisili */}
-                        <div className="rounded-xl border border-gray-100 p-4 space-y-2 text-xs">
+                        <div className="space-y-2 rounded-xl border border-gray-100 p-4 text-xs">
                             <div className="text-xs font-bold text-gray-900">
                                 Kelahiran & Domisili
                             </div>
                             <div>
-                                <span className="text-gray-400 block text-[11px]">Tempat, Tanggal Lahir</span>
-                                <span className="font-semibold text-gray-800">{student.ttl || '-'}</span>
+                                <span className="block text-[11px] text-gray-400">
+                                    Tempat, Tanggal Lahir
+                                </span>
+                                <span className="font-semibold text-gray-800">
+                                    {student.ttl || '-'}
+                                </span>
                             </div>
                             <div>
-                                <span className="text-gray-400 block text-[11px]">Alamat Domisili</span>
-                                <div className="flex items-start gap-1 font-medium text-gray-700 mt-0.5">
-                                    <MapPin size={13} className="shrink-0 mt-0.5 text-gray-400" />
+                                <span className="block text-[11px] text-gray-400">
+                                    Alamat Domisili
+                                </span>
+                                <div className="mt-0.5 flex items-start gap-1 font-medium text-gray-700">
+                                    <MapPin
+                                        size={13}
+                                        className="mt-0.5 shrink-0 text-gray-400"
+                                    />
                                     <span>{student.domisili || '-'}</span>
                                 </div>
                             </div>
@@ -108,20 +133,32 @@ export default function GelaraDetailModal({ student, onClose, onEdit }: GelaraDe
 
                         {/* Data Orang Tua */}
                         <div className="rounded-xl border border-gray-100 p-4 text-xs">
-                            <div className="text-xs font-bold text-gray-900 mb-2">
+                            <div className="mb-2 text-xs font-bold text-gray-900">
                                 Identitas Orang Tua / Wali
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="rounded-lg bg-gray-50 p-2.5">
-                                    <span className="text-[11px] font-semibold text-gray-400 uppercase">Ayah</span>
-                                    <div className="font-bold text-gray-800 mt-0.5 truncate">{student.nama_ayah || '-'}</div>
-                                    <div className="text-xs text-gray-500 mt-0.5 truncate">{student.pekerjaan_ayah || '-'}</div>
+                                    <span className="text-[11px] font-semibold text-gray-400 uppercase">
+                                        Ayah
+                                    </span>
+                                    <div className="mt-0.5 truncate font-bold text-gray-800">
+                                        {student.nama_ayah || '-'}
+                                    </div>
+                                    <div className="mt-0.5 truncate text-xs text-gray-500">
+                                        {student.pekerjaan_ayah || '-'}
+                                    </div>
                                 </div>
 
                                 <div className="rounded-lg bg-gray-50 p-2.5">
-                                    <span className="text-[11px] font-semibold text-gray-400 uppercase">Ibu</span>
-                                    <div className="font-bold text-gray-800 mt-0.5 truncate">{student.nama_ibu || '-'}</div>
-                                    <div className="text-xs text-gray-500 mt-0.5 truncate">{student.pekerjaan_ibu || '-'}</div>
+                                    <span className="text-[11px] font-semibold text-gray-400 uppercase">
+                                        Ibu
+                                    </span>
+                                    <div className="mt-0.5 truncate font-bold text-gray-800">
+                                        {student.nama_ibu || '-'}
+                                    </div>
+                                    <div className="mt-0.5 truncate text-xs text-gray-500">
+                                        {student.pekerjaan_ibu || '-'}
+                                    </div>
                                 </div>
                             </div>
                         </div>

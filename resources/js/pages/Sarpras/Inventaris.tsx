@@ -64,9 +64,13 @@ interface Props {
 
 export default function Inventaris({ asets, filters, options, stats }: Props) {
     const [searchQuery, setSearchQuery] = useState(filters.search || '');
-    const [selectedKategori, setSelectedKategori] = useState(filters.kategori || '');
+    const [selectedKategori, setSelectedKategori] = useState(
+        filters.kategori || '',
+    );
     const [selectedLokasi, setSelectedLokasi] = useState(filters.lokasi || '');
-    const [selectedKondisi, setSelectedKondisi] = useState(filters.kondisi || '');
+    const [selectedKondisi, setSelectedKondisi] = useState(
+        filters.kondisi || '',
+    );
 
     // Detail Modal State
     const [selectedAset, setSelectedAset] = useState<AsetItem | null>(null);
@@ -81,10 +85,9 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                 kondisi: selectedKondisi,
                 ...updates,
             },
-            { preserveState: true, preserveScroll: true, replace: true }
+            { preserveState: true, preserveScroll: true, replace: true },
         );
     };
-
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -146,7 +149,7 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
     const handleDeleteAset = (aset: AsetItem) => {
         if (
             confirm(
-                `Apakah Anda yakin ingin menghapus permanen aset "${aset.nama_aset}" (${aset.kode_aset})?\nData akan dihapus dari sistem.`
+                `Apakah Anda yakin ingin menghapus permanen aset "${aset.nama_aset}" (${aset.kode_aset})?\nData akan dihapus dari sistem.`,
             )
         ) {
             router.delete(`/sarpras/inventaris/${aset.id}`, {
@@ -169,8 +172,9 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                                 <h1 className="text-xl font-bold tracking-tight text-white">
                                     Data Inventaris Aset
                                 </h1>
-                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
-                                    Katalog dan pemantauan data seluruh aset sarana prasarana asrama
+                                <p className="mt-0.5 text-xs text-slate-200 sm:text-sm">
+                                    Katalog dan pemantauan data seluruh aset
+                                    sarana prasarana asrama
                                 </p>
                             </div>
                         </div>
@@ -178,8 +182,8 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                 </div>
 
                 {/* Tabs & Filter Bar */}
-                <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm space-y-4">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-4">
+                <div className="space-y-4 rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm">
+                    <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
                         {/* Title / Badge */}
                         <div className="flex items-center gap-2">
                             <div className="inline-flex items-center gap-2 rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white shadow-sm">
@@ -192,14 +196,17 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                         </div>
 
                         {/* Search form */}
-                        <form onSubmit={handleSearch} className="relative w-full sm:w-72">
-                            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                        <form
+                            onSubmit={handleSearch}
+                            className="relative w-full sm:w-72"
+                        >
+                            <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
                             <input
                                 type="text"
                                 placeholder="Cari nama, kode, lokasi..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder-slate-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white py-2 pr-3 pl-9 text-sm placeholder-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                             />
                         </form>
                     </div>
@@ -207,14 +214,18 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                     {/* Filter Dropdowns */}
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                         <div>
-                            <label className="mb-1 block text-xs font-medium text-slate-600">Kategori</label>
+                            <label className="mb-1 block text-xs font-medium text-slate-600">
+                                Kategori
+                            </label>
                             <select
                                 value={selectedKategori}
                                 onChange={(e) => {
                                     setSelectedKategori(e.target.value);
-                                    handleFilterChange({ kategori: e.target.value });
+                                    handleFilterChange({
+                                        kategori: e.target.value,
+                                    });
                                 }}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                             >
                                 <option value="">Semua Kategori</option>
                                 {options.kategori.map((kat) => (
@@ -226,14 +237,18 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                         </div>
 
                         <div>
-                            <label className="mb-1 block text-xs font-medium text-slate-600">Lokasi Penempatan</label>
+                            <label className="mb-1 block text-xs font-medium text-slate-600">
+                                Lokasi Penempatan
+                            </label>
                             <select
                                 value={selectedLokasi}
                                 onChange={(e) => {
                                     setSelectedLokasi(e.target.value);
-                                    handleFilterChange({ lokasi: e.target.value });
+                                    handleFilterChange({
+                                        lokasi: e.target.value,
+                                    });
                                 }}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                             >
                                 <option value="">Semua Lokasi</option>
                                 {options.lokasi.map((lok) => (
@@ -245,14 +260,18 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                         </div>
 
                         <div>
-                            <label className="mb-1 block text-xs font-medium text-slate-600">Kondisi Fisik</label>
+                            <label className="mb-1 block text-xs font-medium text-slate-600">
+                                Kondisi Fisik
+                            </label>
                             <select
                                 value={selectedKondisi}
                                 onChange={(e) => {
                                     setSelectedKondisi(e.target.value);
-                                    handleFilterChange({ kondisi: e.target.value });
+                                    handleFilterChange({
+                                        kondisi: e.target.value,
+                                    });
                                 }}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                             >
                                 <option value="">Semua Kondisi</option>
                                 {options.kondisi.map((kon) => (
@@ -269,37 +288,82 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                 <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm text-slate-600">
-                            <thead className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                            <thead className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold tracking-wider text-slate-600 uppercase">
                                 <tr>
-                                    <th scope="col" className="px-5 py-3.5">Kode & Nama Aset</th>
-                                    <th scope="col" className="px-5 py-3.5">Kategori</th>
-                                    <th scope="col" className="px-5 py-3.5">Lokasi</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Jumlah</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Kondisi</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Status</th>
-                                    <th scope="col" className="px-5 py-3.5 text-right">Nilai Perolehan</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Aksi</th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Kode & Nama Aset
+                                    </th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Kategori
+                                    </th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Lokasi
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Jumlah
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Kondisi
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-right"
+                                    >
+                                        Nilai Perolehan
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
                                 {asets.length === 0 ? (
                                     <tr>
-                                        <td colSpan={8} className="py-12 text-center text-slate-400">
+                                        <td
+                                            colSpan={8}
+                                            className="py-12 text-center text-slate-400"
+                                        >
                                             <div className="flex flex-col items-center justify-center gap-2">
                                                 <Package className="h-8 w-8 text-slate-300" />
-                                                <p className="font-medium text-slate-500">Tidak ada data aset ditemukan</p>
+                                                <p className="font-medium text-slate-500">
+                                                    Tidak ada data aset
+                                                    ditemukan
+                                                </p>
                                                 <p className="text-xs text-slate-400">
-                                                    Gunakan kata kunci pencarian atau ubah filter di atas
+                                                    Gunakan kata kunci pencarian
+                                                    atau ubah filter di atas
                                                 </p>
                                             </div>
                                         </td>
                                     </tr>
                                 ) : (
                                     asets.map((aset) => (
-                                        <tr key={aset.id} className="hover:bg-slate-50/60 transition">
+                                        <tr
+                                            key={aset.id}
+                                            className="transition hover:bg-slate-50/60"
+                                        >
                                             <td className="px-5 py-4">
-                                                <div className="font-semibold text-slate-900">{aset.nama_aset}</div>
-                                                <div className="font-mono text-xs text-slate-500">{aset.kode_aset}</div>
+                                                <div className="font-semibold text-slate-900">
+                                                    {aset.nama_aset}
+                                                </div>
+                                                <div className="font-mono text-xs text-slate-500">
+                                                    {aset.kode_aset}
+                                                </div>
                                             </td>
                                             <td className="px-5 py-4">
                                                 <span className="inline-flex items-center gap-1.5 text-slate-700">
@@ -324,32 +388,46 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                                                 {aset.jumlah} {aset.satuan}
                                             </td>
                                             <td className="px-5 py-4 text-center">
-                                                <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getKondisiBadge(aset.kondisi)}`}>
+                                                <span
+                                                    className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getKondisiBadge(aset.kondisi)}`}
+                                                >
                                                     {aset.kondisi}
                                                 </span>
                                             </td>
                                             <td className="px-5 py-4 text-center">
-                                                <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getStatusBadge(aset.status)}`}>
+                                                <span
+                                                    className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getStatusBadge(aset.status)}`}
+                                                >
                                                     {aset.status}
                                                 </span>
                                             </td>
                                             <td className="px-5 py-4 text-right font-medium text-slate-900">
-                                                {formatCurrency(aset.nilai_perolehan)}
+                                                {formatCurrency(
+                                                    aset.nilai_perolehan,
+                                                )}
                                             </td>
                                             <td className="px-5 py-4 text-center">
                                                 <div className="flex items-center justify-center gap-1.5">
                                                     <button
                                                         type="button"
-                                                        onClick={() => setSelectedAset(aset)}
-                                                        className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm hover:bg-slate-50 hover:text-teal-700 transition"
+                                                        onClick={() =>
+                                                            setSelectedAset(
+                                                                aset,
+                                                            )
+                                                        }
+                                                        className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-teal-700"
                                                     >
                                                         <Eye className="h-3.5 w-3.5" />
                                                         <span>Detail</span>
                                                     </button>
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleDeleteAset(aset)}
-                                                        className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2 py-1 text-xs font-medium text-rose-700 hover:bg-rose-100 transition"
+                                                        onClick={() =>
+                                                            handleDeleteAset(
+                                                                aset,
+                                                            )
+                                                        }
+                                                        className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2 py-1 text-xs font-medium text-rose-700 transition hover:bg-rose-100"
                                                         title="Hapus Permanen Aset"
                                                     >
                                                         <Trash2 className="h-3.5 w-3.5" />
@@ -369,21 +447,25 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
             {/* Modal Detail Aset */}
             {selectedAset && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+                    <div className="animate-in fade-in zoom-in-95 relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
                         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                             <div className="flex items-center gap-2">
                                 <span className="rounded-lg bg-teal-100 p-2 text-teal-800">
                                     <Package className="h-5 w-5" />
                                 </span>
                                 <div>
-                                    <h3 className="text-lg font-bold text-slate-900">Rincian Informasi Aset</h3>
-                                    <p className="text-xs text-slate-500">Kode: {selectedAset.kode_aset}</p>
+                                    <h3 className="text-lg font-bold text-slate-900">
+                                        Rincian Informasi Aset
+                                    </h3>
+                                    <p className="text-xs text-slate-500">
+                                        Kode: {selectedAset.kode_aset}
+                                    </p>
                                 </div>
                             </div>
                             <button
                                 type="button"
                                 onClick={() => setSelectedAset(null)}
-                                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition"
+                                className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
                             >
                                 <X className="h-5 w-5" />
                             </button>
@@ -392,70 +474,129 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                         <div className="mt-4 space-y-4 text-sm">
                             <div className="grid grid-cols-2 gap-4 rounded-xl bg-slate-50 p-4">
                                 <div>
-                                    <p className="text-xs text-slate-500">Nama Barang / Aset</p>
-                                    <p className="font-semibold text-slate-900">{selectedAset.nama_aset}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Nama Barang / Aset
+                                    </p>
+                                    <p className="font-semibold text-slate-900">
+                                        {selectedAset.nama_aset}
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Kategori</p>
-                                    <p className="font-medium text-slate-800">{selectedAset.kategori}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Kategori
+                                    </p>
+                                    <p className="font-medium text-slate-800">
+                                        {selectedAset.kategori}
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Lokasi Penempatan</p>
-                                    <p className="font-medium text-slate-800">{selectedAset.lokasi}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Lokasi Penempatan
+                                    </p>
+                                    <p className="font-medium text-slate-800">
+                                        {selectedAset.lokasi}
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Kuantitas / Jumlah</p>
-                                    <p className="font-medium text-slate-800">{selectedAset.jumlah} {selectedAset.satuan}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Kuantitas / Jumlah
+                                    </p>
+                                    <p className="font-medium text-slate-800">
+                                        {selectedAset.jumlah}{' '}
+                                        {selectedAset.satuan}
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Kondisi Fisik</p>
-                                    <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold mt-0.5 ${getKondisiBadge(selectedAset.kondisi)}`}>
+                                    <p className="text-xs text-slate-500">
+                                        Kondisi Fisik
+                                    </p>
+                                    <span
+                                        className={`mt-0.5 inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getKondisiBadge(selectedAset.kondisi)}`}
+                                    >
                                         {selectedAset.kondisi}
                                     </span>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Status Operasional</p>
-                                    <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold mt-0.5 ${getStatusBadge(selectedAset.status)}`}>
+                                    <p className="text-xs text-slate-500">
+                                        Status Operasional
+                                    </p>
+                                    <span
+                                        className={`mt-0.5 inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getStatusBadge(selectedAset.status)}`}
+                                    >
                                         {selectedAset.status}
                                     </span>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Nilai Perolehan</p>
-                                    <p className="font-medium text-slate-900">{formatCurrency(selectedAset.nilai_perolehan)}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Nilai Perolehan
+                                    </p>
+                                    <p className="font-medium text-slate-900">
+                                        {formatCurrency(
+                                            selectedAset.nilai_perolehan,
+                                        )}
+                                    </p>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Tanggal Perolehan</p>
-                                    <p className="font-medium text-slate-800">{formatDate(selectedAset.tanggal_perolehan)}</p>
+                                    <p className="text-xs text-slate-500">
+                                        Tanggal Perolehan
+                                    </p>
+                                    <p className="font-medium text-slate-800">
+                                        {formatDate(
+                                            selectedAset.tanggal_perolehan,
+                                        )}
+                                    </p>
                                 </div>
                             </div>
 
-                            <div className="rounded-xl border border-slate-200 p-4 space-y-2">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Pemeriksaan Berkala Terakhir</p>
+                            <div className="space-y-2 rounded-xl border border-slate-200 p-4">
+                                <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                    Pemeriksaan Berkala Terakhir
+                                </p>
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-500">Tanggal Cek:</span>
+                                    <span className="text-slate-500">
+                                        Tanggal Cek:
+                                    </span>
                                     <span className="font-medium text-slate-800">
-                                        {selectedAset.tanggal_pemeriksaan_terakhir ? formatDate(selectedAset.tanggal_pemeriksaan_terakhir) : 'Belum pernah dicek'}
+                                        {selectedAset.tanggal_pemeriksaan_terakhir
+                                            ? formatDate(
+                                                  selectedAset.tanggal_pemeriksaan_terakhir,
+                                              )
+                                            : 'Belum pernah dicek'}
                                     </span>
                                 </div>
                                 <div>
-                                    <span className="text-xs text-slate-500">Catatan Kondisi / Temuan:</span>
-                                    <p className="mt-1 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                        {selectedAset.catatan_pemeriksaan || 'Tidak ada catatan temuan.'}
+                                    <span className="text-xs text-slate-500">
+                                        Catatan Kondisi / Temuan:
+                                    </span>
+                                    <p className="mt-1 rounded-lg border border-slate-100 bg-slate-50 p-2.5 text-xs text-slate-700">
+                                        {selectedAset.catatan_pemeriksaan ||
+                                            'Tidak ada catatan temuan.'}
                                     </p>
                                 </div>
                             </div>
 
                             {selectedAset.status === 'Dihapuskan' && (
-                                <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-4 space-y-2">
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-rose-700">Informasi Penghapusan Aset</p>
+                                <div className="space-y-2 rounded-xl border border-rose-200 bg-rose-50/50 p-4">
+                                    <p className="text-xs font-semibold tracking-wider text-rose-700 uppercase">
+                                        Informasi Penghapusan Aset
+                                    </p>
                                     <div className="flex items-center justify-between text-xs">
-                                        <span className="text-rose-600">Tanggal Penghapusan:</span>
-                                        <span className="font-medium text-rose-900">{formatDate(selectedAset.tanggal_penghapusan)}</span>
+                                        <span className="text-rose-600">
+                                            Tanggal Penghapusan:
+                                        </span>
+                                        <span className="font-medium text-rose-900">
+                                            {formatDate(
+                                                selectedAset.tanggal_penghapusan,
+                                            )}
+                                        </span>
                                     </div>
                                     <div>
-                                        <span className="text-xs text-rose-600">Alasan Penghapusan:</span>
-                                        <p className="mt-1 text-xs text-rose-900 bg-white/80 p-2.5 rounded-lg border border-rose-200">
-                                            {selectedAset.alasan_penghapusan || 'Tidak disertakan alasan.'}
+                                        <span className="text-xs text-rose-600">
+                                            Alasan Penghapusan:
+                                        </span>
+                                        <p className="mt-1 rounded-lg border border-rose-200 bg-white/80 p-2.5 text-xs text-rose-900">
+                                            {selectedAset.alasan_penghapusan ||
+                                                'Tidak disertakan alasan.'}
                                         </p>
                                     </div>
                                 </div>
@@ -466,7 +607,7 @@ export default function Inventaris({ asets, filters, options, stats }: Props) {
                             <button
                                 type="button"
                                 onClick={() => setSelectedAset(null)}
-                                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition"
+                                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
                             >
                                 Tutup
                             </button>

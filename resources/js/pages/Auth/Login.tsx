@@ -88,10 +88,12 @@ export default function Login() {
                                 <input
                                     type="email"
                                     value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
+                                    onChange={(e) =>
+                                        setData('email', e.target.value)
+                                    }
                                     placeholder="nama@doabangsa.sch.id"
                                     required
-                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                    className="w-full rounded-lg border border-gray-300 py-2.5 pr-3 pl-9 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -107,10 +109,12 @@ export default function Login() {
                                 <input
                                     type="password"
                                     value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
+                                    onChange={(e) =>
+                                        setData('password', e.target.value)
+                                    }
                                     placeholder="••••••••"
                                     required
-                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                                    className="w-full rounded-lg border border-gray-300 py-2.5 pr-3 pl-9 text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -120,7 +124,9 @@ export default function Login() {
                                 <input
                                     type="checkbox"
                                     checked={data.remember}
-                                    onChange={(e) => setData('remember', e.target.checked)}
+                                    onChange={(e) =>
+                                        setData('remember', e.target.checked)
+                                    }
                                     className="rounded border-gray-300 text-primary focus:ring-primary"
                                 />
                                 <span>Ingat saya</span>
@@ -133,14 +139,22 @@ export default function Login() {
                             className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow hover:opacity-90 disabled:opacity-50"
                         >
                             <LogIn className="h-4 w-4" />
-                            <span>{processing ? 'Memproses...' : 'Masuk ke Sistem'}</span>
+                            <span>
+                                {processing
+                                    ? 'Memproses...'
+                                    : 'Masuk ke Sistem'}
+                            </span>
                         </button>
                     </form>
 
                     {/* Quick Demo Accounts Selection */}
                     <div className="mt-6 border-t border-gray-100 pt-5">
                         <p className="text-center text-xs font-medium text-gray-500">
-                            Pilih Akun Demo Cepat (Password: <code className="font-mono text-gray-700">password</code>):
+                            Pilih Akun Demo Cepat (Password:{' '}
+                            <code className="font-mono text-gray-700">
+                                password
+                            </code>
+                            ):
                         </p>
                         <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                             {DEMO_ACCOUNTS.map((acc) => (
@@ -148,17 +162,19 @@ export default function Login() {
                                     key={acc.email}
                                     type="button"
                                     onClick={() => fillDemo(acc.email)}
-                                    className="flex flex-col items-start rounded-lg border border-gray-200 p-2 text-left hover:border-primary hover:bg-gray-50 transition"
+                                    className="flex flex-col items-start rounded-lg border border-gray-200 p-2 text-left transition hover:border-primary hover:bg-gray-50"
                                 >
                                     <div className="flex w-full items-center justify-between">
                                         <span className="text-xs font-semibold text-gray-800">
                                             {acc.label}
                                         </span>
-                                        <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${acc.badgeColor}`}>
+                                        <span
+                                            className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${acc.badgeColor}`}
+                                        >
                                             {acc.badge}
                                         </span>
                                     </div>
-                                    <span className="mt-0.5 text-[11px] text-gray-500 truncate w-full">
+                                    <span className="mt-0.5 w-full truncate text-[11px] text-gray-500">
                                         {acc.email}
                                     </span>
                                 </button>

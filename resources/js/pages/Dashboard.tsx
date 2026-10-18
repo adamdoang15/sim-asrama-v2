@@ -10,7 +10,7 @@ import {
     UserPlus,
     Users,
     ArrowUp,
-    ArrowDown
+    ArrowDown,
 } from 'lucide-react';
 
 const STATS = [
@@ -69,25 +69,29 @@ const ANNOUNCEMENTS = [
         date: '09 Okt 2026',
         type: 'Akademik',
         title: 'Rapat di Aula',
-        description: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        description:
+            'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     },
     {
         date: '07 Okt 2026',
         type: 'Kesiswaan',
         title: 'Pengumuman Lomba Siswa Berprestasi',
-        description: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        description:
+            'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     },
     {
         date: '04 Okt 2026',
         type: 'Keuangan',
         title: 'Pembayaran SPP Bulan Oktober',
-        description: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        description:
+            'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     },
     {
         date: '01 Okt 2026',
         type: 'Kurikulum',
         title: 'Jadwal Ujian Tengah Semester',
-        description: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+        description:
+            'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     },
 ];
 
@@ -150,27 +154,45 @@ export default function Dashboard({ stats }: { stats?: any }) {
                     {STATS.map((stat, idx) => {
                         let finalValue = stat.value;
                         if (stats) {
-                            if (stat.title === 'Total Gelara') finalValue = stats.total_gelara;
-                            if (stat.title === 'Total Petugas') finalValue = stats.total_petugas;
+                            if (stat.title === 'Total Gelara')
+                                finalValue = stats.total_gelara;
+                            if (stat.title === 'Total Petugas')
+                                finalValue = stats.total_petugas;
                         }
 
                         return (
-                            <div key={idx} className={`relative group flex flex-col justify-between rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden ${stat.cardBg}`}>
+                            <div
+                                key={idx}
+                                className={`group relative flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-300 hover:shadow-md ${stat.cardBg}`}
+                            >
                                 {/* Left side content */}
                                 <div className="relative z-10 w-2/3">
-                                    <div className="flex items-center space-x-3 mb-3">
-                                        <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full shadow-sm ${stat.iconBg}`}>
-                                            <stat.icon size={22} strokeWidth={2.5} />
+                                    <div className="mb-3 flex items-center space-x-3">
+                                        <div
+                                            className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full shadow-sm ${stat.iconBg}`}
+                                        >
+                                            <stat.icon
+                                                size={22}
+                                                strokeWidth={2.5}
+                                            />
                                         </div>
-                                        <p className="text-sm font-bold text-[#1e293b]">{stat.title}</p>
+                                        <p className="text-sm font-bold text-[#1e293b]">
+                                            {stat.title}
+                                        </p>
                                     </div>
 
-                                    <p className="text-[28px] leading-tight font-extrabold text-[#0f172a] mb-1">{finalValue}</p>
+                                    <p className="mb-1 text-[28px] leading-tight font-extrabold text-[#0f172a]">
+                                        {finalValue}
+                                    </p>
                                 </div>
 
                                 {/* Right side illustration */}
-                                <div className="absolute -right-2 bottom-0 h-full w-[55%] flex items-end justify-end pointer-events-none">
-                                    <img src={stat.image} alt={stat.title} className="h-full object-contain object-bottom mix-blend-multiply opacity-95 group-hover:scale-105 transition-transform duration-300 origin-bottom-right" />
+                                <div className="pointer-events-none absolute -right-2 bottom-0 flex h-full w-[55%] items-end justify-end">
+                                    <img
+                                        src={stat.image}
+                                        alt={stat.title}
+                                        className="h-full origin-bottom-right object-contain object-bottom opacity-95 mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+                                    />
                                 </div>
                             </div>
                         );
@@ -179,35 +201,60 @@ export default function Dashboard({ stats }: { stats?: any }) {
 
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Pengumuman */}
-                    <div className="rounded-xl bg-white shadow-xs border border-gray-200/80">
+                    <div className="rounded-xl border border-gray-200/80 bg-white shadow-xs">
                         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
                             <div className="flex items-center space-x-3">
                                 <div className="text-blue-600">
                                     <Megaphone size={24} />
                                 </div>
                                 <div>
-                                    <h2 className="text-lg font-bold text-gray-900">Pengumuman</h2>
-                                    <p className="text-sm text-gray-500">Informasi terbaru asrama</p>
+                                    <h2 className="text-lg font-bold text-gray-900">
+                                        Pengumuman
+                                    </h2>
+                                    <p className="text-sm text-gray-500">
+                                        Informasi terbaru asrama
+                                    </p>
                                 </div>
                             </div>
-                            <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center">
+                            <button className="flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700">
                                 Lihat Semua &rarr;
                             </button>
                         </div>
                         <div className="p-0">
                             {ANNOUNCEMENTS.map((item, idx) => (
-                                <div key={idx} className="flex items-start border-b border-gray-100 p-6 last:border-0 hover:bg-gray-50 transition-colors cursor-pointer">
-                                    <div className="mr-6 flex flex-col items-center justify-center rounded-lg bg-blue-50 px-4 py-2 text-blue-600 min-w-[70px]">
-                                        <span className="text-2xl font-bold leading-none">{item.date.split(' ')[0]}</span>
-                                        <span className="text-xs font-medium">{item.date.split(' ')[1]} {item.date.split(' ')[2]}</span>
+                                <div
+                                    key={idx}
+                                    className="flex cursor-pointer items-start border-b border-gray-100 p-6 transition-colors last:border-0 hover:bg-gray-50"
+                                >
+                                    <div className="mr-6 flex min-w-[70px] flex-col items-center justify-center rounded-lg bg-blue-50 px-4 py-2 text-blue-600">
+                                        <span className="text-2xl leading-none font-bold">
+                                            {item.date.split(' ')[0]}
+                                        </span>
+                                        <span className="text-xs font-medium">
+                                            {item.date.split(' ')[1]}{' '}
+                                            {item.date.split(' ')[2]}
+                                        </span>
                                     </div>
                                     <div className="flex-1">
-                                        <span className={`text-xs font-semibold ${item.type === 'Akademik' ? 'text-blue-600' :
-                                            item.type === 'Kesiswaan' ? 'text-emerald-600' :
-                                                item.type === 'Keuangan' ? 'text-amber-600' : 'text-indigo-600'
-                                            }`}>{item.type}</span>
-                                        <h3 className="text-sm font-bold text-gray-900 mt-1 mb-1">{item.title}</h3>
-                                        <p className="text-xs text-gray-500 leading-relaxed">{item.description}</p>
+                                        <span
+                                            className={`text-xs font-semibold ${
+                                                item.type === 'Akademik'
+                                                    ? 'text-blue-600'
+                                                    : item.type === 'Kesiswaan'
+                                                      ? 'text-emerald-600'
+                                                      : item.type === 'Keuangan'
+                                                        ? 'text-amber-600'
+                                                        : 'text-indigo-600'
+                                            }`}
+                                        >
+                                            {item.type}
+                                        </span>
+                                        <h3 className="mt-1 mb-1 text-sm font-bold text-gray-900">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-xs leading-relaxed text-gray-500">
+                                            {item.description}
+                                        </p>
                                     </div>
                                     <div className="ml-4 text-gray-300">
                                         &gt;
@@ -218,43 +265,68 @@ export default function Dashboard({ stats }: { stats?: any }) {
                     </div>
 
                     {/* Agenda */}
-                    <div className="rounded-xl bg-white shadow-xs border border-gray-200/80 relative overflow-hidden">
-                        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5 relative z-10">
+                    <div className="relative overflow-hidden rounded-xl border border-gray-200/80 bg-white shadow-xs">
+                        <div className="relative z-10 flex items-center justify-between border-b border-gray-100 px-6 py-5">
                             <div className="flex items-center space-x-3">
                                 <div className="text-blue-600">
                                     <Calendar size={24} />
                                 </div>
                                 <div>
-                                    <h2 className="text-lg font-bold text-gray-900">Agenda Oktober</h2>
-                                    <p className="text-sm text-gray-500">Kegiatan penting dan jadwal asrama</p>
+                                    <h2 className="text-lg font-bold text-gray-900">
+                                        Agenda Oktober
+                                    </h2>
+                                    <p className="text-sm text-gray-500">
+                                        Kegiatan penting dan jadwal asrama
+                                    </p>
                                 </div>
                             </div>
-                            <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center">
+                            <button className="flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700">
                                 Lihat Semua &rarr;
                             </button>
                         </div>
-                        <div className="p-6 relative z-10">
-                            <div className="relative border-l-2 border-gray-100 ml-5 space-y-8">
+                        <div className="relative z-10 p-6">
+                            <div className="relative ml-5 space-y-8 border-l-2 border-gray-100">
                                 {AGENDA.map((item, idx) => (
                                     <div key={idx} className="relative pl-8">
-                                        <div className="absolute -left-[30px] top-1 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 text-blue-600">
-                                            <span className="text-lg font-bold leading-none">{item.date.split(' ')[0]}</span>
-                                            <span className="text-[10px] font-medium">{item.date.split(' ')[1]}</span>
+                                        <div className="absolute top-1 -left-[30px] flex h-14 w-14 flex-col items-center justify-center rounded-full border border-gray-100 bg-white text-blue-600 shadow-sm">
+                                            <span className="text-lg leading-none font-bold">
+                                                {item.date.split(' ')[0]}
+                                            </span>
+                                            <span className="text-[10px] font-medium">
+                                                {item.date.split(' ')[1]}
+                                            </span>
                                         </div>
-                                        <div className="flex items-start justify-between ml-4">
+                                        <div className="ml-4 flex items-start justify-between">
                                             <div>
                                                 <div className="flex items-center space-x-2">
-                                                    <div className={`p-1.5 rounded-full ${item.badgeColor}`}>
+                                                    <div
+                                                        className={`rounded-full p-1.5 ${item.badgeColor}`}
+                                                    >
                                                         <item.icon size={14} />
                                                     </div>
-                                                    <h3 className="text-sm font-bold text-gray-900">{item.title}</h3>
+                                                    <h3 className="text-sm font-bold text-gray-900">
+                                                        {item.title}
+                                                    </h3>
                                                 </div>
-                                                <div className="mt-2 text-xs text-gray-500 space-y-1">
-                                                    <p className="flex items-center"><Calendar size={12} className="mr-2" /> {item.time}</p>
-                                                    <p className="flex items-center"><span className="w-3 inline-block text-center mr-1">📍</span> {item.location}</p>
+                                                <div className="mt-2 space-y-1 text-xs text-gray-500">
+                                                    <p className="flex items-center">
+                                                        <Calendar
+                                                            size={12}
+                                                            className="mr-2"
+                                                        />{' '}
+                                                        {item.time}
+                                                    </p>
+                                                    <p className="flex items-center">
+                                                        <span className="mr-1 inline-block w-3 text-center">
+                                                            📍
+                                                        </span>{' '}
+                                                        {item.location}
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold ${item.badgeColor}`}>
+                                            <span
+                                                className={`rounded-full px-3 py-1 text-[10px] font-bold ${item.badgeColor}`}
+                                            >
                                                 {item.badge}
                                             </span>
                                         </div>
@@ -263,7 +335,7 @@ export default function Dashboard({ stats }: { stats?: any }) {
                             </div>
                         </div>
                         {/* Decorative background building vector could be added here */}
-                        <div className="absolute bottom-0 right-0 w-full h-32 bg-gradient-to-t from-blue-50 to-transparent opacity-50 z-0"></div>
+                        <div className="absolute right-0 bottom-0 z-0 h-32 w-full bg-gradient-to-t from-blue-50 to-transparent opacity-50"></div>
                     </div>
                 </div>
             </div>

@@ -13,24 +13,11 @@ class PelanggaranController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $pelanggaranQuery = Pelanggaran::latest();
-        $prestasiQuery = Prestasi::latest();
-        $gelaraQuery = Gelara::query();
-
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $pelanggaranQuery->where('lembaga', $user->lembaga);
-            $prestasiQuery->where('lembaga', $user->lembaga);
-            $gelaraQuery->where('lembaga', $user->lembaga);
-        }
-
-        $pelanggarans = $pelanggaranQuery->get();
-        $prestasis = $prestasiQuery->get();
-        $gelaras = $gelaraQuery->get(['id', 'name', 'nig']);
 
         return inertia('Kegelaraan/TrackRecord', [
-            'pelanggarans' => $pelanggarans,
-            'prestasis' => $prestasis,
-            'gelaras' => $gelaras,
+            'pelanggarans' => Pelanggaran::forUser($user)->latest()->get(),
+            'prestasis' => Prestasi::forUser($user)->latest()->get(),
+            'gelaras' => Gelara::forUser($user)->get(['id', 'name', 'nig']),
         ]);
     }
 
@@ -56,8 +43,9 @@ class PelanggaranController extends Controller
             $validated['attachment'] = $request->file('attachment')->store('attachments', 'public');
         }
 
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         Pelanggaran::create($validated);
 

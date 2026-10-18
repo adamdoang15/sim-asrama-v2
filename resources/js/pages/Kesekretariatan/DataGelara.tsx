@@ -13,7 +13,7 @@ import {
     Trash2,
     X,
     XCircle,
-    Users
+    Users,
 } from 'lucide-react';
 import { Link, router } from '@inertiajs/react';
 import { Student, StudentsPagination } from '@/components/gelara/types';
@@ -43,7 +43,7 @@ export default function DataGelara({
     filters,
     angkatans = [],
     tahun_ajarans = [],
-    stats = { total: 0, putra: 0, putri: 0 }
+    stats = { total: 0, putra: 0, putri: 0 },
 }: PageProps) {
     // Modals state
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -78,7 +78,13 @@ export default function DataGelara({
     }, [search, gender, angkatan, tahunAjaran, perPage]);
 
     const isFilterActive = useMemo(() => {
-        return Boolean(search || gender !== 'Semua' || angkatan || tahunAjaran || perPage !== '25');
+        return Boolean(
+            search ||
+            gender !== 'Semua' ||
+            angkatan ||
+            tahunAjaran ||
+            perPage !== '25',
+        );
     }, [search, gender, angkatan, tahunAjaran, perPage]);
 
     const handleReset = () => {
@@ -95,7 +101,11 @@ export default function DataGelara({
     };
 
     const handleDelete = (student: Student) => {
-        if (confirm(`Yakin ingin menghapus data Gelara "${student.name}"? Data ini akan dihapus secara permanen.`)) {
+        if (
+            confirm(
+                `Yakin ingin menghapus data Gelara "${student.name}"? Data ini akan dihapus secara permanen.`,
+            )
+        ) {
             router.delete(`/kesekretariatan/data-gelara/${student.id}`, {
                 preserveScroll: true,
             });
@@ -116,8 +126,9 @@ export default function DataGelara({
                                 <h1 className="text-xl font-bold tracking-tight text-white">
                                     Data Induk Gelara
                                 </h1>
-                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
-                                    Pusat inventarisasi arsip identitas, riwayat angkatan, dan biodata santri Gelara
+                                <p className="mt-0.5 text-xs text-slate-200 sm:text-sm">
+                                    Pusat inventarisasi arsip identitas, riwayat
+                                    angkatan, dan biodata santri Gelara
                                 </p>
                             </div>
                         </div>
@@ -152,16 +163,23 @@ export default function DataGelara({
                     <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
                             <div className="relative flex-1">
-                                <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                                <Search
+                                    size={16}
+                                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-gray-400"
+                                />
                                 <input
                                     type="text"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Cari NIG, Nama Gelara, atau Kota Domisili..."
-                                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2.5 pl-10 pr-9 text-sm font-medium text-gray-800 placeholder-gray-400 transition-colors focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2.5 pr-9 pl-10 text-sm font-medium text-gray-800 placeholder-gray-400 transition-colors focus:border-blue-600 focus:bg-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
                                 />
                                 {search && (
-                                    <button type="button" onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                    <button
+                                        type="button"
+                                        onClick={() => setSearch('')}
+                                        className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    >
                                         <X size={15} />
                                     </button>
                                 )}
@@ -170,36 +188,58 @@ export default function DataGelara({
                             <div className="flex items-center gap-2">
                                 <select
                                     value={angkatan}
-                                    onChange={(e) => setAngkatan(e.target.value)}
+                                    onChange={(e) =>
+                                        setAngkatan(e.target.value)
+                                    }
                                     className="h-10 rounded-xl border border-gray-200 bg-gray-50/50 px-3 text-sm font-semibold text-gray-700 transition-colors focus:border-blue-600 focus:bg-white focus:outline-none"
                                 >
                                     <option value="">Semua Angkatan</option>
-                                    {angkatans.map((a) => <option key={a} value={a}>Angkatan {a}</option>)}
+                                    {angkatans.map((a) => (
+                                        <option key={a} value={a}>
+                                            Angkatan {a}
+                                        </option>
+                                    ))}
                                 </select>
 
                                 <select
                                     value={tahunAjaran}
-                                    onChange={(e) => setTahunAjaran(e.target.value)}
+                                    onChange={(e) =>
+                                        setTahunAjaran(e.target.value)
+                                    }
                                     className="h-10 rounded-xl border border-gray-200 bg-gray-50/50 px-3 text-sm font-semibold text-gray-700 transition-colors focus:border-blue-600 focus:bg-white focus:outline-none"
                                 >
                                     <option value="">Semua Thn Masuk</option>
-                                    {tahun_ajarans.map((t) => <option key={t} value={t}>Tahun {t}</option>)}
+                                    {tahun_ajarans.map((t) => (
+                                        <option key={t} value={t}>
+                                            Tahun {t}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100 lg:border-t-0 lg:pt-0">
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-2 lg:border-t-0 lg:pt-0">
                             <div className="flex items-center rounded-xl bg-gray-100 p-1 text-xs font-semibold">
-                                {(['Semua', 'Laki-laki', 'Perempuan'] as const).map((g) => {
+                                {(
+                                    ['Semua', 'Laki-laki', 'Perempuan'] as const
+                                ).map((g) => {
                                     const isActive = gender === g;
-                                    const label = g === 'Semua' ? 'Semua' : g === 'Laki-laki' ? 'Putra' : 'Putri';
+                                    const label =
+                                        g === 'Semua'
+                                            ? 'Semua'
+                                            : g === 'Laki-laki'
+                                              ? 'Putra'
+                                              : 'Putri';
                                     return (
                                         <button
                                             key={g}
                                             type="button"
                                             onClick={() => setGender(g)}
-                                            className={`rounded-lg px-3 py-1.5 transition-all ${isActive ? 'bg-white text-blue-600 font-bold shadow-sm' : 'text-gray-500 hover:text-gray-800'
-                                                }`}
+                                            className={`rounded-lg px-3 py-1.5 transition-all ${
+                                                isActive
+                                                    ? 'bg-white font-bold text-blue-600 shadow-sm'
+                                                    : 'text-gray-500 hover:text-gray-800'
+                                            }`}
                                         >
                                             {label}
                                         </button>
@@ -223,7 +263,7 @@ export default function DataGelara({
                                 <select
                                     value={perPage}
                                     onChange={(e) => setPerPage(e.target.value)}
-                                    className="rounded-lg border border-gray-200 bg-white py-1 px-2 text-xs font-bold text-gray-700 focus:outline-none"
+                                    className="rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs font-bold text-gray-700 focus:outline-none"
                                 >
                                     <option value="10">10</option>
                                     <option value="25">25</option>
@@ -237,51 +277,75 @@ export default function DataGelara({
 
                 {/* 4. Table Card */}
                 <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-                    <div className="overflow-x-auto custom-scrollbar">
+                    <div className="custom-scrollbar overflow-x-auto">
                         <table className="w-full min-w-[960px] text-left text-sm whitespace-nowrap">
                             <thead>
-                                <tr className="border-b border-gray-200 bg-gray-50/80 text-xs font-bold uppercase tracking-wider text-gray-500">
+                                <tr className="border-b border-gray-200 bg-gray-50/80 text-xs font-bold tracking-wider text-gray-500 uppercase">
                                     <th className="px-6 py-4">Gelara / NIG</th>
                                     <th className="px-4 py-4">Gender</th>
-                                    <th className="px-4 py-4">Tempat & Tgl Lahir</th>
-                                    <th className="px-4 py-4">Angkatan & Masuk</th>
-                                    <th className="px-4 py-4 min-w-[240px]">Orang Tua & Domisili</th>
-                                    <th className="px-4 py-4 text-center">Berkas</th>
-                                    <th className="px-6 py-4 text-right">Aksi</th>
+                                    <th className="px-4 py-4">
+                                        Tempat & Tgl Lahir
+                                    </th>
+                                    <th className="px-4 py-4">
+                                        Angkatan & Masuk
+                                    </th>
+                                    <th className="min-w-[240px] px-4 py-4">
+                                        Orang Tua & Domisili
+                                    </th>
+                                    <th className="px-4 py-4 text-center">
+                                        Berkas
+                                    </th>
+                                    <th className="px-6 py-4 text-right">
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {students.data.length > 0 ? (
                                     students.data.map((student) => {
-                                        const isPutra = student.jenis_kelamin === 'Laki-laki';
-                                        const isLengkap = student.status_berkas === 'Berkas Lengkap';
-                                        const hasPhoto = student.foto && student.foto !== 'Belum Ada Foto';
+                                        const isPutra =
+                                            student.jenis_kelamin ===
+                                            'Laki-laki';
+                                        const isLengkap =
+                                            student.status_berkas ===
+                                            'Berkas Lengkap';
+                                        const hasPhoto =
+                                            student.foto &&
+                                            student.foto !== 'Belum Ada Foto';
 
                                         return (
-                                            <tr key={student.id} className="group transition-colors hover:bg-gray-50/70">
+                                            <tr
+                                                key={student.id}
+                                                className="group transition-colors hover:bg-gray-50/70"
+                                            >
                                                 <td className="px-6 py-4 align-top">
                                                     <div className="flex items-center gap-3">
                                                         {hasPhoto ? (
                                                             <img
                                                                 src={`/storage/gelara/${student.foto}`}
-                                                                alt={student.name}
-                                                                className="h-10 w-8 rounded-lg object-cover border border-gray-200 shadow-sm shrink-0"
+                                                                alt={
+                                                                    student.name
+                                                                }
+                                                                className="h-10 w-8 shrink-0 rounded-lg border border-gray-200 object-cover shadow-sm"
                                                             />
                                                         ) : (
                                                             <div
-                                                                className={`flex h-10 w-8 shrink-0 items-center justify-center rounded-lg border text-xs font-bold ${isPutra
-                                                                    ? 'border-sky-200 bg-sky-50 text-sky-800'
-                                                                    : 'border-amber-200 bg-amber-50 text-amber-800'
-                                                                    }`}
+                                                                className={`flex h-10 w-8 shrink-0 items-center justify-center rounded-lg border text-xs font-bold ${
+                                                                    isPutra
+                                                                        ? 'border-sky-200 bg-sky-50 text-sky-800'
+                                                                        : 'border-amber-200 bg-amber-50 text-amber-800'
+                                                                }`}
                                                             >
-                                                                {student.name.charAt(0).toUpperCase()}
+                                                                {student.name
+                                                                    .charAt(0)
+                                                                    .toUpperCase()}
                                                             </div>
                                                         )}
                                                         <div>
-                                                            <div className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                                            <div className="font-bold text-gray-900 transition-colors group-hover:text-blue-600">
                                                                 {student.name}
                                                             </div>
-                                                            <div className="mt-0.5 text-xs text-gray-500 font-medium">
+                                                            <div className="mt-0.5 text-xs font-medium text-gray-500">
                                                                 {student.nig}
                                                             </div>
                                                         </div>
@@ -290,81 +354,129 @@ export default function DataGelara({
 
                                                 <td className="px-4 py-4 align-top">
                                                     <span
-                                                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${isPutra
-                                                            ? 'bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-600/20'
-                                                            : 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20'
-                                                            }`}
+                                                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                                                            isPutra
+                                                                ? 'bg-sky-50 text-sky-700 ring-1 ring-sky-600/20 ring-inset'
+                                                                : 'bg-amber-50 text-amber-700 ring-1 ring-amber-600/20 ring-inset'
+                                                        }`}
                                                     >
-                                                        <span>{isPutra ? '♂' : '♀'}</span>
-                                                        <span>{isPutra ? 'Putra' : 'Putri'}</span>
+                                                        <span>
+                                                            {isPutra
+                                                                ? '♂'
+                                                                : '♀'}
+                                                        </span>
+                                                        <span>
+                                                            {isPutra
+                                                                ? 'Putra'
+                                                                : 'Putri'}
+                                                        </span>
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 align-top">
-                                                    <div className="text-gray-700 font-medium leading-relaxed max-w-[200px] whitespace-normal text-xs">
+                                                    <div className="max-w-[200px] text-xs leading-relaxed font-medium whitespace-normal text-gray-700">
                                                         {student.ttl || '-'}
                                                     </div>
                                                 </td>
 
                                                 <td className="px-4 py-4 align-top">
-                                                    <div className="font-semibold text-gray-900 text-xs">
-                                                        Angkatan {student.angkatan} • {student.kelas || 'Kelas 10'}
+                                                    <div className="text-xs font-semibold text-gray-900">
+                                                        Angkatan{' '}
+                                                        {student.angkatan} •{' '}
+                                                        {student.kelas ||
+                                                            'Kelas 10'}
                                                     </div>
                                                     <div className="mt-0.5 text-xs text-gray-500">
-                                                        Masuk {student.tahun_diterima}
+                                                        Masuk{' '}
+                                                        {student.tahun_diterima}
                                                     </div>
                                                 </td>
 
                                                 <td className="px-4 py-4 align-top whitespace-normal">
                                                     <div className="space-y-1 leading-snug">
-                                                        <div className="flex items-center gap-1.5 flex-wrap text-xs">
+                                                        <div className="flex flex-wrap items-center gap-1.5 text-xs">
                                                             <span className="font-semibold text-gray-900">
-                                                                {student.nama_ayah || '-'}
+                                                                {student.nama_ayah ||
+                                                                    '-'}
                                                             </span>
                                                             {student.pekerjaan_ayah && (
-                                                                <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] text-gray-600 font-medium">
-                                                                    {student.pekerjaan_ayah}
+                                                                <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] font-medium text-gray-600">
+                                                                    {
+                                                                        student.pekerjaan_ayah
+                                                                    }
                                                                 </span>
                                                             )}
-                                                            <span className="text-gray-300">/</span>
+                                                            <span className="text-gray-300">
+                                                                /
+                                                            </span>
                                                             <span className="font-semibold text-gray-900">
-                                                                {student.nama_ibu || '-'}
+                                                                {student.nama_ibu ||
+                                                                    '-'}
                                                             </span>
                                                         </div>
 
                                                         {student.domisili && (
                                                             <div className="flex items-start gap-1 text-xs text-gray-500">
-                                                                <MapPin size={13} className="shrink-0 mt-0.5 text-gray-400" />
-                                                                <span className="line-clamp-1" title={student.domisili}>
-                                                                    {student.domisili}
+                                                                <MapPin
+                                                                    size={13}
+                                                                    className="mt-0.5 shrink-0 text-gray-400"
+                                                                />
+                                                                <span
+                                                                    className="line-clamp-1"
+                                                                    title={
+                                                                        student.domisili
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        student.domisili
+                                                                    }
                                                                 </span>
                                                             </div>
                                                         )}
                                                     </div>
                                                 </td>
 
-                                                <td className="px-4 py-4 align-top text-center">
+                                                <td className="px-4 py-4 text-center align-top">
                                                     <div className="inline-flex flex-col items-center gap-1">
                                                         <span
-                                                            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${isLengkap
-                                                                ? 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20'
-                                                                : 'bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/20'
-                                                                }`}
+                                                            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                                                                isLengkap
+                                                                    ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20 ring-inset'
+                                                                    : 'bg-rose-50 text-rose-700 ring-1 ring-rose-600/20 ring-inset'
+                                                            }`}
                                                         >
-                                                            {isLengkap ? <CheckCircle2 size={12} /> : <XCircle size={12} />}
-                                                            <span>{isLengkap ? 'Lengkap' : 'Belum Valid'}</span>
+                                                            {isLengkap ? (
+                                                                <CheckCircle2
+                                                                    size={12}
+                                                                />
+                                                            ) : (
+                                                                <XCircle
+                                                                    size={12}
+                                                                />
+                                                            )}
+                                                            <span>
+                                                                {isLengkap
+                                                                    ? 'Lengkap'
+                                                                    : 'Belum Valid'}
+                                                            </span>
                                                         </span>
-                                                        <span className="text-xs text-gray-400 font-medium">
-                                                            {hasPhoto ? 'Ada Foto' : 'Tanpa Foto'}
+                                                        <span className="text-xs font-medium text-gray-400">
+                                                            {hasPhoto
+                                                                ? 'Ada Foto'
+                                                                : 'Tanpa Foto'}
                                                         </span>
                                                     </div>
                                                 </td>
 
-                                                <td className="px-6 py-4 align-top text-right">
+                                                <td className="px-6 py-4 text-right align-top">
                                                     <div className="inline-flex items-center gap-1">
                                                         <button
                                                             type="button"
-                                                            onClick={() => setDetailStudent(student)}
+                                                            onClick={() =>
+                                                                setDetailStudent(
+                                                                    student,
+                                                                )
+                                                            }
                                                             className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-blue-600"
                                                             title="Lihat Detail Profil"
                                                         >
@@ -373,8 +485,12 @@ export default function DataGelara({
                                                         <button
                                                             type="button"
                                                             onClick={() => {
-                                                                setFormStudent(student);
-                                                                setIsFormOpen(true);
+                                                                setFormStudent(
+                                                                    student,
+                                                                );
+                                                                setIsFormOpen(
+                                                                    true,
+                                                                );
                                                             }}
                                                             className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-amber-600"
                                                             title="Edit Data"
@@ -383,15 +499,25 @@ export default function DataGelara({
                                                         </button>
                                                         <button
                                                             type="button"
-                                                            onClick={() => handlePrintRow(student)}
+                                                            onClick={() =>
+                                                                handlePrintRow(
+                                                                    student,
+                                                                )
+                                                            }
                                                             className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700"
                                                             title="Cetak Formulir Biodata"
                                                         >
-                                                            <Printer size={16} />
+                                                            <Printer
+                                                                size={16}
+                                                            />
                                                         </button>
                                                         <button
                                                             type="button"
-                                                            onClick={() => handleDelete(student)}
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    student,
+                                                                )
+                                                            }
                                                             className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-rose-50 hover:text-rose-600"
                                                             title="Hapus Data Gelara"
                                                         >
@@ -404,16 +530,22 @@ export default function DataGelara({
                                     })
                                 ) : (
                                     <tr>
-                                        <td colSpan={7} className="py-16 text-center">
+                                        <td
+                                            colSpan={7}
+                                            className="py-16 text-center"
+                                        >
                                             <div className="mx-auto flex max-w-sm flex-col items-center justify-center text-center">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100 text-gray-400">
                                                     <Search size={22} />
                                                 </div>
                                                 <h3 className="mt-4 text-base font-bold text-gray-900">
-                                                    Tidak ada data Gelara ditemukan
+                                                    Tidak ada data Gelara
+                                                    ditemukan
                                                 </h3>
                                                 <p className="mt-1 text-sm text-gray-500">
-                                                    Coba sesuaikan kata kunci pencarian atau opsi filter lainnya.
+                                                    Coba sesuaikan kata kunci
+                                                    pencarian atau opsi filter
+                                                    lainnya.
                                                 </p>
                                                 {isFilterActive && (
                                                     <button
@@ -422,7 +554,9 @@ export default function DataGelara({
                                                         className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-gray-100 px-4 py-2 text-xs font-bold text-gray-700 transition-colors hover:bg-gray-200"
                                                     >
                                                         <RefreshCcw size={13} />
-                                                        <span>Reset Pencarian</span>
+                                                        <span>
+                                                            Reset Pencarian
+                                                        </span>
                                                     </button>
                                                 )}
                                             </div>
@@ -437,9 +571,18 @@ export default function DataGelara({
                     <div className="flex flex-col items-center justify-between gap-3 border-t border-gray-200 bg-gray-50/50 px-6 py-3.5 text-sm text-gray-600 sm:flex-row">
                         <div>
                             Menampilkan{' '}
-                            <span className="font-bold text-gray-900">{students.from || 0}</span> -{' '}
-                            <span className="font-bold text-gray-900">{students.to || 0}</span> dari total{' '}
-                            <span className="font-bold text-gray-900">{students.total}</span> data
+                            <span className="font-bold text-gray-900">
+                                {students.from || 0}
+                            </span>{' '}
+                            -{' '}
+                            <span className="font-bold text-gray-900">
+                                {students.to || 0}
+                            </span>{' '}
+                            dari total{' '}
+                            <span className="font-bold text-gray-900">
+                                {students.total}
+                            </span>{' '}
+                            data
                         </div>
 
                         {students.links && students.links.length > 3 && (
@@ -449,8 +592,10 @@ export default function DataGelara({
                                         return (
                                             <span
                                                 key={idx}
-                                                className="px-3 py-1.5 text-gray-300 font-semibold"
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                                className="px-3 py-1.5 font-semibold text-gray-300"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: link.label,
+                                                }}
                                             />
                                         );
                                     }
@@ -459,11 +604,14 @@ export default function DataGelara({
                                         <Link
                                             key={idx}
                                             href={link.url || '#'}
-                                            className={`rounded-lg px-3 py-1.5 font-bold transition-colors ${link.active
-                                                ? 'bg-blue-600 text-white shadow-xs'
-                                                : 'text-gray-600 hover:bg-gray-200'
-                                                }`}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            className={`rounded-lg px-3 py-1.5 font-bold transition-colors ${
+                                                link.active
+                                                    ? 'bg-blue-600 text-white shadow-xs'
+                                                    : 'text-gray-600 hover:bg-gray-200'
+                                            }`}
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
                                         />
                                     );
                                 })}

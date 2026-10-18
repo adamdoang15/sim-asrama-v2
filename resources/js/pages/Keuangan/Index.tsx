@@ -1,6 +1,12 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
-import { CreditCard, DollarSign, Wallet, ArrowUpRight, TrendingUp } from 'lucide-react';
+import {
+    CreditCard,
+    DollarSign,
+    Wallet,
+    ArrowUpRight,
+    TrendingUp,
+} from 'lucide-react';
 
 export default function KeuanganIndex() {
     return (
@@ -15,9 +21,12 @@ export default function KeuanganIndex() {
                             <CreditCard className="h-7 w-7 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold">Modul Keuangan & Pembayaran</h1>
+                            <h1 className="text-xl font-bold">
+                                Modul Keuangan & Pembayaran
+                            </h1>
                             <p className="text-sm text-slate-200">
-                                Pengelolaan SPP santri, catatan donasi operasional, dan rekapitulasi keuangan asrama.
+                                Pengelolaan SPP santri, catatan donasi
+                                operasional, dan rekapitulasi keuangan asrama.
                             </p>
                         </div>
                     </div>
@@ -26,41 +35,62 @@ export default function KeuanganIndex() {
                 {/* Info Cards */}
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                     <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-gray-500">Pembayaran SPP</span>
+                        <div className="mb-3 flex items-center justify-between">
+                            <span className="text-sm font-semibold text-gray-500">
+                                Pembayaran SPP
+                            </span>
                             <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600">
                                 <DollarSign size={20} />
                             </div>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">Aktif</p>
-                        <p className="mt-1 text-xs text-gray-500">Modul pencatatan pembayaran SPP santri.</p>
+                        <p className="text-2xl font-bold text-gray-900">
+                            Aktif
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                            Modul pencatatan pembayaran SPP santri.
+                        </p>
                     </div>
 
                     <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-gray-500">Donasi & Infaq</span>
+                        <div className="mb-3 flex items-center justify-between">
+                            <span className="text-sm font-semibold text-gray-500">
+                                Donasi & Infaq
+                            </span>
                             <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
                                 <Wallet size={20} />
                             </div>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">Tersedia</p>
-                        <p className="mt-1 text-xs text-gray-500">Pencatatan donatur dan alokasi dana infaq.</p>
+                        <p className="text-2xl font-bold text-gray-900">
+                            Tersedia
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                            Pencatatan donatur dan alokasi dana infaq.
+                        </p>
                     </div>
 
                     <div className="rounded-xl border border-gray-200/80 bg-white p-5 shadow-xs">
-                        <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold text-gray-500">Laporan Keuangan</span>
+                        <div className="mb-3 flex items-center justify-between">
+                            <span className="text-sm font-semibold text-gray-500">
+                                Laporan Keuangan
+                            </span>
                             <div className="rounded-lg bg-indigo-50 p-2 text-indigo-600">
                                 <TrendingUp size={20} />
                             </div>
                         </div>
-                        <p className="text-2xl font-bold text-gray-900">Siap Cetak</p>
-                        <p className="mt-1 text-xs text-gray-500">Rekapitulasi arus kas dan laporan bulanan.</p>
+                        <p className="text-2xl font-bold text-gray-900">
+                            Siap Cetak
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                            Rekapitulasi arus kas dan laporan bulanan.
+                        </p>
                     </div>
                 </div>
 
                 <div className="rounded-xl border border-dashed border-gray-200 bg-white p-8 text-center text-gray-500">
-                    <p className="text-sm">Halaman modul keuangan dalam mode operasional. Silakan pilih menu terkait untuk mengelola transaksi.</p>
+                    <p className="text-sm">
+                        Halaman modul keuangan dalam mode operasional. Silakan
+                        pilih menu terkait untuk mengelola transaksi.
+                    </p>
                 </div>
             </div>
         </DashboardLayout>

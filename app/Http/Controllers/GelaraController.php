@@ -14,11 +14,7 @@ class GelaraController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $query = Gelara::latest();
-
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $query = Gelara::forUser($user)->latest();
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -41,10 +37,7 @@ class GelaraController extends Controller
             $query->where('tahun_diterima', $request->tahun_ajaran);
         }
 
-        $baseQuery = Gelara::query();
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $baseQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
+        $baseQuery = Gelara::forUser($user);
 
         $angkatans = (clone $baseQuery)->select('angkatan')->distinct()->orderBy('angkatan', 'desc')->pluck('angkatan');
         $tahun_ajarans = (clone $baseQuery)->select('tahun_diterima')->distinct()->orderBy('tahun_diterima', 'desc')->pluck('tahun_diterima');
@@ -125,9 +118,9 @@ class GelaraController extends Controller
             $initials .= strtoupper(substr($w, 0, 1));
         }
         $validated['avatar'] = $initials;
-
-        $user = $request->user();
-        $validated['lembaga'] = $request->input('lembaga') ?? ($user && $user->lembaga !== 'Yayasan' ? $user->lembaga : 'LKP Doa Bangsa Cicantayan');
+        if ($request->filled('lembaga')) {
+            $validated['lembaga'] = $request->input('lembaga');
+        }
 
         Gelara::create($validated);
 

@@ -31,18 +31,11 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
     Route::redirect('/', '/dashboard')->name('home');
     Route::get('/dashboard', function (Request $request) {
         $user = $request->user();
-        $gelaraQuery = Gelara::query();
-        $pegawaiQuery = Pegawai::query();
-
-        if ($user && $user->lembaga !== 'Yayasan') {
-            $gelaraQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            $pegawaiQuery->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-        }
 
         return Inertia::render('Dashboard', [
             'stats' => [
-                'total_gelara' => $gelaraQuery->count(),
-                'total_petugas' => $pegawaiQuery->count(),
+                'total_gelara' => Gelara::forUser($user)->count(),
+                'total_petugas' => Pegawai::forUser($user)->count(),
             ],
         ]);
     })->name('dashboard');
@@ -63,14 +56,8 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
         Route::put('/prestasi/{id}', [PrestasiController::class, 'update'])->name('prestasi.update');
         Route::delete('/prestasi/{id}', [PrestasiController::class, 'destroy'])->name('prestasi.destroy');
         Route::get('/rekap', function (Request $request) {
-            $user = $request->user();
-            $query = Kegiatan::orderBy('start_date', 'desc');
-            if ($user && $user->lembaga !== 'Yayasan') {
-                $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            }
-
             return Inertia::render('Kegelaraan/RekapProgram', [
-                'kegiatans' => $query->get(),
+                'kegiatans' => Kegiatan::forUser($request->user())->orderBy('start_date', 'desc')->get(),
             ]);
         })->name('rekap');
     });
@@ -157,11 +144,7 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
         })->name('arsip');
         Route::get('/absensi', function (Request $request) {
             $user = $request->user();
-            $query = Pegawai::query();
-            if ($user && $user->lembaga !== 'Yayasan') {
-                $query->where(fn ($q) => $q->where('lembaga', $user->lembaga)->orWhereNull('lembaga'));
-            }
-            $petugasList = $query->orderBy('name')->get(['id', 'name', 'jabatan', 'lembaga']);
+            $petugasList = Pegawai::forUser($user)->orderBy('name')->get(['id', 'name', 'jabatan', 'lembaga']);
 
             return Inertia::render('Administrasi/AbsensiPetugas', [
                 'petugasList' => $petugasList,
