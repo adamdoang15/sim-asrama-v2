@@ -31,6 +31,8 @@ class AssetRegistry
 
     /**
      * Daftarkan aset baru ke inventaris aktif.
+     *
+     * @param  array<string, mixed>  $attributes
      */
     public static function registerAsset(array $attributes): Aset
     {
@@ -47,6 +49,8 @@ class AssetRegistry
 
     /**
      * Catat hasil pemeriksaan berkala dan mutasikan status aset bila diperlukan.
+     *
+     * @param  array<string, mixed>  $data
      */
     public static function recordInspection(Aset $aset, array $data): Aset
     {
@@ -87,6 +91,8 @@ class AssetRegistry
 
     /**
      * Catat pengadaan baru dan secara opsional konversikan langsung ke inventaris aktif.
+     *
+     * @param  array<string, mixed>  $attributes
      */
     public static function recordProcurement(array $attributes, bool $autoReceive = false): PengadaanAset
     {

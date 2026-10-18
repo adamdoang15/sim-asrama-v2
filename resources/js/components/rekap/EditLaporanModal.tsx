@@ -10,7 +10,11 @@ interface EditLaporanModalProps {
     onClose: () => void;
 }
 
-export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLaporanModalProps) {
+export default function EditLaporanModal({
+    item,
+    rawKegiatan,
+    onClose,
+}: EditLaporanModalProps) {
     const { data, setData, post, processing, errors } = useForm({
         _method: 'put',
         title: rawKegiatan?.title || item.title,
@@ -55,11 +59,16 @@ export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLap
                 canvas.toBlob(
                     (blob) => {
                         if (blob) {
-                            setData('photo', new File([blob], file.name, { type: 'image/jpeg' }));
+                            setData(
+                                'photo',
+                                new File([blob], file.name, {
+                                    type: 'image/jpeg',
+                                }),
+                            );
                         }
                     },
                     'image/jpeg',
-                    0.8
+                    0.8,
                 );
             };
         };
@@ -75,45 +84,61 @@ export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLap
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose}></div>
-            <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50">
+            <div
+                className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                onClick={onClose}
+            ></div>
+            <div className="animate-in fade-in zoom-in-95 relative w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl duration-200">
+                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 p-5">
                     <div>
-                        <h3 className="font-extrabold text-slate-900 text-lg tracking-tight">Edit Laporan</h3>
-                        <p className="text-xs text-slate-500 mt-0.5">{item.title}</p>
+                        <h3 className="text-lg font-extrabold tracking-tight text-slate-900">
+                            Edit Laporan
+                        </h3>
+                        <p className="mt-0.5 text-xs text-slate-500">
+                            {item.title}
+                        </p>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+                        className="rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
                     >
                         <X size={18} />
                     </button>
                 </div>
-                <form onSubmit={handleEditSubmit} className="p-5 flex flex-col gap-5">
+                <form
+                    onSubmit={handleEditSubmit}
+                    className="flex flex-col gap-5 p-5"
+                >
                     {Object.keys(errors).length > 0 && (
-                        <div className="p-3 bg-red-50 text-red-600 rounded-xl text-xs">
+                        <div className="rounded-xl bg-red-50 p-3 text-xs text-red-600">
                             Gagal menyimpan: {Object.values(errors).join(', ')}
                         </div>
                     )}
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-slate-700">Keterangan / Evaluasi</label>
+                        <label className="text-xs font-bold text-slate-700">
+                            Keterangan / Evaluasi
+                        </label>
                         <textarea
                             value={data.description}
-                            onChange={(e) => setData('description', e.target.value)}
+                            onChange={(e) =>
+                                setData('description', e.target.value)
+                            }
                             rows={4}
                             placeholder="Tuliskan hasil evaluasi kegiatan..."
-                            className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-3 text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-blue-400 focus:outline-none transition-all resize-none"
+                            className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm text-slate-800 placeholder-slate-400 transition-all focus:border-blue-400 focus:bg-white focus:outline-none"
                         ></textarea>
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-slate-700">Dokumentasi</label>
+                        <label className="text-xs font-bold text-slate-700">
+                            Dokumentasi
+                        </label>
                         {data.photo ? (
-                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group/preview">
+                            <div className="group/preview relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
                                 <img
                                     src={URL.createObjectURL(data.photo)}
                                     alt="Preview"
-                                    className="w-full h-full object-cover"
+                                    className="h-full w-full object-cover"
                                 />
                                 <button
                                     type="button"
@@ -121,18 +146,18 @@ export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLap
                                         e.preventDefault();
                                         setData('photo', null);
                                     }}
-                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-sm transition-colors z-10"
+                                    className="absolute top-2 right-2 z-10 rounded-full bg-red-500 p-1.5 text-white shadow-sm transition-colors hover:bg-red-600"
                                     title="Batal upload"
                                 >
                                     <X size={14} />
                                 </button>
                             </div>
                         ) : item.existing_photo_path && !data.delete_photo ? (
-                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group/preview">
+                            <div className="group/preview relative aspect-video w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
                                 <img
                                     src={`/storage/${item.existing_photo_path}`}
                                     alt="Preview"
-                                    className="w-full h-full object-cover"
+                                    className="h-full w-full object-cover"
                                 />
                                 <button
                                     type="button"
@@ -140,18 +165,18 @@ export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLap
                                         e.preventDefault();
                                         setData('delete_photo', true);
                                     }}
-                                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 shadow-sm transition-colors z-10"
+                                    className="absolute top-2 right-2 z-10 rounded-full bg-red-500 p-1.5 text-white shadow-sm transition-colors hover:bg-red-600"
                                     title="Hapus foto ini"
                                 >
                                     <X size={14} />
                                 </button>
                             </div>
                         ) : (
-                            <label className="w-full border-2 border-dashed border-slate-200 rounded-xl bg-slate-50 p-6 flex flex-col items-center justify-center gap-2 hover:bg-slate-100 transition-colors cursor-pointer group">
-                                <div className="w-10 h-10 rounded-full bg-white shadow-xs flex items-center justify-center text-slate-400 group-hover:text-blue-500 group-hover:scale-110 transition-all">
+                            <label className="group flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 transition-colors hover:bg-slate-100">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-400 shadow-xs transition-all group-hover:scale-110 group-hover:text-blue-500">
                                     <Camera size={18} />
                                 </div>
-                                <span className="text-xs font-medium text-slate-500 text-center max-w-[200px] truncate">
+                                <span className="max-w-[200px] truncate text-center text-xs font-medium text-slate-500">
                                     Klik untuk upload foto (opsional)
                                 </span>
                                 <input
@@ -164,21 +189,23 @@ export default function EditLaporanModal({ item, rawKegiatan, onClose }: EditLap
                         )}
                     </div>
 
-                    <div className="flex items-center justify-end gap-3 mt-2 pt-5 border-t border-slate-100">
+                    <div className="mt-2 flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors"
+                            className="rounded-xl px-4 py-2.5 text-xs font-bold text-slate-600 transition-colors hover:bg-slate-100"
                         >
                             Batal
                         </button>
                         <button
                             type="submit"
                             disabled={processing}
-                            className="px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700 disabled:opacity-50"
                         >
                             <Save size={14} />
-                            <span>{processing ? 'Menyimpan...' : 'Simpan Laporan'}</span>
+                            <span>
+                                {processing ? 'Menyimpan...' : 'Simpan Laporan'}
+                            </span>
                         </button>
                     </div>
                 </form>

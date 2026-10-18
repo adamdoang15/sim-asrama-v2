@@ -14,15 +14,15 @@ export default function DashboardLayout({
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
+        <div className="flex h-screen overflow-hidden bg-gray-50 font-sans">
             <Head title={title} />
-            
+
             <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
             <div className="flex flex-1 flex-col overflow-hidden">
                 <Header setSidebarOpen={setSidebarOpen} />
-                
-                <main className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 p-4 sm:p-6 lg:p-8">
+
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 sm:p-6 lg:p-8">
                     {children}
                 </main>
             </div>

@@ -125,8 +125,8 @@ class HealthBiometrics
      * Format struktur data rekam medis terpadu dan riwayat klinis santri.
      *
      * @param  Collection<int, Gelara>  $gelaras
-     * @param  Collection<int, Kesehatan>  $kesehatans
-     * @param  Collection<int, Collection<int, Kesehatan>>  $allHistories
+     * @param  Collection<(int|string), mixed>  $kesehatans
+     * @param  Collection<(int|string), mixed>  $allHistories
      * @return array<int, array<string, mixed>>
      */
     public static function mapStudentsForMedicalRecord(
@@ -183,7 +183,7 @@ class HealthBiometrics
     /**
      * Hitung ringkasan statistik kohort kesehatan asrama (sehat, perlu perhatian, belum diperiksa).
      *
-     * @param  array<int, array{sudah_diperiksa: bool, total_sakit: int}>|Collection<int, array<string, mixed>>  $students
+     * @param  array<int, mixed>|Collection<int, mixed>  $students
      * @return array{total_santri: int, santri_sehat: int, perlu_perhatian: int, belum_diperiksa: int}
      */
     public static function aggregateCohortStats(array|Collection $students): array
@@ -205,6 +205,8 @@ class HealthBiometrics
 
     /**
      * Simpan hasil pemeriksaan kesehatan santri dengan auto-enrichment IMT dan kategori.
+     *
+     * @param  array<string, mixed>  $validated
      */
     public static function recordExamination(array $validated): Kesehatan
     {

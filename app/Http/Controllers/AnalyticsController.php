@@ -256,7 +256,7 @@ class AnalyticsController extends Controller
     {
         $user = $request->user();
         $asetQuery = Aset::forUser($user);
-        $perbaikanQuery = PerbaikanAset::whereHas('aset', fn ($qa) => $qa->forUser($user));
+        $perbaikanQuery = PerbaikanAset::whereIn('aset_id', (clone $asetQuery)->select('id'));
         $pengadaanQuery = PengadaanAset::forUser($user);
 
         $totalAset = (clone $asetQuery)->count();

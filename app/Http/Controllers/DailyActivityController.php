@@ -18,10 +18,12 @@ class DailyActivityController extends Controller
     public function index(Request $request): Response
     {
         $date = $request->get('date', now()->toDateString());
-        $currentDate = Carbon::parse($date)->locale('id');
+        $currentDate = Carbon::parse($date);
+        $currentDate->locale('id');
 
         $month = $request->get('month', $currentDate->format('Y-m'));
-        $carbonMonth = Carbon::parse($month.'-01')->locale('id');
+        $carbonMonth = Carbon::parse($month.'-01');
+        $carbonMonth->locale('id');
 
         $startOfMonth = $carbonMonth->copy()->startOfMonth();
         $endOfMonth = $carbonMonth->copy()->endOfMonth();

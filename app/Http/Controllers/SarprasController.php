@@ -13,6 +13,9 @@ use Inertia\Response;
 
 class SarprasController extends Controller
 {
+    /**
+     * @return array<string, array<int, string>>
+     */
     public function getLembagaOptions(): array
     {
         return [
@@ -22,6 +25,9 @@ class SarprasController extends Controller
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getAllLokasiOptions(): array
     {
         $all = [];
@@ -232,7 +238,7 @@ class SarprasController extends Controller
         }
 
         $user = $request->user();
-        $query->whereHas('aset', fn ($qa) => $qa->forUser($user, $lembaga));
+        $query->whereIn('aset_id', Aset::forUser($user, $lembaga)->select('id'));
         $activeAsetQuery = Aset::forUser($user, $lembaga)
             ->where('status', '!=', 'Dihapuskan')
             ->orderBy('nama_aset', 'asc');
@@ -244,7 +250,7 @@ class SarprasController extends Controller
         $perbaikans = $query->orderBy('created_at', 'desc')->get();
         $activeAsets = $activeAsetQuery->get();
 
-        $statsBase = PerbaikanAset::whereHas('aset', fn ($qa) => $qa->forUser($user));
+        $statsBase = PerbaikanAset::whereIn('aset_id', Aset::forUser($user)->select('id'));
 
         $stats = [
             'total_laporan' => (clone $statsBase)->count(),

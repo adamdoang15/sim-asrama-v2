@@ -49,6 +49,10 @@ class AcademicEvaluation
 
     /**
      * Petakan santri dengan rekaman nilai pada mata pelajaran aktif.
+     *
+     * @param  Collection<int, Gelara>  $gelaras
+     * @param  Collection<int|string, NilaiAkademik>  $savedGrades
+     * @return Collection<int, mixed>
      */
     public static function mapStudentsWithGrades(Collection $gelaras, Collection $savedGrades): Collection
     {
@@ -88,6 +92,9 @@ class AcademicEvaluation
 
     /**
      * Hitung ringkasan distribusi nilai santri (Grade A, B, C, D).
+     *
+     * @param  Collection<int, array<string, mixed>>  $students
+     * @return array<int, array{grade: string, range: string, count: int, percentage: float, color: string, barColor: string}>
      */
     public static function calculateDistribution(Collection $students): array
     {
@@ -135,6 +142,10 @@ class AcademicEvaluation
 
     /**
      * Kompilasi seluruh ledger nilai, capaian ekskul, kesehatan, dan rapor pelengkap santri.
+     *
+     * @param  Collection<int, Gelara>  $gelaras
+     * @param  array<int, string>  $mapelOptions
+     * @return Collection<int, mixed>
      */
     public static function compileLedger(
         Collection $gelaras,
@@ -187,10 +198,10 @@ class AcademicEvaluation
                     'nilai_akhir' => $na,
                     'predikat' => ($g && $na > 0) ? self::calculatePredikat($na) : '-',
                     'kkm' => $kkm,
-                    'deskripsi' => $g?->deskripsi ?? 'Memiliki kemampuan dan pemahaman yang baik pada kompetensi materi yang dipelajari.',
+                    'deskripsi' => $g->deskripsi ?? 'Memiliki kemampuan dan pemahaman yang baik pada kompetensi materi yang dipelajari.',
                     'keterampilan_nilai' => $na > 0 ? min(100, round($na + 2, 1)) : 0,
                     'keterampilan_predikat' => ($g && $na > 0) ? self::calculatePredikat(min(100, $na + 2)) : '-',
-                    'keterampilan_deskripsi' => $g?->deskripsi ? 'Memiliki keterampilan yang baik dalam mempraktikkan materi pembelajaran.' : 'Cukup terampil dalam mempraktikkan materi pembelajaran.',
+                    'keterampilan_deskripsi' => ($g && $g->deskripsi) ? 'Memiliki keterampilan yang baik dalam mempraktikkan materi pembelajaran.' : 'Cukup terampil dalam mempraktikkan materi pembelajaran.',
                 ];
             }
 

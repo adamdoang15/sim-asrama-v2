@@ -77,9 +77,12 @@ export default function NilaiAkademik({
     const [currentPage, setCurrentPage] = useState(1);
 
     // State untuk Cetak Rapor, Ledger & Pelengkap
-    const [selectedRapor, setSelectedRapor] = useState<LedgerStudent | null>(null);
+    const [selectedRapor, setSelectedRapor] = useState<LedgerStudent | null>(
+        null,
+    );
     const [showLedger, setShowLedger] = useState(false);
-    const [pelengkapStudent, setPelengkapStudent] = useState<LedgerStudent | null>(null);
+    const [pelengkapStudent, setPelengkapStudent] =
+        useState<LedgerStudent | null>(null);
 
     // Helpers untuk Rapor & Ledger
     const filteredLedgerStudents = useMemo(() => {
@@ -88,7 +91,7 @@ export default function NilaiAkademik({
         return classLedger.students.filter(
             (s) =>
                 s.name.toLowerCase().includes(q) ||
-                s.nig.toLowerCase().includes(q)
+                s.nig.toLowerCase().includes(q),
         );
     }, [classLedger.students, searchQuery]);
 
@@ -99,16 +102,27 @@ export default function NilaiAkademik({
     const incompleteCount = classLedger.students.length - completeCount;
 
     const classOverallAvg = useMemo(() => {
-        const validAvgs = classLedger.students.map((s) => s.avg).filter((v) => v > 0);
+        const validAvgs = classLedger.students
+            .map((s) => s.avg)
+            .filter((v) => v > 0);
         return validAvgs.length > 0
-            ? Math.round((validAvgs.reduce((a, b) => a + b, 0) / validAvgs.length) * 10) / 10
+            ? Math.round(
+                  (validAvgs.reduce((a, b) => a + b, 0) / validAvgs.length) *
+                      10,
+              ) / 10
             : 0;
     }, [classLedger.students]);
 
     const classAvgTotal = useMemo(() => {
-        const validTotals = classLedger.students.map((s) => s.total).filter((v) => v > 0);
+        const validTotals = classLedger.students
+            .map((s) => s.total)
+            .filter((v) => v > 0);
         return validTotals.length > 0
-            ? Math.round((validTotals.reduce((a, b) => a + b, 0) / validTotals.length) * 10) / 10
+            ? Math.round(
+                  (validTotals.reduce((a, b) => a + b, 0) /
+                      validTotals.length) *
+                      10,
+              ) / 10
             : 0;
     }, [classLedger.students]);
 
@@ -146,7 +160,7 @@ export default function NilaiAkademik({
                     setIsSavingKkm(false);
                 },
                 onError: () => setIsSavingKkm(false),
-            }
+            },
         );
     };
 
@@ -196,7 +210,7 @@ export default function NilaiAkademik({
                 onError: () => {
                     setIsSavingKd(false);
                 },
-            }
+            },
         );
     };
 
@@ -214,13 +228,13 @@ export default function NilaiAkademik({
             tahun_akademik: updates.tahun_akademik ?? selectedTahun,
             kelas: updates.kelas ?? selectedKelas,
             mata_pelajaran: updates.mata_pelajaran ?? selectedMapel,
-            search: updates.search ?? searchQuery
+            search: updates.search ?? searchQuery,
         };
 
         router.get('/kurikulum/nilai-akademik', query, {
             preserveState: false,
             preserveScroll: true,
-            replace: true
+            replace: true,
         });
     };
 
@@ -231,7 +245,7 @@ export default function NilaiAkademik({
         return students.filter(
             (s) =>
                 s.name.toLowerCase().includes(q) ||
-                s.nig.toLowerCase().includes(q)
+                s.nig.toLowerCase().includes(q),
         );
     }, [students, searchQuery]);
 
@@ -266,19 +280,23 @@ export default function NilaiAkademik({
             uas: parseFloat(val.uas) || 0,
         }));
 
-        router.post('/kurikulum/nilai-akademik/batch', {
-            tahun_akademik: selectedTahun,
-            kelas: selectedKelas,
-            mata_pelajaran: selectedMapel,
-            scores,
-        }, {
-            preserveScroll: true,
-            onSuccess: () => {
-                setIsSaving(false);
-                setIsEditMode(false);
+        router.post(
+            '/kurikulum/nilai-akademik/batch',
+            {
+                tahun_akademik: selectedTahun,
+                kelas: selectedKelas,
+                mata_pelajaran: selectedMapel,
+                scores,
             },
-            onError: () => setIsSaving(false),
-        });
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setIsSaving(false);
+                    setIsEditMode(false);
+                },
+                onError: () => setIsSaving(false),
+            },
+        );
     };
 
     // Helper for predicate badges
@@ -303,7 +321,7 @@ export default function NilaiAkademik({
 
     return (
         <DashboardLayout title="Manajemen Nilai Akademik Gelara">
-            <div className="space-y-6 pb-12 font-sans text-slate-800 max-w-7xl mx-auto">
+            <div className="mx-auto max-w-7xl space-y-6 pb-12 font-sans text-slate-800">
                 {/* Header Banner Berwarna */}
                 <div className="rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 text-white shadow-xs">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -315,8 +333,9 @@ export default function NilaiAkademik({
                                 <h1 className="text-xl font-bold tracking-tight text-white">
                                     Manajemen Nilai Akademik Gelara
                                 </h1>
-                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
-                                    Pencatatan asesmen berkala, rekap capaian, konversi mutu, dan sinkronisasi data santri
+                                <p className="mt-0.5 text-xs text-slate-200 sm:text-sm">
+                                    Pencatatan asesmen berkala, rekap capaian,
+                                    konversi mutu, dan sinkronisasi data santri
                                 </p>
                             </div>
                         </div>
@@ -325,24 +344,26 @@ export default function NilaiAkademik({
                             <button
                                 type="button"
                                 onClick={() => setActiveTab('nilai')}
-                                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition active:scale-[0.98] cursor-pointer ${activeTab === 'nilai'
-                                    ? 'bg-blue-600 text-white shadow-xs'
-                                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md'
-                                    }`}
+                                className={`inline-flex cursor-pointer items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition active:scale-[0.98] ${
+                                    activeTab === 'nilai'
+                                        ? 'bg-blue-600 text-white shadow-xs'
+                                        : 'bg-white/10 text-white backdrop-blur-md hover:bg-white/20'
+                                }`}
                             >
-                                <FileSpreadsheet className="w-4 h-4" />
+                                <FileSpreadsheet className="h-4 w-4" />
                                 <span>Nilai Mata Pelajaran</span>
                             </button>
 
                             <button
                                 type="button"
                                 onClick={() => setActiveTab('rapor')}
-                                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition active:scale-[0.98] cursor-pointer ${activeTab === 'rapor'
-                                    ? 'bg-blue-600 text-white shadow-xs'
-                                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md'
-                                    }`}
+                                className={`inline-flex cursor-pointer items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition active:scale-[0.98] ${
+                                    activeTab === 'rapor'
+                                        ? 'bg-blue-600 text-white shadow-xs'
+                                        : 'bg-white/10 text-white backdrop-blur-md hover:bg-white/20'
+                                }`}
                             >
-                                <Printer className="w-4 h-4" />
+                                <Printer className="h-4 w-4" />
                                 <span>Cetak Rapor & Ledger</span>
                             </button>
                         </div>
@@ -351,22 +372,26 @@ export default function NilaiAkademik({
 
                 {/* 3. Filter Bar (Hanya tampil pada tab Nilai Mata Pelajaran) */}
                 {activeTab === 'nilai' && (
-                    <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-5">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                             {/* Tahun Akademik */}
                             <div className="space-y-1.5">
                                 <label className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
                                     Tahun Akademik
                                 </label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-blue-600">
-                                        <Calendar className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-blue-600">
+                                        <Calendar className="h-4 w-4" />
                                     </div>
                                     <select
                                         value={selectedTahun}
-                                        onChange={(e) => handleFilterChange({ tahun_akademik: e.target.value })}
+                                        onChange={(e) =>
+                                            handleFilterChange({
+                                                tahun_akademik: e.target.value,
+                                            })
+                                        }
                                         aria-label="Pilih Tahun Akademik"
-                                        className="w-full pl-10 pr-9 py-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none truncate"
+                                        className="w-full cursor-pointer appearance-none truncate rounded-xl border border-slate-200 bg-slate-50/80 py-2.5 pr-9 pl-10 text-sm font-semibold text-slate-800 transition hover:bg-slate-100/70 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                     >
                                         {options.tahun_akademik.map((t) => (
                                             <option key={t} value={t}>
@@ -374,8 +399,8 @@ export default function NilaiAkademik({
                                             </option>
                                         ))}
                                     </select>
-                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
-                                        <ChevronDown className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400">
+                                        <ChevronDown className="h-4 w-4" />
                                     </div>
                                 </div>
                             </div>
@@ -386,14 +411,18 @@ export default function NilaiAkademik({
                                     Kelas
                                 </label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-blue-600">
-                                        <Users className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-blue-600">
+                                        <Users className="h-4 w-4" />
                                     </div>
                                     <select
                                         value={selectedKelas}
-                                        onChange={(e) => handleFilterChange({ kelas: e.target.value })}
+                                        onChange={(e) =>
+                                            handleFilterChange({
+                                                kelas: e.target.value,
+                                            })
+                                        }
                                         aria-label="Pilih Kelas"
-                                        className="w-full pl-10 pr-9 py-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none truncate"
+                                        className="w-full cursor-pointer appearance-none truncate rounded-xl border border-slate-200 bg-slate-50/80 py-2.5 pr-9 pl-10 text-sm font-semibold text-slate-800 transition hover:bg-slate-100/70 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                     >
                                         {options.kelas.map((k) => (
                                             <option key={k} value={k}>
@@ -401,8 +430,8 @@ export default function NilaiAkademik({
                                             </option>
                                         ))}
                                     </select>
-                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
-                                        <ChevronDown className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400">
+                                        <ChevronDown className="h-4 w-4" />
                                     </div>
                                 </div>
                             </div>
@@ -413,14 +442,18 @@ export default function NilaiAkademik({
                                     Mata Pelajaran
                                 </label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-blue-600">
-                                        <BookOpen className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-blue-600">
+                                        <BookOpen className="h-4 w-4" />
                                     </div>
                                     <select
                                         value={selectedMapel}
-                                        onChange={(e) => handleFilterChange({ mata_pelajaran: e.target.value })}
+                                        onChange={(e) =>
+                                            handleFilterChange({
+                                                mata_pelajaran: e.target.value,
+                                            })
+                                        }
                                         aria-label="Pilih Mata Pelajaran"
-                                        className="w-full pl-10 pr-9 py-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none truncate"
+                                        className="w-full cursor-pointer appearance-none truncate rounded-xl border border-slate-200 bg-slate-50/80 py-2.5 pr-9 pl-10 text-sm font-semibold text-slate-800 transition hover:bg-slate-100/70 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                     >
                                         {options.mata_pelajaran.map((m) => (
                                             <option key={m} value={m}>
@@ -428,8 +461,8 @@ export default function NilaiAkademik({
                                             </option>
                                         ))}
                                     </select>
-                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
-                                        <ChevronDown className="w-4 h-4" />
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400">
+                                        <ChevronDown className="h-4 w-4" />
                                     </div>
                                 </div>
                             </div>
@@ -438,55 +471,71 @@ export default function NilaiAkademik({
                 )}
 
                 {/* 4. Main Two-Column Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
                     {/* Left Column: Table & Controls */}
-                    <div className="lg:col-span-8 xl:col-span-8 2xl:col-span-9 bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+                    <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs lg:col-span-8 xl:col-span-8 2xl:col-span-9">
                         {activeTab === 'rapor' ? (
                             <>
                                 {/* Tab Rapor Header Toolbar */}
-                                <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100">
-                                    <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs">
-                                        <span className="px-3 py-1.5 rounded-xl bg-slate-100 font-semibold text-slate-700">
-                                            Total: <strong className="text-slate-900">{classLedger.students.length} Santri</strong>
+                                <div className="flex flex-col justify-between gap-4 border-b border-slate-100 p-4 sm:p-5 md:flex-row md:items-center">
+                                    <div className="flex flex-wrap items-center gap-2 text-xs sm:gap-2.5">
+                                        <span className="rounded-xl bg-slate-100 px-3 py-1.5 font-semibold text-slate-700">
+                                            Total:{' '}
+                                            <strong className="text-slate-900">
+                                                {classLedger.students.length}{' '}
+                                                Santri
+                                            </strong>
                                         </span>
-                                        <span className="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 font-semibold text-emerald-700">
-                                            Lengkap: <strong className="text-emerald-800">{completeCount} Santri</strong>
+                                        <span className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 font-semibold text-emerald-700">
+                                            Lengkap:{' '}
+                                            <strong className="text-emerald-800">
+                                                {completeCount} Santri
+                                            </strong>
                                         </span>
                                         {incompleteCount > 0 && (
-                                            <span className="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 font-semibold text-amber-700">
-                                                Belum Lengkap: <strong className="text-amber-800">{incompleteCount} Santri</strong>
+                                            <span className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 font-semibold text-amber-700">
+                                                Belum Lengkap:{' '}
+                                                <strong className="text-amber-800">
+                                                    {incompleteCount} Santri
+                                                </strong>
                                             </span>
                                         )}
                                     </div>
 
                                     <div className="flex flex-wrap items-center gap-2.5">
                                         <div className="relative min-w-[200px] sm:min-w-[240px]">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                <Search className="w-3.5 h-3.5" />
+                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                                <Search className="h-3.5 w-3.5" />
                                             </div>
                                             <input
                                                 type="text"
                                                 value={searchQuery}
-                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                onChange={(e) =>
+                                                    setSearchQuery(
+                                                        e.target.value,
+                                                    )
+                                                }
                                                 placeholder="Cari santri atau NIG..."
-                                                className="w-full pl-8 pr-7 py-1.5 bg-slate-50 hover:bg-slate-100/70 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-1.5 pr-7 pl-8 text-xs text-slate-800 transition placeholder:text-slate-400 hover:bg-slate-100/70 focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                             />
                                             {searchQuery && (
                                                 <button
                                                     type="button"
-                                                    onClick={() => setSearchQuery('')}
-                                                    className="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-400 hover:text-slate-600"
+                                                    onClick={() =>
+                                                        setSearchQuery('')
+                                                    }
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400 hover:text-slate-600"
                                                 >
-                                                    <X className="w-3.5 h-3.5" />
+                                                    <X className="h-3.5 w-3.5" />
                                                 </button>
                                             )}
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => setShowLedger(true)}
-                                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-xs transition active:scale-[0.98] cursor-pointer"
+                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.98]"
                                         >
-                                            <FileSpreadsheet className="w-3.5 h-3.5" />
+                                            <FileSpreadsheet className="h-3.5 w-3.5" />
                                             <span>Cetak Ledger Kelas</span>
                                         </button>
                                     </div>
@@ -494,138 +543,225 @@ export default function NilaiAkademik({
 
                                 {/* Tabel Gelara per Kelas (Rapor & Ledger Tab) */}
                                 <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse">
+                                    <table className="w-full border-collapse text-left">
                                         <thead>
-                                            <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                                <th scope="col" className="py-3.5 pl-4 pr-1 w-10 text-center">
+                                            <tr className="border-b border-slate-200/80 bg-slate-50/80 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                                <th
+                                                    scope="col"
+                                                    className="w-10 py-3.5 pr-1 pl-4 text-center"
+                                                >
                                                     No
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-3 font-semibold text-slate-600 min-w-[160px]">
+                                                <th
+                                                    scope="col"
+                                                    className="min-w-[160px] px-3 py-3.5 font-semibold text-slate-600"
+                                                >
                                                     Gelara (Nama & NIG)
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2.5 text-center w-28">
+                                                <th
+                                                    scope="col"
+                                                    className="w-28 px-2.5 py-3.5 text-center"
+                                                >
                                                     Rerata Nilai
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-3 text-center min-w-[150px]">
+                                                <th
+                                                    scope="col"
+                                                    className="min-w-[150px] px-3 py-3.5 text-center"
+                                                >
                                                     Kelengkapan
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2.5 text-center w-28">
+                                                <th
+                                                    scope="col"
+                                                    className="w-28 px-2.5 py-3.5 text-center"
+                                                >
                                                     Status
                                                 </th>
-                                                <th scope="col" className="py-3.5 pr-4 pl-2 text-center min-w-[210px]">
+                                                <th
+                                                    scope="col"
+                                                    className="min-w-[210px] py-3.5 pr-4 pl-2 text-center"
+                                                >
                                                     Aksi
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100 text-sm">
-                                            {filteredLedgerStudents.length === 0 ? (
+                                            {filteredLedgerStudents.length ===
+                                            0 ? (
                                                 <tr>
-                                                    <td colSpan={6} className="py-12 text-center text-slate-400">
-                                                        Tidak ada data santri pada kelas ini.
+                                                    <td
+                                                        colSpan={6}
+                                                        className="py-12 text-center text-slate-400"
+                                                    >
+                                                        Tidak ada data santri
+                                                        pada kelas ini.
                                                     </td>
                                                 </tr>
                                             ) : (
-                                                filteredLedgerStudents.map((student, idx) => (
-                                                    <tr key={student.id} className="hover:bg-blue-50/30 transition-colors">
-                                                        <td className="py-3 pl-4 pr-1 text-center text-xs font-semibold text-slate-400">
-                                                            {idx + 1}
-                                                        </td>
-                                                        <td className="py-3 px-3">
-                                                            <div className="font-semibold text-slate-900 leading-snug text-xs sm:text-sm">
-                                                                {student.name}
-                                                            </div>
-                                                            <div className="text-[11px] text-slate-500 mt-0.5">
-                                                                <span>{student.nig}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td className="py-3 px-2.5 text-center">
-                                                            {student.avg > 0 ? (
-                                                                <div className="inline-flex items-center gap-1.5">
-                                                                    <span className="font-bold text-blue-600 text-xs sm:text-sm">
-                                                                        {student.avg.toFixed(1)}
-                                                                    </span>
-                                                                    <span
-                                                                        className={`inline-block px-1.5 py-0.2 rounded text-[10px] font-bold ${getPredikatBadge(
-                                                                            student.predikat
-                                                                        )}`}
-                                                                    >
-                                                                        {student.predikat}
+                                                filteredLedgerStudents.map(
+                                                    (student, idx) => (
+                                                        <tr
+                                                            key={student.id}
+                                                            className="transition-colors hover:bg-blue-50/30"
+                                                        >
+                                                            <td className="py-3 pr-1 pl-4 text-center text-xs font-semibold text-slate-400">
+                                                                {idx + 1}
+                                                            </td>
+                                                            <td className="px-3 py-3">
+                                                                <div className="text-xs leading-snug font-semibold text-slate-900 sm:text-sm">
+                                                                    {
+                                                                        student.name
+                                                                    }
+                                                                </div>
+                                                                <div className="mt-0.5 text-[11px] text-slate-500">
+                                                                    <span>
+                                                                        {
+                                                                            student.nig
+                                                                        }
                                                                     </span>
                                                                 </div>
-                                                            ) : (
-                                                                <span className="text-xs text-slate-300">-</span>
-                                                            )}
-                                                        </td>
-                                                        <td className="py-3 px-3">
-                                                            <div className="w-full max-w-[140px] mx-auto space-y-1">
-                                                                <div className="flex justify-between text-[11px] font-semibold text-slate-600">
-                                                                    <span>{student.filled_count}/{student.total_count} Mapel</span>
-                                                                    <span>{Math.round((student.filled_count / Math.max(student.total_count, 1)) * 100)}%</span>
-                                                                </div>
-                                                                <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                                                    <div
-                                                                        className={`h-full rounded-full transition-all duration-300 ${student.is_complete ? 'bg-emerald-500' : 'bg-blue-500'
+                                                            </td>
+                                                            <td className="px-2.5 py-3 text-center">
+                                                                {student.avg >
+                                                                0 ? (
+                                                                    <div className="inline-flex items-center gap-1.5">
+                                                                        <span className="text-xs font-bold text-blue-600 sm:text-sm">
+                                                                            {student.avg.toFixed(
+                                                                                1,
+                                                                            )}
+                                                                        </span>
+                                                                        <span
+                                                                            className={`py-0.2 inline-block rounded px-1.5 text-[10px] font-bold ${getPredikatBadge(
+                                                                                student.predikat,
+                                                                            )}`}
+                                                                        >
+                                                                            {
+                                                                                student.predikat
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                ) : (
+                                                                    <span className="text-xs text-slate-300">
+                                                                        -
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className="px-3 py-3">
+                                                                <div className="mx-auto w-full max-w-[140px] space-y-1">
+                                                                    <div className="flex justify-between text-[11px] font-semibold text-slate-600">
+                                                                        <span>
+                                                                            {
+                                                                                student.filled_count
+                                                                            }
+                                                                            /
+                                                                            {
+                                                                                student.total_count
+                                                                            }{' '}
+                                                                            Mapel
+                                                                        </span>
+                                                                        <span>
+                                                                            {Math.round(
+                                                                                (student.filled_count /
+                                                                                    Math.max(
+                                                                                        student.total_count,
+                                                                                        1,
+                                                                                    )) *
+                                                                                    100,
+                                                                            )}
+                                                                            %
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                                                        <div
+                                                                            className={`h-full rounded-full transition-all duration-300 ${
+                                                                                student.is_complete
+                                                                                    ? 'bg-emerald-500'
+                                                                                    : 'bg-blue-500'
                                                                             }`}
-                                                                        style={{ width: `${(student.filled_count / Math.max(student.total_count, 1)) * 100}%` }}
-                                                                    />
+                                                                            style={{
+                                                                                width: `${(student.filled_count / Math.max(student.total_count, 1)) * 100}%`,
+                                                                            }}
+                                                                        />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="py-3 px-2.5 text-center">
-                                                            {student.is_complete ? (
-                                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                                                                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                                                                    <span>Lengkap</span>
-                                                                </span>
-                                                            ) : (
-                                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                                                                    Belum Lengkap
-                                                                </span>
-                                                            )}
-                                                        </td>
-                                                        <td className="py-3 pr-4 pl-2 text-center">
-                                                            <div className="flex items-center justify-center gap-1.5">
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => setPelengkapStudent(student)}
-                                                                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold text-xs transition cursor-pointer shadow-2xs active:scale-[0.98]"
-                                                                    title="Input Nilai Sikap, Ekskul, Absensi & Catatan Wali"
-                                                                >
-                                                                    <ClipboardList className="w-3.5 h-3.5 text-blue-600" />
-                                                                    <span>Pelengkap</span>
-                                                                </button>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => setSelectedRapor(student)}
-                                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition cursor-pointer shadow-xs active:scale-[0.98]"
-                                                                >
-                                                                    <Printer className="w-3.5 h-3.5" />
-                                                                    <span>Cetak Rapor</span>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                ))
+                                                            </td>
+                                                            <td className="px-2.5 py-3 text-center">
+                                                                {student.is_complete ? (
+                                                                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+                                                                        <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                                                                        <span>
+                                                                            Lengkap
+                                                                        </span>
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                                                                        Belum
+                                                                        Lengkap
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className="py-3 pr-4 pl-2 text-center">
+                                                                <div className="flex items-center justify-center gap-1.5">
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            setPelengkapStudent(
+                                                                                student,
+                                                                            )
+                                                                        }
+                                                                        className="inline-flex cursor-pointer items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 active:scale-[0.98]"
+                                                                        title="Input Nilai Sikap, Ekskul, Absensi & Catatan Wali"
+                                                                    >
+                                                                        <ClipboardList className="h-3.5 w-3.5 text-blue-600" />
+                                                                        <span>
+                                                                            Pelengkap
+                                                                        </span>
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            setSelectedRapor(
+                                                                                student,
+                                                                            )
+                                                                        }
+                                                                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 active:scale-[0.98]"
+                                                                    >
+                                                                        <Printer className="h-3.5 w-3.5" />
+                                                                        <span>
+                                                                            Cetak
+                                                                            Rapor
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    ),
+                                                )
                                             )}
                                         </tbody>
                                     </table>
                                 </div>
 
                                 {/* Footer Rapor Tab */}
-                                <div className="px-5 py-4 border-t border-slate-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                                <div className="flex flex-col items-center justify-between gap-3 border-t border-slate-100 bg-white px-5 py-4 text-xs text-slate-500 sm:flex-row">
                                     <div className="flex items-center gap-2">
                                         <span>
-                                            Menampilkan <strong className="text-slate-700">{filteredLedgerStudents.length}</strong> santri di {selectedKelas}
+                                            Menampilkan{' '}
+                                            <strong className="text-slate-700">
+                                                {filteredLedgerStudents.length}
+                                            </strong>{' '}
+                                            santri di {selectedKelas}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button
                                             type="button"
                                             onClick={() => setShowLedger(true)}
-                                            className="inline-flex items-center gap-1.5 font-bold text-blue-600 hover:text-blue-800 transition cursor-pointer"
+                                            className="inline-flex cursor-pointer items-center gap-1.5 font-bold text-blue-600 transition hover:text-blue-800"
                                         >
-                                            <FileSpreadsheet className="w-3.5 h-3.5" />
-                                            <span>Buka Lembar Rekap Ledger Kelas</span>
+                                            <FileSpreadsheet className="h-3.5 w-3.5" />
+                                            <span>
+                                                Buka Lembar Rekap Ledger Kelas
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
@@ -633,65 +769,78 @@ export default function NilaiAkademik({
                         ) : (
                             <>
                                 {/* Tab Nilai Header Toolbar */}
-                                <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100">
+                                <div className="flex flex-col justify-between gap-4 border-b border-slate-100 p-4 sm:p-5 md:flex-row md:items-center">
                                     <div className="flex flex-wrap items-center gap-2.5">
-                                        <div className="flex items-center gap-2 mr-1">
-                                            <BookOpen className="w-5 h-5 text-blue-600" />
-                                            <h2 className="text-base font-extrabold text-slate-900">{selectedMapel}</h2>
-                                            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                                        <div className="mr-1 flex items-center gap-2">
+                                            <BookOpen className="h-5 w-5 text-blue-600" />
+                                            <h2 className="text-base font-extrabold text-slate-900">
+                                                {selectedMapel}
+                                            </h2>
+                                            <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-xs font-bold text-blue-700">
                                                 {selectedKelas}
                                             </span>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={handleOpenKdModal}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-blue-500 hover:text-blue-600 font-semibold text-xs shadow-2xs transition active:scale-[0.98] cursor-pointer"
+                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:border-blue-500 hover:text-blue-600 active:scale-[0.98]"
                                         >
-                                            <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                                            <BookOpen className="h-3.5 w-3.5 text-blue-600" />
                                             <span>Kompetensi Dasar (KD)</span>
-                                            {subjectKds && subjectKds.length > 0 && (
-                                                <span className="px-1.5 py-0.2 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold">
-                                                    {subjectKds.length} KD
-                                                </span>
-                                            )}
+                                            {subjectKds &&
+                                                subjectKds.length > 0 && (
+                                                    <span className="py-0.2 rounded-full bg-blue-100 px-1.5 text-[10px] font-bold text-blue-700">
+                                                        {subjectKds.length} KD
+                                                    </span>
+                                                )}
                                         </button>
                                         <button
                                             type="button"
-                                            onClick={() => setIsMapelModalOpen(true)}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:border-blue-500 hover:text-blue-600 font-semibold text-xs shadow-2xs transition active:scale-[0.98] cursor-pointer"
+                                            onClick={() =>
+                                                setIsMapelModalOpen(true)
+                                            }
+                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs transition hover:border-blue-500 hover:text-blue-600 active:scale-[0.98]"
                                         >
-                                            <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                                            <BookOpen className="h-3.5 w-3.5 text-blue-600" />
                                             <span>Kelola Mapel</span>
                                         </button>
                                     </div>
 
                                     <div className="flex flex-wrap items-center gap-3">
                                         <div className="relative min-w-[200px] sm:min-w-[240px]">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                <Search className="w-3.5 h-3.5" />
+                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                                <Search className="h-3.5 w-3.5" />
                                             </div>
                                             <input
                                                 type="text"
                                                 value={searchQuery}
-                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                onChange={(e) =>
+                                                    setSearchQuery(
+                                                        e.target.value,
+                                                    )
+                                                }
                                                 onKeyDown={(e) => {
                                                     if (e.key === 'Enter') {
-                                                        handleFilterChange({ search: searchQuery });
+                                                        handleFilterChange({
+                                                            search: searchQuery,
+                                                        });
                                                     }
                                                 }}
                                                 placeholder="Cari santri..."
-                                                className="w-full pl-8 pr-7 py-1.5 bg-slate-50 hover:bg-slate-100/70 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-1.5 pr-7 pl-8 text-xs text-slate-800 transition placeholder:text-slate-400 hover:bg-slate-100/70 focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                             />
                                             {searchQuery && (
                                                 <button
                                                     type="button"
                                                     onClick={() => {
                                                         setSearchQuery('');
-                                                        handleFilterChange({ search: '' });
+                                                        handleFilterChange({
+                                                            search: '',
+                                                        });
                                                     }}
-                                                    className="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-400 hover:text-slate-600"
+                                                    className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400 hover:text-slate-600"
                                                 >
-                                                    <X className="w-3.5 h-3.5" />
+                                                    <X className="h-3.5 w-3.5" />
                                                 </button>
                                             )}
                                         </div>
@@ -700,8 +849,10 @@ export default function NilaiAkademik({
                                             <div className="flex items-center gap-2">
                                                 <button
                                                     type="button"
-                                                    onClick={() => setIsEditMode(false)}
-                                                    className="px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold transition cursor-pointer"
+                                                    onClick={() =>
+                                                        setIsEditMode(false)
+                                                    }
+                                                    className="cursor-pointer rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
                                                 >
                                                     Batal
                                                 </button>
@@ -709,19 +860,25 @@ export default function NilaiAkademik({
                                                     type="button"
                                                     disabled={isSaving}
                                                     onClick={handleSaveBatch}
-                                                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-xs transition active:scale-[0.98] cursor-pointer disabled:opacity-50"
+                                                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-emerald-700 active:scale-[0.98] disabled:opacity-50"
                                                 >
-                                                    {isSaving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                                                    <span>{isSaving ? 'Menyimpan...' : 'Simpan Semua'}</span>
+                                                    {isSaving && (
+                                                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                                    )}
+                                                    <span>
+                                                        {isSaving
+                                                            ? 'Menyimpan...'
+                                                            : 'Simpan Semua'}
+                                                    </span>
                                                 </button>
                                             </div>
                                         ) : (
                                             <button
                                                 type="button"
                                                 onClick={startEditMode}
-                                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-xs transition active:scale-[0.98] cursor-pointer"
+                                                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-emerald-700 active:scale-[0.98]"
                                             >
-                                                <FileSpreadsheet className="w-3.5 h-3.5" />
+                                                <FileSpreadsheet className="h-3.5 w-3.5" />
                                                 <span>Input / Edit Nilai</span>
                                             </button>
                                         )}
@@ -729,16 +886,27 @@ export default function NilaiAkademik({
                                 </div>
 
                                 {/* Status Pengisian & KKM Sub-bar */}
-                                <div className="px-5 py-2.5 bg-slate-50/70 border-b border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-5 py-2.5 text-xs text-slate-500">
                                     <div>
                                         Status Pengisian:{' '}
-                                        <strong className={gradedCount > 0 ? 'text-emerald-700 font-bold' : 'text-slate-700 font-semibold'}>
-                                            {gradedCount} dari {filteredStudents.length} Santri Dinilai
+                                        <strong
+                                            className={
+                                                gradedCount > 0
+                                                    ? 'font-bold text-emerald-700'
+                                                    : 'font-semibold text-slate-700'
+                                            }
+                                        >
+                                            {gradedCount} dari{' '}
+                                            {filteredStudents.length} Santri
+                                            Dinilai
                                         </strong>
                                     </div>
                                     <div className="flex items-center gap-2 text-[11px] text-slate-500">
                                         <span>
-                                            Standar KKM: <strong className="font-bold text-slate-800">{kkm.toFixed(1)}</strong>
+                                            Standar KKM:{' '}
+                                            <strong className="font-bold text-slate-800">
+                                                {kkm.toFixed(1)}
+                                            </strong>
                                         </span>
                                         <button
                                             type="button"
@@ -746,67 +914,107 @@ export default function NilaiAkademik({
                                                 setInputKkm(kkm);
                                                 setIsKkmModalOpen(true);
                                             }}
-                                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 font-semibold transition cursor-pointer active:scale-95"
+                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-0.5 font-semibold text-blue-700 transition hover:bg-blue-100 active:scale-95"
                                             title="Ubah Standar KKM untuk semua mata pelajaran"
                                         >
-                                            <Edit2 className="w-3 h-3" />
-                                            <span>Atur KKM (Semua Pelajaran)</span>
+                                            <Edit2 className="h-3 w-3" />
+                                            <span>
+                                                Atur KKM (Semua Pelajaran)
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
 
                                 {/* Banner jika Belum Ada Nilai pada Mata Pelajaran Terpilih */}
-                                {gradedCount === 0 && filteredStudents.length > 0 && (
-                                    <div className="mx-5 my-3 p-3 bg-amber-50/80 border border-amber-200/80 rounded-xl text-xs text-amber-800 flex flex-wrap items-center justify-between gap-2">
-                                        <span>
-                                            Belum ada nilai yang diinput untuk mata pelajaran <strong>{selectedMapel}</strong> di {selectedKelas} ({selectedTahun}).
-                                        </span>
-                                        <button
-                                            type="button"
-                                            onClick={startEditMode}
-                                            className="font-bold underline text-amber-900 hover:text-amber-950 cursor-pointer"
-                                        >
-                                            Input Nilai Sekarang
-                                        </button>
-                                    </div>
-                                )}
+                                {gradedCount === 0 &&
+                                    filteredStudents.length > 0 && (
+                                        <div className="mx-5 my-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-amber-200/80 bg-amber-50/80 p-3 text-xs text-amber-800">
+                                            <span>
+                                                Belum ada nilai yang diinput
+                                                untuk mata pelajaran{' '}
+                                                <strong>{selectedMapel}</strong>{' '}
+                                                di {selectedKelas} (
+                                                {selectedTahun}).
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={startEditMode}
+                                                className="cursor-pointer font-bold text-amber-900 underline hover:text-amber-950"
+                                            >
+                                                Input Nilai Sekarang
+                                            </button>
+                                        </div>
+                                    )}
 
                                 {/* Table */}
                                 <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse">
+                                    <table className="w-full border-collapse text-left">
                                         <thead>
-                                            <tr className="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                                <th scope="col" className="py-3.5 pl-4 pr-1 w-10 text-center">
+                                            <tr className="border-b border-slate-200/80 bg-slate-50/80 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                                <th
+                                                    scope="col"
+                                                    className="w-10 py-3.5 pr-1 pl-4 text-center"
+                                                >
                                                     No
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-3 font-semibold text-slate-600 min-w-[150px]">
+                                                <th
+                                                    scope="col"
+                                                    className="min-w-[150px] px-3 py-3.5 font-semibold text-slate-600"
+                                                >
                                                     Gelara / Santri
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     H1
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     H2
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     H3
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     H4
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     H5
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     UTS
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2 text-center w-12">
+                                                <th
+                                                    scope="col"
+                                                    className="w-12 px-2 py-3.5 text-center"
+                                                >
                                                     UAS
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2.5 text-center w-16">
+                                                <th
+                                                    scope="col"
+                                                    className="w-16 px-2.5 py-3.5 text-center"
+                                                >
                                                     Akhir
                                                 </th>
-                                                <th scope="col" className="py-3.5 px-2.5 text-center w-14">
+                                                <th
+                                                    scope="col"
+                                                    className="w-14 px-2.5 py-3.5 text-center"
+                                                >
                                                     Predikat
                                                 </th>
                                             </tr>
@@ -814,115 +1022,274 @@ export default function NilaiAkademik({
                                         <tbody className="divide-y divide-slate-100 text-sm">
                                             {filteredStudents.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan={11} className="py-12 text-center text-slate-400">
-                                                        Tidak ada santri yang cocok dari database Data Gelara.
+                                                    <td
+                                                        colSpan={11}
+                                                        className="py-12 text-center text-slate-400"
+                                                    >
+                                                        Tidak ada santri yang
+                                                        cocok dari database Data
+                                                        Gelara.
                                                     </td>
                                                 </tr>
                                             ) : (
-                                                filteredStudents.map((student, idx) => (
-                                                    <tr
-                                                        key={student.id}
-                                                        className="hover:bg-blue-50/30 transition-colors group"
-                                                    >
-                                                        {/* No */}
-                                                        <td className="py-3 pl-4 pr-1 text-center text-xs font-semibold text-slate-400">
-                                                            {idx + 1}
-                                                        </td>
+                                                filteredStudents.map(
+                                                    (student, idx) => (
+                                                        <tr
+                                                            key={student.id}
+                                                            className="group transition-colors hover:bg-blue-50/30"
+                                                        >
+                                                            {/* No */}
+                                                            <td className="py-3 pr-1 pl-4 text-center text-xs font-semibold text-slate-400">
+                                                                {idx + 1}
+                                                            </td>
 
-                                                        {/* Santri Info */}
-                                                        <td className="py-3 px-3">
-                                                            <div className="font-semibold text-slate-900 leading-snug text-xs sm:text-sm">
-                                                                {student.name}
-                                                            </div>
-                                                            <div className="text-[11px] text-slate-500 mt-0.5">
-                                                                <span>{student.nig}</span>
-                                                            </div>
-                                                        </td>
+                                                            {/* Santri Info */}
+                                                            <td className="px-3 py-3">
+                                                                <div className="text-xs leading-snug font-semibold text-slate-900 sm:text-sm">
+                                                                    {
+                                                                        student.name
+                                                                    }
+                                                                </div>
+                                                                <div className="mt-0.5 text-[11px] text-slate-500">
+                                                                    <span>
+                                                                        {
+                                                                            student.nig
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            </td>
 
-                                                        {(() => {
-                                                            const cur = isEditMode && rowScores[student.id] ? rowScores[student.id] : student;
-                                                            const toNum = (v: any) => (parseFloat(v) || 0);
-                                                            const harianFilled = [cur.h1, cur.h2, cur.h3, cur.h4, cur.h5]
-                                                                .map(toNum)
-                                                                .filter((v) => v > 0);
-                                                            const rH = harianFilled.length > 0
-                                                                ? harianFilled.reduce((a, b) => a + b, 0) / harianFilled.length
-                                                                : 0;
-                                                            const nA = Math.round(((rH * 0.6) + (toNum(cur.uts) * 0.2) + (toNum(cur.uas) * 0.2)) * 10) / 10;
-                                                            const pred = nA >= 85 ? 'A' : nA >= 75 ? 'B' : nA >= 65 ? 'C' : 'D';
+                                                            {(() => {
+                                                                const cur =
+                                                                    isEditMode &&
+                                                                    rowScores[
+                                                                        student
+                                                                            .id
+                                                                    ]
+                                                                        ? rowScores[
+                                                                              student
+                                                                                  .id
+                                                                          ]
+                                                                        : student;
+                                                                const toNum = (
+                                                                    v: any,
+                                                                ) =>
+                                                                    parseFloat(
+                                                                        v,
+                                                                    ) || 0;
+                                                                const harianFilled =
+                                                                    [
+                                                                        cur.h1,
+                                                                        cur.h2,
+                                                                        cur.h3,
+                                                                        cur.h4,
+                                                                        cur.h5,
+                                                                    ]
+                                                                        .map(
+                                                                            toNum,
+                                                                        )
+                                                                        .filter(
+                                                                            (
+                                                                                v,
+                                                                            ) =>
+                                                                                v >
+                                                                                0,
+                                                                        );
+                                                                const rH =
+                                                                    harianFilled.length >
+                                                                    0
+                                                                        ? harianFilled.reduce(
+                                                                              (
+                                                                                  a,
+                                                                                  b,
+                                                                              ) =>
+                                                                                  a +
+                                                                                  b,
+                                                                              0,
+                                                                          ) /
+                                                                          harianFilled.length
+                                                                        : 0;
+                                                                const nA =
+                                                                    Math.round(
+                                                                        (rH *
+                                                                            0.6 +
+                                                                            toNum(
+                                                                                cur.uts,
+                                                                            ) *
+                                                                                0.2 +
+                                                                            toNum(
+                                                                                cur.uas,
+                                                                            ) *
+                                                                                0.2) *
+                                                                            10,
+                                                                    ) / 10;
+                                                                const pred =
+                                                                    nA >= 85
+                                                                        ? 'A'
+                                                                        : nA >=
+                                                                            75
+                                                                          ? 'B'
+                                                                          : nA >=
+                                                                              65
+                                                                            ? 'C'
+                                                                            : 'D';
 
-                                                            return (
-                                                                <>
-                                                                    {(['h1', 'h2', 'h3', 'h4', 'h5', 'uts', 'uas'] as const).map((field) => (
-                                                                        <td key={field} className="py-2.5 px-1 text-center">
-                                                                            {isEditMode ? (
-                                                                                <input
-                                                                                    type="number"
-                                                                                    min="0"
-                                                                                    max="100"
-                                                                                    step="0.1"
-                                                                                    placeholder="0"
-                                                                                    value={rowScores[student.id]?.[field] ?? ''}
-                                                                                    onFocus={(e) => e.target.select()}
-                                                                                    onChange={(e) => {
-                                                                                        const raw = e.target.value;
-                                                                                        setRowScores((prev) => ({
-                                                                                            ...prev,
-                                                                                            [student.id]: {
-                                                                                                ...prev[student.id],
-                                                                                                [field]: raw === '' ? '' : Math.min(100, Math.max(0, parseFloat(raw) || 0)),
-                                                                                            },
-                                                                                        }));
-                                                                                    }}
-                                                                                    className="w-12 text-center py-1 bg-white border border-slate-300 rounded text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder:text-slate-300"
-                                                                                />
-                                                                            ) : (
-                                                                                <span className="text-xs font-medium text-slate-700">
-                                                                                    {student[field] > 0 ? student[field] : <span className="text-slate-300">-</span>}
-                                                                                </span>
-                                                                            )}
+                                                                return (
+                                                                    <>
+                                                                        {(
+                                                                            [
+                                                                                'h1',
+                                                                                'h2',
+                                                                                'h3',
+                                                                                'h4',
+                                                                                'h5',
+                                                                                'uts',
+                                                                                'uas',
+                                                                            ] as const
+                                                                        ).map(
+                                                                            (
+                                                                                field,
+                                                                            ) => (
+                                                                                <td
+                                                                                    key={
+                                                                                        field
+                                                                                    }
+                                                                                    className="px-1 py-2.5 text-center"
+                                                                                >
+                                                                                    {isEditMode ? (
+                                                                                        <input
+                                                                                            type="number"
+                                                                                            min="0"
+                                                                                            max="100"
+                                                                                            step="0.1"
+                                                                                            placeholder="0"
+                                                                                            value={
+                                                                                                rowScores[
+                                                                                                    student
+                                                                                                        .id
+                                                                                                ]?.[
+                                                                                                    field
+                                                                                                ] ??
+                                                                                                ''
+                                                                                            }
+                                                                                            onFocus={(
+                                                                                                e,
+                                                                                            ) =>
+                                                                                                e.target.select()
+                                                                                            }
+                                                                                            onChange={(
+                                                                                                e,
+                                                                                            ) => {
+                                                                                                const raw =
+                                                                                                    e
+                                                                                                        .target
+                                                                                                        .value;
+                                                                                                setRowScores(
+                                                                                                    (
+                                                                                                        prev,
+                                                                                                    ) => ({
+                                                                                                        ...prev,
+                                                                                                        [student.id]:
+                                                                                                            {
+                                                                                                                ...prev[
+                                                                                                                    student
+                                                                                                                        .id
+                                                                                                                ],
+                                                                                                                [field]:
+                                                                                                                    raw ===
+                                                                                                                    ''
+                                                                                                                        ? ''
+                                                                                                                        : Math.min(
+                                                                                                                              100,
+                                                                                                                              Math.max(
+                                                                                                                                  0,
+                                                                                                                                  parseFloat(
+                                                                                                                                      raw,
+                                                                                                                                  ) ||
+                                                                                                                                      0,
+                                                                                                                              ),
+                                                                                                                          ),
+                                                                                                            },
+                                                                                                    }),
+                                                                                                );
+                                                                                            }}
+                                                                                            className="w-12 rounded border border-slate-300 bg-white py-1 text-center text-xs font-semibold placeholder:text-slate-300 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <span className="text-xs font-medium text-slate-700">
+                                                                                            {student[
+                                                                                                field
+                                                                                            ] >
+                                                                                            0 ? (
+                                                                                                student[
+                                                                                                    field
+                                                                                                ]
+                                                                                            ) : (
+                                                                                                <span className="text-slate-300">
+                                                                                                    -
+                                                                                                </span>
+                                                                                            )}
+                                                                                        </span>
+                                                                                    )}
+                                                                                </td>
+                                                                            ),
+                                                                        )}
+
+                                                                        {/* Nilai Akhir */}
+                                                                        <td className="px-2.5 py-3 text-center">
+                                                                            <span className="text-xs font-bold text-blue-600">
+                                                                                {nA >
+                                                                                0
+                                                                                    ? nA.toFixed(
+                                                                                          1,
+                                                                                      )
+                                                                                    : '-'}
+                                                                            </span>
                                                                         </td>
-                                                                    ))}
 
-                                                                    {/* Nilai Akhir */}
-                                                                    <td className="py-3 px-2.5 text-center">
-                                                                        <span className="text-xs font-bold text-blue-600">
-                                                                            {nA > 0 ? nA.toFixed(1) : '-'}
-                                                                        </span>
-                                                                    </td>
-
-                                                                    {/* Predikat */}
-                                                                    <td className="py-3 px-2.5 text-center">
-                                                                        <span
-                                                                            className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${getPredikatBadge(
-                                                                                pred
-                                                                            )}`}
-                                                                        >
-                                                                            {nA > 0 ? pred : '-'}
-                                                                        </span>
-                                                                    </td>
-                                                                </>
-                                                            );
-                                                        })()}
-
-                                                    </tr>
-                                                ))
+                                                                        {/* Predikat */}
+                                                                        <td className="px-2.5 py-3 text-center">
+                                                                            <span
+                                                                                className={`inline-block rounded px-2 py-0.5 text-[11px] font-bold ${getPredikatBadge(
+                                                                                    pred,
+                                                                                )}`}
+                                                                            >
+                                                                                {nA >
+                                                                                0
+                                                                                    ? pred
+                                                                                    : '-'}
+                                                                            </span>
+                                                                        </td>
+                                                                    </>
+                                                                );
+                                                            })()}
+                                                        </tr>
+                                                    ),
+                                                )
                                             )}
                                         </tbody>
                                     </table>
                                 </div>
 
                                 {/* Footer & Pagination */}
-                                <div className="px-5 py-4 border-t border-slate-100 bg-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                                <div className="flex flex-col items-center justify-between gap-3 border-t border-slate-100 bg-white px-5 py-4 text-xs text-slate-500 sm:flex-row">
                                     <div className="flex items-center gap-2">
                                         <span>
-                                            Menampilkan <strong className="text-slate-700">1 - {filteredStudents.length}</strong> dari{' '}
-                                            <strong className="text-slate-700">{totalStudents}</strong> Gelara terdaftar
+                                            Menampilkan{' '}
+                                            <strong className="text-slate-700">
+                                                1 - {filteredStudents.length}
+                                            </strong>{' '}
+                                            dari{' '}
+                                            <strong className="text-slate-700">
+                                                {totalStudents}
+                                            </strong>{' '}
+                                            Gelara terdaftar
                                         </span>
                                         <span>•</span>
-                                        <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold">
-                                            <CheckCircle2 className="w-3.5 h-3.5" />
-                                            Tersinkronisasi dengan Database Gelara
+                                        <span className="inline-flex items-center gap-1 font-semibold text-emerald-600">
+                                            <CheckCircle2 className="h-3.5 w-3.5" />
+                                            Tersinkronisasi dengan Database
+                                            Gelara
                                         </span>
                                     </div>
 
@@ -930,21 +1297,28 @@ export default function NilaiAkademik({
                                         <button
                                             type="button"
                                             disabled={currentPage === 1}
-                                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                            onClick={() =>
+                                                setCurrentPage((p) =>
+                                                    Math.max(1, p - 1),
+                                                )
+                                            }
                                             aria-label="Halaman Sebelumnya"
-                                            className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition"
+                                            className="cursor-pointer rounded-lg border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
                                         >
-                                            <ChevronLeft className="w-4 h-4" />
+                                            <ChevronLeft className="h-4 w-4" />
                                         </button>
                                         {[1, 2, 3].map((page) => (
                                             <button
                                                 key={page}
                                                 type="button"
-                                                onClick={() => setCurrentPage(page)}
-                                                className={`w-8 h-8 rounded-lg text-xs font-bold transition cursor-pointer ${currentPage === page
-                                                    ? 'bg-blue-600 text-white shadow-xs'
-                                                    : 'text-slate-600 hover:bg-slate-100'
-                                                    }`}
+                                                onClick={() =>
+                                                    setCurrentPage(page)
+                                                }
+                                                className={`h-8 w-8 cursor-pointer rounded-lg text-xs font-bold transition ${
+                                                    currentPage === page
+                                                        ? 'bg-blue-600 text-white shadow-xs'
+                                                        : 'text-slate-600 hover:bg-slate-100'
+                                                }`}
                                             >
                                                 {page}
                                             </button>
@@ -952,11 +1326,15 @@ export default function NilaiAkademik({
                                         <button
                                             type="button"
                                             disabled={currentPage === 3}
-                                            onClick={() => setCurrentPage((p) => Math.min(3, p + 1))}
+                                            onClick={() =>
+                                                setCurrentPage((p) =>
+                                                    Math.min(3, p + 1),
+                                                )
+                                            }
                                             aria-label="Halaman Selanjutnya"
-                                            className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition"
+                                            className="cursor-pointer rounded-lg border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
                                         >
-                                            <ChevronRight className="w-4 h-4" />
+                                            <ChevronRight className="h-4 w-4" />
                                         </button>
                                     </div>
                                 </div>
@@ -965,81 +1343,122 @@ export default function NilaiAkademik({
                     </div>
 
                     {/* Right Column: Distribusi Mutu Card / Rekap Rapor Card */}
-                    <div className="lg:col-span-4 xl:col-span-4 2xl:col-span-3 space-y-4">
+                    <div className="space-y-4 lg:col-span-4 xl:col-span-4 2xl:col-span-3">
                         {activeTab === 'rapor' ? (
-                            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs space-y-5">
-                                <h2 className="text-base font-extrabold text-slate-900 tracking-tight">
+                            <div className="space-y-5 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                                <h2 className="text-base font-extrabold tracking-tight text-slate-900">
                                     Rekap Rapor & Ledger
                                 </h2>
-                                <p className="text-xs text-slate-500 leading-relaxed">
-                                    Ringkasan kelengkapan nilai akademik dan kesiapan dokumen evaluasi santri untuk <strong>{selectedKelas}</strong> ({selectedTahun}).
+                                <p className="text-xs leading-relaxed text-slate-500">
+                                    Ringkasan kelengkapan nilai akademik dan
+                                    kesiapan dokumen evaluasi santri untuk{' '}
+                                    <strong>{selectedKelas}</strong> (
+                                    {selectedTahun}).
                                 </p>
 
                                 <div className="space-y-2.5 pt-1">
-                                    <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between">
-                                        <span className="text-xs font-semibold text-slate-600">Total Santri di Kelas</span>
-                                        <span className="text-sm font-bold text-slate-900">{classLedger.students.length} Santri</span>
+                                    <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 p-3">
+                                        <span className="text-xs font-semibold text-slate-600">
+                                            Total Santri di Kelas
+                                        </span>
+                                        <span className="text-sm font-bold text-slate-900">
+                                            {classLedger.students.length} Santri
+                                        </span>
                                     </div>
-                                    <div className="p-3 bg-emerald-50/70 border border-emerald-100 rounded-xl flex items-center justify-between">
-                                        <span className="text-xs font-semibold text-emerald-800">Nilai Lengkap (Siap Cetak)</span>
-                                        <span className="text-sm font-bold text-emerald-800">{completeCount} Santri</span>
+                                    <div className="flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50/70 p-3">
+                                        <span className="text-xs font-semibold text-emerald-800">
+                                            Nilai Lengkap (Siap Cetak)
+                                        </span>
+                                        <span className="text-sm font-bold text-emerald-800">
+                                            {completeCount} Santri
+                                        </span>
                                     </div>
-                                    <div className="p-3 bg-amber-50/70 border border-amber-100 rounded-xl flex items-center justify-between">
-                                        <span className="text-xs font-semibold text-amber-800">Belum Lengkap</span>
-                                        <span className="text-sm font-bold text-amber-800">{incompleteCount} Santri</span>
+                                    <div className="flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50/70 p-3">
+                                        <span className="text-xs font-semibold text-amber-800">
+                                            Belum Lengkap
+                                        </span>
+                                        <span className="text-sm font-bold text-amber-800">
+                                            {incompleteCount} Santri
+                                        </span>
                                     </div>
-                                    <div className="p-3 bg-blue-50/70 border border-blue-100 rounded-xl flex items-center justify-between">
-                                        <span className="text-xs font-semibold text-blue-800">Rerata Nilai Kelas</span>
-                                        <span className="text-sm font-bold text-blue-900">{classOverallAvg > 0 ? classOverallAvg.toFixed(1) : '-'}</span>
+                                    <div className="flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/70 p-3">
+                                        <span className="text-xs font-semibold text-blue-800">
+                                            Rerata Nilai Kelas
+                                        </span>
+                                        <span className="text-sm font-bold text-blue-900">
+                                            {classOverallAvg > 0
+                                                ? classOverallAvg.toFixed(1)
+                                                : '-'}
+                                        </span>
                                     </div>
                                 </div>
 
                                 <button
                                     type="button"
                                     onClick={() => setShowLedger(true)}
-                                    className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-[0.99]"
+                                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-xs transition hover:bg-slate-800 active:scale-[0.99]"
                                 >
-                                    <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+                                    <FileSpreadsheet className="h-4 w-4 text-emerald-400" />
                                     <span>Buka Ledger Rekapitulasi</span>
                                 </button>
 
-                                <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs text-slate-600 space-y-1.5">
-                                    <div className="font-bold text-slate-800 flex items-center gap-1.5">
-                                        <Printer className="w-3.5 h-3.5 text-blue-600" />
+                                <div className="space-y-1.5 rounded-xl border border-slate-200/80 bg-slate-50 p-3 text-xs text-slate-600">
+                                    <div className="flex items-center gap-1.5 font-bold text-slate-800">
+                                        <Printer className="h-3.5 w-3.5 text-blue-600" />
                                         <span>Petunjuk Cetak Dokumen:</span>
                                     </div>
-                                    <ul className="list-disc list-inside space-y-1 text-[11px] text-slate-500 pl-0.5">
-                                        <li>Cetak Rapor diformat otomatis untuk kertas <strong>A4 Portrait</strong>.</li>
-                                        <li>Cetak Ledger diformat otomatis untuk kertas <strong>A4 Landscape</strong>.</li>
-                                        <li>Gunakan opsi <em>Save as PDF</em> pada browser untuk mengunduh dokumen digital.</li>
+                                    <ul className="list-inside list-disc space-y-1 pl-0.5 text-[11px] text-slate-500">
+                                        <li>
+                                            Cetak Rapor diformat otomatis untuk
+                                            kertas <strong>A4 Portrait</strong>.
+                                        </li>
+                                        <li>
+                                            Cetak Ledger diformat otomatis untuk
+                                            kertas <strong>A4 Landscape</strong>
+                                            .
+                                        </li>
+                                        <li>
+                                            Gunakan opsi <em>Save as PDF</em>{' '}
+                                            pada browser untuk mengunduh dokumen
+                                            digital.
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs space-y-5">
-                                <h2 className="text-base font-extrabold text-slate-900 tracking-tight">
+                            <div className="space-y-5 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                                <h2 className="text-base font-extrabold tracking-tight text-slate-900">
                                     Distribusi Mutu
                                 </h2>
 
                                 {/* Mini Bar Chart (Pure CSS) */}
-                                <div className="bg-slate-50/70 border border-slate-100 rounded-xl p-4">
-                                    <div className="h-28 flex items-end justify-between gap-3 px-2 pt-4 border-b border-slate-200">
+                                <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
+                                    <div className="flex h-28 items-end justify-between gap-3 border-b border-slate-200 px-2 pt-4">
                                         {distribution.map((item) => {
                                             const heightPercent =
                                                 item.count > 0
-                                                    ? Math.max(16, Math.round((item.count / maxBarCount) * 100))
+                                                    ? Math.max(
+                                                          16,
+                                                          Math.round(
+                                                              (item.count /
+                                                                  maxBarCount) *
+                                                                  100,
+                                                          ),
+                                                      )
                                                     : 6;
 
                                             return (
                                                 <div
                                                     key={item.grade}
-                                                    className="flex-1 flex flex-col items-center justify-end h-full group"
+                                                    className="group flex h-full flex-1 flex-col items-center justify-end"
                                                 >
-                                                    <span className="text-[11px] font-bold text-slate-600 mb-1">
+                                                    <span className="mb-1 text-[11px] font-bold text-slate-600">
                                                         {item.count}
                                                     </span>
                                                     <div
-                                                        style={{ height: `${heightPercent}%` }}
+                                                        style={{
+                                                            height: `${heightPercent}%`,
+                                                        }}
                                                         className={`w-full max-w-[36px] ${item.barColor} rounded-t-md transition-all duration-300 group-hover:brightness-95`}
                                                     />
                                                 </div>
@@ -1050,7 +1469,10 @@ export default function NilaiAkademik({
                                     {/* X-Axis Labels */}
                                     <div className="flex justify-between gap-3 px-2 pt-2 text-[11px] font-bold text-slate-500">
                                         {distribution.map((item) => (
-                                            <div key={item.grade} className="flex-1 text-center">
+                                            <div
+                                                key={item.grade}
+                                                className="flex-1 text-center"
+                                            >
                                                 {item.grade}
                                             </div>
                                         ))}
@@ -1066,27 +1488,42 @@ export default function NilaiAkademik({
                                         >
                                             <div className="flex items-center gap-2">
                                                 <span
-                                                    className="w-2.5 h-2.5 rounded-full inline-block"
-                                                    style={{ backgroundColor: item.color }}
+                                                    className="inline-block h-2.5 w-2.5 rounded-full"
+                                                    style={{
+                                                        backgroundColor:
+                                                            item.color,
+                                                    }}
                                                 />
                                                 <span className="font-semibold text-slate-700">
-                                                    Predikat {item.grade} ({item.range})
+                                                    Predikat {item.grade} (
+                                                    {item.range})
                                                 </span>
                                             </div>
-                                            <div className="text-slate-600 font-medium">
-                                                <span className="font-bold text-slate-800">{item.count} Gelara</span>{' '}
-                                                <span className="text-slate-400">({item.percentage.toFixed(1)}%)</span>
+                                            <div className="font-medium text-slate-600">
+                                                <span className="font-bold text-slate-800">
+                                                    {item.count} Gelara
+                                                </span>{' '}
+                                                <span className="text-slate-400">
+                                                    (
+                                                    {item.percentage.toFixed(1)}
+                                                    %)
+                                                </span>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
 
                                 {/* Standar Kelulusan Callout Box */}
-                                <div className="bg-blue-50/80 border border-blue-100 rounded-xl p-3.5 text-xs text-blue-900 leading-relaxed">
+                                <div className="rounded-xl border border-blue-100 bg-blue-50/80 p-3.5 text-xs leading-relaxed text-blue-900">
                                     <p>
-                                        <strong className="font-bold text-blue-950">Standar Kelulusan:</strong>{' '}
+                                        <strong className="font-bold text-blue-950">
+                                            Standar Kelulusan:
+                                        </strong>{' '}
                                         KKM minimal mata pelajaran adalah{' '}
-                                        <strong className="text-blue-950 font-semibold">{kkm.toFixed(2)}</strong>.
+                                        <strong className="font-semibold text-blue-950">
+                                            {kkm.toFixed(2)}
+                                        </strong>
+                                        .
                                     </p>
                                 </div>
                             </div>
@@ -1094,23 +1531,21 @@ export default function NilaiAkademik({
                     </div>
                 </div>
 
-
-
                 {/* 6. Modal: Form Kompetensi Dasar (KD) Per Mata Pelajaran */}
                 {isKdModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-                        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
+                        <div className="animate-in fade-in zoom-in-95 w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl duration-150">
                             {/* Header */}
                             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                                        <BookOpen className="w-5 h-5" />
+                                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                                        <BookOpen className="h-5 w-5" />
                                     </div>
                                     <div>
-                                        <h3 className="text-base font-bold text-slate-900 leading-tight">
+                                        <h3 className="text-base leading-tight font-bold text-slate-900">
                                             Kompetensi Dasar (KD)
                                         </h3>
-                                        <p className="text-xs text-slate-500 mt-0.5">
+                                        <p className="mt-0.5 text-xs text-slate-500">
                                             {selectedMapel} ({selectedKelas})
                                         </p>
                                     </div>
@@ -1119,48 +1554,65 @@ export default function NilaiAkademik({
                                     type="button"
                                     onClick={() => setIsKdModalOpen(false)}
                                     aria-label="Tutup form KD"
-                                    className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition cursor-pointer"
+                                    className="cursor-pointer rounded-lg p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
                                 >
-                                    <X className="w-5 h-5" />
+                                    <X className="h-5 w-5" />
                                 </button>
                             </div>
 
                             {/* Context Badge */}
-                            <div className="bg-slate-50 border border-slate-100 rounded-xl px-3 py-2 flex items-center justify-between text-xs text-slate-600">
-                                <span className="font-semibold text-slate-800">{selectedMapel}</span>
+                            <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+                                <span className="font-semibold text-slate-800">
+                                    {selectedMapel}
+                                </span>
                                 <span className="text-slate-400">•</span>
                                 <span>{selectedKelas}</span>
                                 <span className="text-slate-400">•</span>
-                                <span className="text-slate-500">{selectedTahun}</span>
+                                <span className="text-slate-500">
+                                    {selectedTahun}
+                                </span>
                             </div>
 
                             {/* Info */}
-                            <p className="text-xs text-slate-500 leading-relaxed">
-                                Masukkan daftar Kompetensi Dasar (KD) untuk mata pelajaran ini (bisa memasukkan hingga 5 KD). Pengaturan ini otomatis berlaku untuk seluruh santri di kelas {selectedKelas}.
+                            <p className="text-xs leading-relaxed text-slate-500">
+                                Masukkan daftar Kompetensi Dasar (KD) untuk mata
+                                pelajaran ini (bisa memasukkan hingga 5 KD).
+                                Pengaturan ini otomatis berlaku untuk seluruh
+                                santri di kelas {selectedKelas}.
                             </p>
 
                             {/* List KD Inputs */}
-                            <div className="space-y-2.5 max-h-[280px] overflow-y-auto pr-1">
+                            <div className="max-h-[280px] space-y-2.5 overflow-y-auto pr-1">
                                 {kdList.map((kd, index) => (
-                                    <div key={index} className="flex items-center gap-2">
-                                        <span className="w-12 text-center py-2 px-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-100 shrink-0">
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <span className="w-12 shrink-0 rounded-lg border border-blue-100 bg-blue-50 px-1 py-2 text-center text-xs font-bold text-blue-700">
                                             KD {index + 1}
                                         </span>
                                         <input
                                             type="text"
                                             value={kd}
-                                            onChange={(e) => handleKdChange(index, e.target.value)}
+                                            onChange={(e) =>
+                                                handleKdChange(
+                                                    index,
+                                                    e.target.value,
+                                                )
+                                            }
                                             placeholder={`Contoh: Memahami materi KD ${index + 1}...`}
-                                            className="flex-1 px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition placeholder:text-slate-300"
+                                            className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs transition placeholder:text-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                         />
                                         {kdList.length > 1 && (
                                             <button
                                                 type="button"
-                                                onClick={() => handleRemoveKd(index)}
+                                                onClick={() =>
+                                                    handleRemoveKd(index)
+                                                }
                                                 title="Hapus KD ini"
-                                                className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer shrink-0"
+                                                className="shrink-0 cursor-pointer rounded-lg p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
                                             >
-                                                <Trash2 className="w-4 h-4" />
+                                                <Trash2 className="h-4 w-4" />
                                             </button>
                                         )}
                                     </div>
@@ -1172,20 +1624,23 @@ export default function NilaiAkademik({
                                 <button
                                     type="button"
                                     onClick={handleAddKd}
-                                    className="w-full py-2 border border-dashed border-blue-300 hover:border-blue-500 bg-blue-50/40 hover:bg-blue-50 rounded-xl text-xs font-semibold text-blue-600 transition flex items-center justify-center gap-1.5 cursor-pointer"
+                                    className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-dashed border-blue-300 bg-blue-50/40 py-2 text-xs font-semibold text-blue-600 transition hover:border-blue-500 hover:bg-blue-50"
                                 >
-                                    <Plus className="w-3.5 h-3.5" />
-                                    <span>Tambah Kompetensi Dasar ({5 - kdList.length} tersisa)</span>
+                                    <Plus className="h-3.5 w-3.5" />
+                                    <span>
+                                        Tambah Kompetensi Dasar (
+                                        {5 - kdList.length} tersisa)
+                                    </span>
                                 </button>
                             )}
 
                             {/* Modal Actions */}
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                            <div className="flex items-center justify-end gap-2 border-t border-slate-100 pt-2">
                                 <button
                                     type="button"
                                     onClick={() => setIsKdModalOpen(false)}
                                     disabled={isSavingKd}
-                                    className="px-3.5 py-2 rounded-xl border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-50 transition cursor-pointer"
+                                    className="cursor-pointer rounded-xl border border-slate-200 px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
                                 >
                                     Batal
                                 </button>
@@ -1193,10 +1648,16 @@ export default function NilaiAkademik({
                                     type="button"
                                     onClick={handleSaveKd}
                                     disabled={isSavingKd}
-                                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 shadow-xs transition cursor-pointer disabled:opacity-50"
+                                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 disabled:opacity-50"
                                 >
-                                    {isSavingKd && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                                    <span>{isSavingKd ? 'Menyimpan...' : 'Simpan KD'}</span>
+                                    {isSavingKd && (
+                                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                    )}
+                                    <span>
+                                        {isSavingKd
+                                            ? 'Menyimpan...'
+                                            : 'Simpan KD'}
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -1213,21 +1674,26 @@ export default function NilaiAkademik({
 
                 {/* Modal: Atur KKM Universal */}
                 {isKkmModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-                        <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-sm w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
+                        <div className="animate-in fade-in zoom-in-95 w-full max-w-sm space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl duration-150">
                             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                                 <div>
-                                    <h3 className="text-base font-bold text-slate-900">Atur Standar KKM Universal</h3>
+                                    <h3 className="text-base font-bold text-slate-900">
+                                        Atur Standar KKM Universal
+                                    </h3>
                                     <p className="text-xs text-slate-500">
-                                        Berlaku untuk <strong className="text-blue-900 font-semibold">semua mata pelajaran &amp; kelas</strong>
+                                        Berlaku untuk{' '}
+                                        <strong className="font-semibold text-blue-900">
+                                            semua mata pelajaran &amp; kelas
+                                        </strong>
                                     </p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => setIsKkmModalOpen(false)}
-                                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                                    className="cursor-pointer text-slate-400 hover:text-slate-600"
                                 >
-                                    <X className="w-5 h-5" />
+                                    <X className="h-5 w-5" />
                                 </button>
                             </div>
 
@@ -1241,19 +1707,24 @@ export default function NilaiAkademik({
                                     max="100"
                                     step="0.5"
                                     value={inputKkm}
-                                    onChange={(e) => setInputKkm(parseFloat(e.target.value) || 0)}
-                                    className="w-full px-3 py-2 text-sm font-bold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-center"
+                                    onChange={(e) =>
+                                        setInputKkm(
+                                            parseFloat(e.target.value) || 0,
+                                        )
+                                    }
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm font-bold focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                 />
                                 <p className="text-[11px] text-slate-400">
-                                    Santri dengan nilai akhir &ge; nilai ini akan dianggap tuntas KKM.
+                                    Santri dengan nilai akhir &ge; nilai ini
+                                    akan dianggap tuntas KKM.
                                 </p>
                             </div>
 
-                            <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                            <div className="flex justify-end gap-2 border-t border-slate-100 pt-2">
                                 <button
                                     type="button"
                                     onClick={() => setIsKkmModalOpen(false)}
-                                    className="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 rounded-xl transition cursor-pointer"
+                                    className="cursor-pointer rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
                                 >
                                     Batal
                                 </button>
@@ -1261,9 +1732,11 @@ export default function NilaiAkademik({
                                     type="button"
                                     disabled={isSavingKkm}
                                     onClick={handleSaveKkm}
-                                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-xs transition cursor-pointer disabled:opacity-50 inline-flex items-center gap-1.5"
+                                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-blue-700 disabled:opacity-50"
                                 >
-                                    {isSavingKkm && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                                    {isSavingKkm && (
+                                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                    )}
                                     <span>Simpan KKM</span>
                                 </button>
                             </div>

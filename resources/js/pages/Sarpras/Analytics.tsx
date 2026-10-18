@@ -52,10 +52,10 @@ export default function SarprasAnalytics({
         <DashboardLayout title="Analytics Sarpras">
             <Head title="Analytics Sarpras" />
 
-            <div className="space-y-6 max-w-[1400px] mx-auto pb-10">
+            <div className="mx-auto max-w-[1400px] space-y-6 pb-10">
                 {/* Header Banner */}
                 <div className="rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950 to-indigo-950 p-6 text-white shadow-xs">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
                                 <Building className="h-6 w-6 text-white" />
@@ -64,22 +64,24 @@ export default function SarprasAnalytics({
                                 <h1 className="text-xl font-bold tracking-tight text-white">
                                     Analytics & Statistik Sarana Prasarana
                                 </h1>
-                                <p className="text-xs text-purple-200 mt-0.5">
-                                    Inventarisasi aset lembaga, monitoring kondisi kelayakan, dan status perbaikan sarpras
+                                <p className="mt-0.5 text-xs text-purple-200">
+                                    Inventarisasi aset lembaga, monitoring
+                                    kondisi kelayakan, dan status perbaikan
+                                    sarpras
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
                             <Link
                                 href="/sarpras/inventaris"
-                                className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-2 text-xs font-semibold text-white transition active:scale-[0.98]"
+                                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-white/20 active:scale-[0.98]"
                             >
                                 <span>Inventaris Aset</span>
                                 <ArrowRight size={14} />
                             </Link>
                             <Link
                                 href="/sarpras/perbaikan"
-                                className="inline-flex items-center gap-2 rounded-xl bg-purple-600 hover:bg-purple-500 px-3.5 py-2 text-xs font-semibold text-white transition active:scale-[0.98]"
+                                className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-purple-500 active:scale-[0.98]"
                             >
                                 <span>Perbaikan Aset</span>
                                 <ArrowRight size={14} />
@@ -89,62 +91,91 @@ export default function SarprasAnalytics({
                 </div>
 
                 {/* KPI Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Aset</span>
-                            <div className="h-9 w-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Total Aset
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
                                 <Building size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.total_aset}</div>
-                        <p className="mt-1 text-xs text-slate-400">Barang inventaris tercatat</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.total_aset}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Barang inventaris tercatat
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kondisi Baik</span>
-                            <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Kondisi Baik
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                                 <CheckCircle2 size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.aset_baik}</div>
-                        <p className="mt-1 text-xs text-slate-400">Siap & layak digunakan</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.aset_baik}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Siap & layak digunakan
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tiket Perbaikan Aktif</span>
-                            <div className="h-9 w-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Tiket Perbaikan Aktif
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
                                 <Wrench size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.perbaikan_aktif}</div>
-                        <p className="mt-1 text-xs text-slate-400">Dalam proses pemeliharaan</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.perbaikan_aktif}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Dalam proses pemeliharaan
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Pengadaan Berjalan</span>
-                            <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Pengadaan Berjalan
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                                 <PackagePlus size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.pengadaan_aktif}</div>
-                        <p className="mt-1 text-xs text-slate-400">Pengajuan barang baru</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.pengadaan_aktif}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Pengajuan barang baru
+                        </p>
                     </div>
                 </div>
 
                 {/* Charts Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Chart 1: Kondisi Aset Pie */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="mb-4 flex items-center justify-between">
                             <div>
-                                <h3 className="text-sm font-bold text-slate-800">Distribusi Kondisi Fisik Aset</h3>
-                                <p className="text-xs text-slate-400">Persentase kelayakan barang inventaris asrama</p>
+                                <h3 className="text-sm font-bold text-slate-800">
+                                    Distribusi Kondisi Fisik Aset
+                                </h3>
+                                <p className="text-xs text-slate-400">
+                                    Persentase kelayakan barang inventaris
+                                    asrama
+                                </p>
                             </div>
-                            <span className="text-xs font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg">
+                            <span className="rounded-lg bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
                                 {stats.total_aset} Item
                             </span>
                         </div>
@@ -161,19 +192,34 @@ export default function SarprasAnalytics({
                                         dataKey="value"
                                     >
                                         {kondisiData.map((_, index) => (
-                                            <Cell key={`cell-${index}`} fill={KONDISI_COLORS[index % KONDISI_COLORS.length]} />
+                                            <Cell
+                                                key={`cell-${index}`}
+                                                fill={
+                                                    KONDISI_COLORS[
+                                                        index %
+                                                            KONDISI_COLORS.length
+                                                    ]
+                                                }
+                                            />
                                         ))}
                                     </Pie>
                                     <Tooltip
                                         contentStyle={{
                                             backgroundColor: '#fff',
                                             borderRadius: '12px',
-                                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                                            boxShadow:
+                                                '0 4px 20px rgba(0,0,0,0.08)',
                                             border: '1px solid #f1f5f9',
                                             fontSize: '12px',
                                         }}
                                     />
-                                    <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+                                    <Legend
+                                        iconType="circle"
+                                        wrapperStyle={{
+                                            fontSize: '12px',
+                                            paddingTop: '10px',
+                                        }}
+                                    />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
@@ -181,28 +227,56 @@ export default function SarprasAnalytics({
 
                     {/* Chart 2: Status Perbaikan Bar */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="mb-4 flex items-center justify-between">
                             <div>
-                                <h3 className="text-sm font-bold text-slate-800">Progres Penanganan Perbaikan</h3>
-                                <p className="text-xs text-slate-400">Status tiket pemeliharaan aset rusak</p>
+                                <h3 className="text-sm font-bold text-slate-800">
+                                    Progres Penanganan Perbaikan
+                                </h3>
+                                <p className="text-xs text-slate-400">
+                                    Status tiket pemeliharaan aset rusak
+                                </p>
                             </div>
                             <TrendingUp size={16} className="text-purple-600" />
                         </div>
                         <div className="h-[260px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={statusPerbaikanData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                    <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                                    <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} allowDecimals={false} />
+                                <BarChart
+                                    data={statusPerbaikanData}
+                                    margin={{
+                                        top: 10,
+                                        right: 10,
+                                        left: -20,
+                                        bottom: 0,
+                                    }}
+                                >
+                                    <XAxis
+                                        dataKey="name"
+                                        tick={{ fontSize: 11, fill: '#64748b' }}
+                                        axisLine={false}
+                                        tickLine={false}
+                                    />
+                                    <YAxis
+                                        tick={{ fontSize: 11, fill: '#64748b' }}
+                                        axisLine={false}
+                                        tickLine={false}
+                                        allowDecimals={false}
+                                    />
                                     <Tooltip
                                         contentStyle={{
                                             backgroundColor: '#fff',
                                             borderRadius: '12px',
-                                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                                            boxShadow:
+                                                '0 4px 20px rgba(0,0,0,0.08)',
                                             border: '1px solid #f1f5f9',
                                             fontSize: '12px',
                                         }}
                                     />
-                                    <Bar dataKey="value" fill={STATUS_BAR_COLOR} radius={[6, 6, 0, 0]} name="Tiket Perbaikan" />
+                                    <Bar
+                                        dataKey="value"
+                                        fill={STATUS_BAR_COLOR}
+                                        radius={[6, 6, 0, 0]}
+                                        name="Tiket Perbaikan"
+                                    />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
@@ -211,37 +285,59 @@ export default function SarprasAnalytics({
 
                 {/* Recent Maintenance Table */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4 flex items-center justify-between">
                         <div>
-                            <h3 className="text-sm font-bold text-slate-800">Tiket Perbaikan Terbaru</h3>
-                            <p className="text-xs text-slate-400">Daftar laporan kerusakan aset yang sedang ditangani</p>
+                            <h3 className="text-sm font-bold text-slate-800">
+                                Tiket Perbaikan Terbaru
+                            </h3>
+                            <p className="text-xs text-slate-400">
+                                Daftar laporan kerusakan aset yang sedang
+                                ditangani
+                            </p>
                         </div>
-                        <Link href="/sarpras/perbaikan" className="text-xs font-semibold text-purple-600 hover:text-purple-700">
+                        <Link
+                            href="/sarpras/perbaikan"
+                            className="text-xs font-semibold text-purple-600 hover:text-purple-700"
+                        >
                             Buka Daftar Perbaikan →
                         </Link>
                     </div>
 
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-xs">
-                            <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                            <thead className="border-b border-slate-100 bg-slate-50 font-semibold text-slate-500">
                                 <tr>
-                                    <th className="py-3 px-4">Nama Aset</th>
-                                    <th className="py-3 px-4">Uraian Masalah</th>
-                                    <th className="py-3 px-4">Estimasi Biaya</th>
-                                    <th className="py-3 px-4">Status</th>
+                                    <th className="px-4 py-3">Nama Aset</th>
+                                    <th className="px-4 py-3">
+                                        Uraian Masalah
+                                    </th>
+                                    <th className="px-4 py-3">
+                                        Estimasi Biaya
+                                    </th>
+                                    <th className="px-4 py-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {recentPerbaikan && recentPerbaikan.length > 0 ? (
+                                {recentPerbaikan &&
+                                recentPerbaikan.length > 0 ? (
                                     recentPerbaikan.map((item) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/50 transition">
-                                            <td className="py-3 px-4 font-bold text-slate-800">{item.aset?.nama_aset || 'Aset'}</td>
-                                            <td className="py-3 px-4 text-slate-600 max-w-xs truncate">{item.uraian_kerusakan || '-'}</td>
-                                            <td className="py-3 px-4 font-mono text-slate-700">
-                                                {item.biaya ? `Rp ${Number(item.biaya).toLocaleString('id-ID')}` : 'Rp 0'}
+                                        <tr
+                                            key={item.id}
+                                            className="transition hover:bg-slate-50/50"
+                                        >
+                                            <td className="px-4 py-3 font-bold text-slate-800">
+                                                {item.aset?.nama_aset || 'Aset'}
                                             </td>
-                                            <td className="py-3 px-4">
-                                                <span className="text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full font-semibold">
+                                            <td className="max-w-xs truncate px-4 py-3 text-slate-600">
+                                                {item.uraian_kerusakan || '-'}
+                                            </td>
+                                            <td className="px-4 py-3 font-mono text-slate-700">
+                                                {item.biaya
+                                                    ? `Rp ${Number(item.biaya).toLocaleString('id-ID')}`
+                                                    : 'Rp 0'}
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <span className="rounded-full bg-purple-50 px-2.5 py-0.5 font-semibold text-purple-700">
                                                     {item.status || 'Menunggu'}
                                                 </span>
                                             </td>
@@ -249,7 +345,10 @@ export default function SarprasAnalytics({
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={4} className="py-6 text-center text-slate-400">
+                                        <td
+                                            colSpan={4}
+                                            className="py-6 text-center text-slate-400"
+                                        >
                                             Belum ada data perbaikan aktif
                                         </td>
                                     </tr>

@@ -61,10 +61,10 @@ export default function KurikulumAnalytics({
         <DashboardLayout title="Analytics Kurikulum">
             <Head title="Analytics Kurikulum" />
 
-            <div className="space-y-6 max-w-[1400px] mx-auto pb-10">
+            <div className="mx-auto max-w-[1400px] space-y-6 pb-10">
                 {/* Header Banner */}
                 <div className="rounded-2xl bg-gradient-to-r from-teal-900 via-emerald-900 to-slate-900 p-6 text-white shadow-xs">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md">
                                 <BookOpen className="h-6 w-6 text-white" />
@@ -74,26 +74,30 @@ export default function KurikulumAnalytics({
                                     <h1 className="text-xl font-bold tracking-tight text-white">
                                         Analytics &amp; Statistik Kurikulum
                                     </h1>
-                                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-0.5 text-xs font-semibold text-emerald-200 backdrop-blur-md">
-                                        <span>Standar KKM: {kkm} (Semua Pelajaran)</span>
+                                    <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3 py-0.5 text-xs font-semibold text-emerald-200 backdrop-blur-md">
+                                        <span>
+                                            Standar KKM: {kkm} (Semua Pelajaran)
+                                        </span>
                                     </div>
                                 </div>
-                                <p className="text-xs text-teal-100 mt-1">
-                                    Evaluasi ketuntasan belajar santri, nilai rata-rata mata pelajaran, dan jadwal akademik
+                                <p className="mt-1 text-xs text-teal-100">
+                                    Evaluasi ketuntasan belajar santri, nilai
+                                    rata-rata mata pelajaran, dan jadwal
+                                    akademik
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
                             <Link
                                 href="/kurikulum/kalender"
-                                className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-2 text-xs font-semibold text-white transition active:scale-[0.98]"
+                                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-white/20 active:scale-[0.98]"
                             >
                                 <span>Kalender Akademik</span>
                                 <ArrowRight size={14} />
                             </Link>
                             <Link
                                 href="/kurikulum/nilai-akademik"
-                                className="inline-flex items-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-3.5 py-2 text-xs font-semibold text-white transition active:scale-[0.98]"
+                                className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-teal-500 active:scale-[0.98]"
                             >
                                 <span>Nilai Akademik</span>
                                 <ArrowRight size={14} />
@@ -103,67 +107,96 @@ export default function KurikulumAnalytics({
                 </div>
 
                 {/* KPI Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tingkat Ketuntasan</span>
-                            <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Tingkat Ketuntasan
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                                 <CheckCircle size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.persen_tuntas}%</div>
-                        <p className="mt-1 text-xs text-slate-400">Rasio nilai di atas KKM ({kkm}) semua pelajaran</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.persen_tuntas}%
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Rasio nilai di atas KKM ({kkm}) semua pelajaran
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Mata Pelajaran</span>
-                            <div className="h-9 w-9 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Mata Pelajaran
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
                                 <BookOpen size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.total_mapel}</div>
-                        <p className="mt-1 text-xs text-slate-400">Mapel terdaftar aktif</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.total_mapel}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Mapel terdaftar aktif
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Entri Nilai</span>
-                            <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Total Entri Nilai
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                                 <GraduationCap size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.total_nilai}</div>
-                        <p className="mt-1 text-xs text-slate-400">Data evaluasi terinput</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.total_nilai}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Data evaluasi terinput
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Agenda Akademik</span>
-                            <div className="h-9 w-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <span className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                Agenda Akademik
+                            </span>
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
                                 <Calendar size={18} />
                             </div>
                         </div>
-                        <div className="mt-3 text-3xl font-extrabold text-slate-800">{stats.total_agenda}</div>
-                        <p className="mt-1 text-xs text-slate-400">Jadwal semester berjalan</p>
+                        <div className="mt-3 text-3xl font-extrabold text-slate-800">
+                            {stats.total_agenda}
+                        </div>
+                        <p className="mt-1 text-xs text-slate-400">
+                            Jadwal semester berjalan
+                        </p>
                     </div>
                 </div>
 
                 {/* Charts Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Chart 1: Ketuntasan Belajar Pie */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="mb-4 flex items-center justify-between">
                             <div>
-                                <h3 className="text-sm font-bold text-slate-800">Rasio Ketuntasan Belajar (KKM {kkm})</h3>
-                                <p className="text-xs text-slate-400">Perbandingan santri tuntas KKM vs butuh perbaikan semua pelajaran</p>
+                                <h3 className="text-sm font-bold text-slate-800">
+                                    Rasio Ketuntasan Belajar (KKM {kkm})
+                                </h3>
+                                <p className="text-xs text-slate-400">
+                                    Perbandingan santri tuntas KKM vs butuh
+                                    perbaikan semua pelajaran
+                                </p>
                             </div>
                             {stats.total_nilai > 0 ? (
-                                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
+                                <span className="rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                                     {stats.persen_tuntas}% Lulus
                                 </span>
                             ) : (
-                                <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                                <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-500">
                                     Belum Ada Data
                                 </span>
                             )}
@@ -182,28 +215,46 @@ export default function KurikulumAnalytics({
                                             dataKey="value"
                                         >
                                             {ketuntasanData.map((_, index) => (
-                                                <Cell key={`cell-${index}`} fill={TUNTAS_COLORS[index % TUNTAS_COLORS.length]} />
+                                                <Cell
+                                                    key={`cell-${index}`}
+                                                    fill={
+                                                        TUNTAS_COLORS[
+                                                            index %
+                                                                TUNTAS_COLORS.length
+                                                        ]
+                                                    }
+                                                />
                                             ))}
                                         </Pie>
                                         <Tooltip
                                             contentStyle={{
                                                 backgroundColor: '#fff',
                                                 borderRadius: '12px',
-                                                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                                                boxShadow:
+                                                    '0 4px 20px rgba(0,0,0,0.08)',
                                                 border: '1px solid #f1f5f9',
                                                 fontSize: '12px',
                                             }}
                                         />
-                                        <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+                                        <Legend
+                                            iconType="circle"
+                                            wrapperStyle={{
+                                                fontSize: '12px',
+                                                paddingTop: '10px',
+                                            }}
+                                        />
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
                         ) : (
-                            <div className="h-[260px] w-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-                                <BookOpen className="h-8 w-8 text-slate-300 mb-2" />
-                                <p className="text-xs font-semibold text-slate-600">Belum ada data evaluasi nilai santri</p>
-                                <p className="text-[11px] text-slate-400 mt-1 max-w-[260px]">
-                                    Input nilai santri pada menu Nilai Akademik untuk melihat distribusi ketuntasan KKM
+                            <div className="flex h-[260px] w-full flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-6 text-center">
+                                <BookOpen className="mb-2 h-8 w-8 text-slate-300" />
+                                <p className="text-xs font-semibold text-slate-600">
+                                    Belum ada data evaluasi nilai santri
+                                </p>
+                                <p className="mt-1 max-w-[260px] text-[11px] text-slate-400">
+                                    Input nilai santri pada menu Nilai Akademik
+                                    untuk melihat distribusi ketuntasan KKM
                                 </p>
                             </div>
                         )}
@@ -211,38 +262,77 @@ export default function KurikulumAnalytics({
 
                     {/* Chart 2: Rata-rata Nilai per Mapel Bar */}
                     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="mb-4 flex items-center justify-between">
                             <div>
-                                <h3 className="text-sm font-bold text-slate-800">Rata-rata Nilai per Mata Pelajaran</h3>
-                                <p className="text-xs text-slate-400">Performa akademik mata pelajaran utama</p>
+                                <h3 className="text-sm font-bold text-slate-800">
+                                    Rata-rata Nilai per Mata Pelajaran
+                                </h3>
+                                <p className="text-xs text-slate-400">
+                                    Performa akademik mata pelajaran utama
+                                </p>
                             </div>
                             <Award size={16} className="text-teal-600" />
                         </div>
                         {mapelData && mapelData.length > 0 ? (
                             <div className="h-[260px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={mapelData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                        <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                                        <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} domain={[0, 100]} />
+                                    <BarChart
+                                        data={mapelData}
+                                        margin={{
+                                            top: 10,
+                                            right: 10,
+                                            left: -20,
+                                            bottom: 0,
+                                        }}
+                                    >
+                                        <XAxis
+                                            dataKey="name"
+                                            tick={{
+                                                fontSize: 11,
+                                                fill: '#64748b',
+                                            }}
+                                            axisLine={false}
+                                            tickLine={false}
+                                        />
+                                        <YAxis
+                                            tick={{
+                                                fontSize: 11,
+                                                fill: '#64748b',
+                                            }}
+                                            axisLine={false}
+                                            tickLine={false}
+                                            domain={[0, 100]}
+                                        />
                                         <Tooltip
                                             contentStyle={{
                                                 backgroundColor: '#fff',
                                                 borderRadius: '12px',
-                                                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                                                boxShadow:
+                                                    '0 4px 20px rgba(0,0,0,0.08)',
                                                 border: '1px solid #f1f5f9',
                                                 fontSize: '12px',
                                             }}
                                         />
-                                        <Bar dataKey="value" fill={MAPEL_BAR_COLOR} radius={[6, 6, 0, 0]} name="Rata-rata Nilai" />
+                                        <Bar
+                                            dataKey="value"
+                                            fill={MAPEL_BAR_COLOR}
+                                            radius={[6, 6, 0, 0]}
+                                            name="Rata-rata Nilai"
+                                        />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
                         ) : (
-                            <div className="h-[260px] w-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-                                <GraduationCap className="h-8 w-8 text-slate-300 mb-2" />
-                                <p className="text-xs font-semibold text-slate-600">Belum ada data rata-rata nilai mata pelajaran</p>
-                                <p className="text-[11px] text-slate-400 mt-1 max-w-[260px]">
-                                    Rata-rata per mata pelajaran akan terhitung secara otomatis setelah nilai akademik diinput
+                            <div className="flex h-[260px] w-full flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-6 text-center">
+                                <GraduationCap className="mb-2 h-8 w-8 text-slate-300" />
+                                <p className="text-xs font-semibold text-slate-600">
+                                    Belum ada data rata-rata nilai mata
+                                    pelajaran
+                                </p>
+                                <p className="mt-1 max-w-[260px] text-[11px] text-slate-400">
+                                    Rata-rata per mata pelajaran akan terhitung
+                                    secara otomatis setelah nilai akademik
+                                    diinput
                                 </p>
                             </div>
                         )}
@@ -251,12 +341,20 @@ export default function KurikulumAnalytics({
 
                 {/* Recent Academic Grades */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4 flex items-center justify-between">
                         <div>
-                            <h3 className="text-sm font-bold text-slate-800">Nilai Akademik Santri Terkini</h3>
-                            <p className="text-xs text-slate-400">Riwayat entri evaluasi nilai akademik dan ketuntasan santri</p>
+                            <h3 className="text-sm font-bold text-slate-800">
+                                Nilai Akademik Santri Terkini
+                            </h3>
+                            <p className="text-xs text-slate-400">
+                                Riwayat entri evaluasi nilai akademik dan
+                                ketuntasan santri
+                            </p>
                         </div>
-                        <Link href="/kurikulum/nilai-akademik" className="inline-flex items-center gap-1 text-xs font-semibold text-teal-600 hover:text-teal-700">
+                        <Link
+                            href="/kurikulum/nilai-akademik"
+                            className="inline-flex items-center gap-1 text-xs font-semibold text-teal-600 hover:text-teal-700"
+                        >
                             <span>Kelola Nilai Akademik</span>
                             <ArrowRight size={13} />
                         </Link>
@@ -264,45 +362,71 @@ export default function KurikulumAnalytics({
 
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-xs">
-                            <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                            <thead className="border-b border-slate-100 bg-slate-50 font-semibold text-slate-500">
                                 <tr>
-                                    <th className="py-3 px-4">Santri</th>
-                                    <th className="py-3 px-4">Kelas & Mapel</th>
-                                    <th className="py-3 px-4">Nilai Akhir</th>
-                                    <th className="py-3 px-4">Predikat</th>
-                                    <th className="py-3 px-4">Status Ketuntasan</th>
+                                    <th className="px-4 py-3">Santri</th>
+                                    <th className="px-4 py-3">Kelas & Mapel</th>
+                                    <th className="px-4 py-3">Nilai Akhir</th>
+                                    <th className="px-4 py-3">Predikat</th>
+                                    <th className="px-4 py-3">
+                                        Status Ketuntasan
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                                 {recentNilai && recentNilai.length > 0 ? (
                                     recentNilai.map((item) => {
-                                        const isTuntas = Number(item.nilai_akhir) >= kkm;
+                                        const isTuntas =
+                                            Number(item.nilai_akhir) >= kkm;
                                         return (
-                                            <tr key={item.id} className="hover:bg-slate-50/50 transition">
-                                                <td className="py-3 px-4">
-                                                    <div className="font-bold text-slate-800">{item.gelara?.name || 'Santri'}</div>
-                                                    <div className="text-[11px] text-slate-400 font-mono">NIG: {item.gelara?.nig || '-'}</div>
+                                            <tr
+                                                key={item.id}
+                                                className="transition hover:bg-slate-50/50"
+                                            >
+                                                <td className="px-4 py-3">
+                                                    <div className="font-bold text-slate-800">
+                                                        {item.gelara?.name ||
+                                                            'Santri'}
+                                                    </div>
+                                                    <div className="font-mono text-[11px] text-slate-400">
+                                                        NIG:{' '}
+                                                        {item.gelara?.nig ||
+                                                            '-'}
+                                                    </div>
                                                 </td>
-                                                <td className="py-3 px-4">
-                                                    <div className="font-medium text-slate-700">{item.mata_pelajaran}</div>
-                                                    <div className="text-[11px] text-slate-400">{item.kelas}</div>
+                                                <td className="px-4 py-3">
+                                                    <div className="font-medium text-slate-700">
+                                                        {item.mata_pelajaran}
+                                                    </div>
+                                                    <div className="text-[11px] text-slate-400">
+                                                        {item.kelas}
+                                                    </div>
                                                 </td>
-                                                <td className="py-3 px-4 font-mono font-bold text-slate-800 text-sm">
-                                                    {Number(item.nilai_akhir).toFixed(1)}
+                                                <td className="px-4 py-3 font-mono text-sm font-bold text-slate-800">
+                                                    {Number(
+                                                        item.nilai_akhir,
+                                                    ).toFixed(1)}
                                                 </td>
-                                                <td className="py-3 px-4">
-                                                    <span className="inline-block px-2 py-0.5 rounded font-bold text-[11px] bg-slate-100 text-slate-700">
+                                                <td className="px-4 py-3">
+                                                    <span className="inline-block rounded bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-700">
                                                         {item.predikat || '-'}
                                                     </span>
                                                 </td>
-                                                <td className="py-3 px-4">
+                                                <td className="px-4 py-3">
                                                     {isTuntas ? (
-                                                        <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full font-semibold">
-                                                            <CheckCircle size={12} /> Tuntas (≥ {kkm})
+                                                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 font-semibold text-emerald-700">
+                                                            <CheckCircle
+                                                                size={12}
+                                                            />{' '}
+                                                            Tuntas (≥ {kkm})
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full font-semibold">
-                                                            <AlertTriangle size={12} /> Remedial (&lt; {kkm})
+                                                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 font-semibold text-amber-700">
+                                                            <AlertTriangle
+                                                                size={12}
+                                                            />{' '}
+                                                            Remedial (&lt; {kkm}
+                                                            )
                                                         </span>
                                                     )}
                                                 </td>
@@ -311,8 +435,12 @@ export default function KurikulumAnalytics({
                                     })
                                 ) : (
                                     <tr>
-                                        <td colSpan={5} className="py-8 text-center text-slate-400">
-                                            Belum ada entri nilai akademik santri
+                                        <td
+                                            colSpan={5}
+                                            className="py-8 text-center text-slate-400"
+                                        >
+                                            Belum ada entri nilai akademik
+                                            santri
                                         </td>
                                     </tr>
                                 )}

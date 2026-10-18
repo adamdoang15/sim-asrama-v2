@@ -10,37 +10,46 @@ interface RekapListViewProps {
 export default function RekapListView({ items, onEdit }: RekapListViewProps) {
     return (
         <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs whitespace-nowrap min-w-[980px]">
-                <thead className="bg-[#f8fafc] border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+            <table className="w-full min-w-[980px] text-left text-xs whitespace-nowrap">
+                <thead className="border-b border-slate-100 bg-[#f8fafc] text-[11px] font-bold tracking-wider text-slate-500 uppercase">
                     <tr>
-                        <th className="px-5 py-3.5 w-[300px]">Nama Kegiatan &amp; Kategori</th>
-                        <th className="px-4 py-3.5 w-44">Waktu Pelaksanaan</th>
-                        <th className="px-4 py-3.5 w-48">Tempat</th>
-                        <th className="px-4 py-3.5 w-44">Peserta Gelara</th>
-                        <th className="px-4 py-3.5 min-w-[240px]">Keterangan</th>
-                        <th className="px-5 py-3.5 w-32 text-center">Dokumentasi &amp; Aksi</th>
+                        <th className="w-[300px] px-5 py-3.5">
+                            Nama Kegiatan &amp; Kategori
+                        </th>
+                        <th className="w-44 px-4 py-3.5">Waktu Pelaksanaan</th>
+                        <th className="w-48 px-4 py-3.5">Tempat</th>
+                        <th className="w-44 px-4 py-3.5">Peserta Gelara</th>
+                        <th className="min-w-[240px] px-4 py-3.5">
+                            Keterangan
+                        </th>
+                        <th className="w-32 px-5 py-3.5 text-center">
+                            Dokumentasi &amp; Aksi
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                     {items.length > 0 ? (
                         items.map((item) => (
-                            <tr key={item.id} className="hover:bg-slate-50/50 transition-colors align-top">
+                            <tr
+                                key={item.id}
+                                className="align-top transition-colors hover:bg-slate-50/50"
+                            >
                                 {/* Column 1: Kategori & Nama */}
                                 <td className="px-5 py-4 whitespace-normal">
                                     <div className="flex items-start gap-3">
                                         <div
-                                            className={`shrink-0 rounded-lg px-2.5 py-2 text-center text-[10px] font-extrabold leading-tight w-20 flex flex-col justify-center ${item.catBadgeClass}`}
+                                            className={`flex w-20 shrink-0 flex-col justify-center rounded-lg px-2.5 py-2 text-center text-[10px] leading-tight font-extrabold ${item.catBadgeClass}`}
                                         >
                                             {item.catLines.map((line, idx) => (
                                                 <span key={idx}>{line}</span>
                                             ))}
                                         </div>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-2"></div>
+                                        <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></div>
                                         <div className="flex-1">
-                                            <h3 className="font-extrabold text-slate-900 text-xs sm:text-sm leading-snug">
+                                            <h3 className="text-xs leading-snug font-extrabold text-slate-900 sm:text-sm">
                                                 {item.title}
                                             </h3>
-                                            <p className="text-[10px] text-slate-400 font-mono mt-1">
+                                            <p className="mt-1 font-mono text-[10px] text-slate-400">
                                                 Ref: {item.ref}
                                             </p>
                                         </div>
@@ -49,26 +58,34 @@ export default function RekapListView({ items, onEdit }: RekapListViewProps) {
 
                                 {/* Column 2: Waktu Pelaksanaan */}
                                 <td className="px-4 py-4">
-                                    <div className="font-bold text-slate-800 text-xs mb-1">
+                                    <div className="mb-1 text-xs font-bold text-slate-800">
                                         {item.date}
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
-                                        <Clock size={12} className="text-slate-400" />
+                                    <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
+                                        <Clock
+                                            size={12}
+                                            className="text-slate-400"
+                                        />
                                         <span>{item.time}</span>
                                     </div>
                                 </td>
 
                                 {/* Column 3: Tempat */}
                                 <td className="px-4 py-4 whitespace-normal">
-                                    <div className="flex items-start gap-1.5 text-xs text-slate-600 leading-relaxed">
-                                        <MapPin size={12} className="text-slate-400 shrink-0 mt-0.5" />
-                                        <span className="line-clamp-2">{item.location}</span>
+                                    <div className="flex items-start gap-1.5 text-xs leading-relaxed text-slate-600">
+                                        <MapPin
+                                            size={12}
+                                            className="mt-0.5 shrink-0 text-slate-400"
+                                        />
+                                        <span className="line-clamp-2">
+                                            {item.location}
+                                        </span>
                                     </div>
                                 </td>
 
                                 {/* Column 4: Peserta Gelara */}
                                 <td className="px-4 py-4">
-                                    <div className="font-bold text-slate-800 text-xs mb-0.5">
+                                    <div className="mb-0.5 text-xs font-bold text-slate-800">
                                         {item.participants}
                                     </div>
                                     <div className="text-[11px] text-slate-400">
@@ -78,7 +95,7 @@ export default function RekapListView({ items, onEdit }: RekapListViewProps) {
 
                                 {/* Column 5: Keterangan */}
                                 <td className="px-4 py-4 whitespace-normal">
-                                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-2 pr-2">
+                                    <p className="line-clamp-2 pr-2 text-xs leading-relaxed text-slate-600">
                                         {item.evaluation}
                                     </p>
                                 </td>
@@ -86,17 +103,20 @@ export default function RekapListView({ items, onEdit }: RekapListViewProps) {
                                 {/* Column 6: Dokumentasi & Aksi */}
                                 <td className="px-5 py-4">
                                     <div className="flex flex-col items-center gap-2">
-                                        <button className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50/80 text-blue-600 hover:bg-blue-100 transition-colors text-[11px] font-bold border border-blue-200/50">
+                                        <button className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200/50 bg-blue-50/80 px-3 py-1 text-[11px] font-bold text-blue-600 transition-colors hover:bg-blue-100">
                                             <Camera size={12} />
                                             <span>{item.photos} Foto</span>
                                         </button>
-                                        <div className="flex items-center gap-3 text-slate-400 pt-0.5">
+                                        <div className="flex items-center gap-3 pt-0.5 text-slate-400">
                                             <button
                                                 onClick={() => onEdit(item)}
-                                                className="hover:text-slate-700 transition-colors"
+                                                className="transition-colors hover:text-slate-700"
                                                 title="Edit Laporan"
                                             >
-                                                <Pencil size={12} className="text-slate-500" />
+                                                <Pencil
+                                                    size={12}
+                                                    className="text-slate-500"
+                                                />
                                             </button>
                                         </div>
                                     </div>
@@ -105,7 +125,10 @@ export default function RekapListView({ items, onEdit }: RekapListViewProps) {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={6} className="px-5 py-8 text-center text-xs text-slate-400">
+                            <td
+                                colSpan={6}
+                                className="px-5 py-8 text-center text-xs text-slate-400"
+                            >
                                 Tidak ada agenda kegiatan pada kategori ini.
                             </td>
                         </tr>

@@ -37,14 +37,14 @@ class NilaiAkademikController extends Controller
         }
 
         $kelasMapel = KelasMapel::where('kelas', $selectedKelas)->first();
-        $mapelOptions = $kelasMapel?->mapels ?? [
+        $mapelOptions = $kelasMapel->mapels ?? [
             'Bahasa Arab',
             'Pendidikan Agama Islam',
             'Matematika',
             'Literasi',
             'Numerasi',
         ];
-        $kkm = (float) ($kelasMapel?->kkm ?? 75.0);
+        $kkm = (float) ($kelasMapel->kkm ?? 75.0);
 
         $selectedMapel = $request->input('mata_pelajaran');
         if (! in_array($selectedMapel, $mapelOptions, true)) {
@@ -59,9 +59,7 @@ class NilaiAkademikController extends Controller
         $allGelarasQuery = Gelara::forUser($user);
 
         // Hubungkan filter kelas dengan tabel gelaras
-        if (! empty($selectedKelas)) {
-            $gelaraQuery->where('kelas', $selectedKelas);
-        }
+        $gelaraQuery->where('kelas', $selectedKelas);
 
         if (! empty($search)) {
             $gelaraQuery->where(function ($q) use ($search) {
@@ -233,7 +231,7 @@ class NilaiAkademikController extends Controller
                     'nilai_akhir' => $nAkhir,
                     'mutu' => $nAkhir,
                     'predikat' => AcademicEvaluation::calculatePredikat($nAkhir),
-                    'deskripsi' => $existing?->deskripsi ?? 'Penilaian kelas terpadu.',
+                    'deskripsi' => $existing->deskripsi ?? 'Penilaian kelas terpadu.',
                 ]
             );
         }

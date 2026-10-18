@@ -55,20 +55,33 @@ interface Props {
     };
 }
 
-export default function Pengadaan({ pengadaans, filters, options, stats }: Props) {
-    const lembagaList = options.lembaga || ['Lembaga 1', 'Lembaga 2', 'Lembaga 3'];
+export default function Pengadaan({
+    pengadaans,
+    filters,
+    options,
+    stats,
+}: Props) {
+    const lembagaList = options.lembaga || [
+        'Lembaga 1',
+        'Lembaga 2',
+        'Lembaga 3',
+    ];
     const initialLembaga = filters.lembaga || lembagaList[0] || 'Lembaga 1';
-    const getRoomsForLembaga = (lem: string) => options.lembaga_ruangan?.[lem] || options.lokasi || [];
+    const getRoomsForLembaga = (lem: string) =>
+        options.lembaga_ruangan?.[lem] || options.lokasi || [];
 
     const [searchQuery, setSearchQuery] = useState(filters.search || '');
-    const [selectedLembaga, setSelectedLembaga] = useState(filters.lembaga || '');
+    const [selectedLembaga, setSelectedLembaga] = useState(
+        filters.lembaga || '',
+    );
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         nama_barang: '',
         lembaga: initialLembaga,
         kategori: options.kategori[0] || 'Mebel & Furnitur',
-        lokasi_tujuan: getRoomsForLembaga(initialLembaga)[0] || options.lokasi[0] || '',
+        lokasi_tujuan:
+            getRoomsForLembaga(initialLembaga)[0] || options.lokasi[0] || '',
         jumlah: 1,
         satuan: 'Unit',
         estimasi_biaya: '',
@@ -91,7 +104,7 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
         router.get(
             '/sarpras/pengadaan',
             { search: searchQuery, lembaga: selectedLembaga },
-            { preserveState: true, preserveScroll: true, replace: true }
+            { preserveState: true, preserveScroll: true, replace: true },
         );
     };
 
@@ -101,7 +114,9 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
             '/sarpras/pengadaan',
             {
                 ...formData,
-                estimasi_biaya: formData.estimasi_biaya ? parseFloat(formData.estimasi_biaya) : 0,
+                estimasi_biaya: formData.estimasi_biaya
+                    ? parseFloat(formData.estimasi_biaya)
+                    : 0,
             },
             {
                 preserveScroll: true,
@@ -111,16 +126,21 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                         nama_barang: '',
                         lembaga: initialLembaga,
                         kategori: options.kategori[0] || 'Mebel & Furnitur',
-                        lokasi_tujuan: getRoomsForLembaga(initialLembaga)[0] || options.lokasi[0] || '',
+                        lokasi_tujuan:
+                            getRoomsForLembaga(initialLembaga)[0] ||
+                            options.lokasi[0] ||
+                            '',
                         jumlah: 1,
                         satuan: 'Unit',
                         estimasi_biaya: '',
                         sumber_dana: 'Yayasan / Asrama',
-                        tanggal_pengajuan: new Date().toISOString().split('T')[0],
+                        tanggal_pengajuan: new Date()
+                            .toISOString()
+                            .split('T')[0],
                         keterangan: '',
                     });
                 },
-            }
+            },
         );
     };
 
@@ -151,7 +171,7 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
     const handleDelete = (item: PengadaanItem) => {
         if (
             confirm(
-                `Apakah Anda yakin ingin menghapus transaksi pembelian "${item.nama_barang}" (${item.nomor_pengadaan})?\nData barang terkait di inventaris aktif juga akan otomatis dibersihkan.`
+                `Apakah Anda yakin ingin menghapus transaksi pembelian "${item.nama_barang}" (${item.nomor_pengadaan})?\nData barang terkait di inventaris aktif juga akan otomatis dibersihkan.`,
             )
         ) {
             router.delete(`/sarpras/pengadaan/${item.id}`, {
@@ -174,8 +194,9 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                                 <h1 className="text-xl font-bold tracking-tight text-white">
                                     Pengadaan & Pembelian Aset
                                 </h1>
-                                <p className="text-xs text-slate-200 sm:text-sm mt-0.5">
-                                    Catat pembelian dan belanja aset baru — otomatis langsung masuk ke Inventaris aktif
+                                <p className="mt-0.5 text-xs text-slate-200 sm:text-sm">
+                                    Catat pembelian dan belanja aset baru —
+                                    otomatis langsung masuk ke Inventaris aktif
                                 </p>
                             </div>
                         </div>
@@ -194,10 +215,12 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                 </div>
 
                 {/* Table Data & Search */}
-                <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm space-y-4">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-4">
+                <div className="space-y-4 rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm">
+                    <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-2">
-                            <h2 className="text-base font-bold text-slate-900">Riwayat Pembelian & Belanja Aset</h2>
+                            <h2 className="text-base font-bold text-slate-900">
+                                Riwayat Pembelian & Belanja Aset
+                            </h2>
                             <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
                                 {pengadaans.length} data
                             </span>
@@ -210,26 +233,40 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                                     setSelectedLembaga(e.target.value);
                                     router.get(
                                         '/sarpras/pengadaan',
-                                        { search: searchQuery, lembaga: e.target.value },
-                                        { preserveState: true, preserveScroll: true, replace: true }
+                                        {
+                                            search: searchQuery,
+                                            lembaga: e.target.value,
+                                        },
+                                        {
+                                            preserveState: true,
+                                            preserveScroll: true,
+                                            replace: true,
+                                        },
                                     );
                                 }}
-                                className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                             >
                                 <option value="">Semua Lembaga</option>
                                 {lembagaList.map((lem) => (
-                                    <option key={lem} value={lem}>{lem}</option>
+                                    <option key={lem} value={lem}>
+                                        {lem}
+                                    </option>
                                 ))}
                             </select>
 
-                            <form onSubmit={handleSearch} className="relative w-full sm:w-64">
-                                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                            <form
+                                onSubmit={handleSearch}
+                                className="relative w-full sm:w-64"
+                            >
+                                <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
                                 <input
                                     type="text"
                                     placeholder="Cari nama barang, no pengadaan..."
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder-slate-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 bg-white py-2 pr-3 pl-9 text-sm placeholder-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                 />
                             </form>
                         </div>
@@ -237,40 +274,85 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
 
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm text-slate-600">
-                            <thead className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                            <thead className="border-b border-slate-200 bg-slate-50/75 text-xs font-semibold tracking-wider text-slate-600 uppercase">
                                 <tr>
-                                    <th scope="col" className="px-5 py-3.5">No & Tanggal Beli</th>
-                                    <th scope="col" className="px-5 py-3.5">Nama Barang & Kategori</th>
-                                    <th scope="col" className="px-5 py-3.5">Lokasi Tujuan</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Jumlah</th>
-                                    <th scope="col" className="px-5 py-3.5 text-right">Biaya Perolehan</th>
-                                    <th scope="col" className="px-5 py-3.5">Sumber Dana</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Status</th>
-                                    <th scope="col" className="px-5 py-3.5 text-center">Aksi</th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        No & Tanggal Beli
+                                    </th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Nama Barang & Kategori
+                                    </th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Lokasi Tujuan
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Jumlah
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-right"
+                                    >
+                                        Biaya Perolehan
+                                    </th>
+                                    <th scope="col" className="px-5 py-3.5">
+                                        Sumber Dana
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-5 py-3.5 text-center"
+                                    >
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
                                 {pengadaans.length === 0 ? (
                                     <tr>
-                                        <td colSpan={8} className="py-12 text-center text-slate-400">
-                                            Belum ada transaksi pembelian aset yang dicatat
+                                        <td
+                                            colSpan={8}
+                                            className="py-12 text-center text-slate-400"
+                                        >
+                                            Belum ada transaksi pembelian aset
+                                            yang dicatat
                                         </td>
                                     </tr>
                                 ) : (
                                     pengadaans.map((item) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/60 transition">
+                                        <tr
+                                            key={item.id}
+                                            className="transition hover:bg-slate-50/60"
+                                        >
                                             <td className="px-5 py-4">
-                                                <div className="font-mono font-semibold text-slate-900">{item.nomor_pengadaan}</div>
-                                                <div className="text-xs text-slate-500">{formatDate(item.tanggal_pengajuan)}</div>
+                                                <div className="font-mono font-semibold text-slate-900">
+                                                    {item.nomor_pengadaan}
+                                                </div>
+                                                <div className="text-xs text-slate-500">
+                                                    {formatDate(
+                                                        item.tanggal_pengajuan,
+                                                    )}
+                                                </div>
                                             </td>
                                             <td className="px-5 py-4">
-                                                <div className="font-semibold text-slate-900">{item.nama_barang}</div>
+                                                <div className="font-semibold text-slate-900">
+                                                    {item.nama_barang}
+                                                </div>
                                                 <div className="flex items-center gap-1.5 text-xs text-slate-500">
                                                     <span>{item.kategori}</span>
                                                     {item.lembaga && (
                                                         <>
                                                             <span>•</span>
-                                                            <span className="font-semibold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200/60">{item.lembaga}</span>
+                                                            <span className="rounded border border-teal-200/60 bg-teal-50 px-1.5 py-0.5 font-semibold text-teal-700">
+                                                                {item.lembaga}
+                                                            </span>
                                                         </>
                                                     )}
                                                 </div>
@@ -285,7 +367,9 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                                                 {item.jumlah} {item.satuan}
                                             </td>
                                             <td className="px-5 py-4 text-right font-medium text-slate-900">
-                                                {formatCurrency(item.estimasi_biaya)}
+                                                {formatCurrency(
+                                                    item.estimasi_biaya,
+                                                )}
                                             </td>
                                             <td className="px-5 py-4 text-slate-700">
                                                 {item.sumber_dana || '-'}
@@ -293,14 +377,18 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                                             <td className="px-5 py-4 text-center">
                                                 <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
                                                     <CheckCircle2 className="h-3 w-3" />
-                                                    <span>Inventaris Aktif</span>
+                                                    <span>
+                                                        Inventaris Aktif
+                                                    </span>
                                                 </span>
                                             </td>
                                             <td className="px-5 py-4 text-center">
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleDelete(item)}
-                                                    className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-700 hover:bg-rose-100 transition"
+                                                    onClick={() =>
+                                                        handleDelete(item)
+                                                    }
+                                                    className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-700 transition hover:bg-rose-100"
                                                     title="Hapus riwayat belanja"
                                                 >
                                                     <Trash2 className="h-3.5 w-3.5" />
@@ -319,9 +407,11 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
             {/* Modal Catat Pembelian Aset Baru */}
             {isAddModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+                    <div className="animate-in fade-in zoom-in-95 relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
                         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <h3 className="text-lg font-bold text-slate-900">Catat Pengadaan     Aset Baru</h3>
+                            <h3 className="text-lg font-bold text-slate-900">
+                                Catat Pengadaan Aset Baru
+                            </h3>
                             <button
                                 type="button"
                                 onClick={() => setIsAddModalOpen(false)}
@@ -331,131 +421,220 @@ export default function Pengadaan({ pengadaans, filters, options, stats }: Props
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmitAdd} className="mt-4 space-y-4">
+                        <form
+                            onSubmit={handleSubmitAdd}
+                            className="mt-4 space-y-4"
+                        >
                             <div>
-                                <label className="mb-1 block text-xs font-medium text-slate-700">Nama Barang / Aset</label>
+                                <label className="mb-1 block text-xs font-medium text-slate-700">
+                                    Nama Barang / Aset
+                                </label>
                                 <input
                                     type="text"
                                     required
                                     placeholder="Contoh: Meja Belajar Santri 4 Seater"
                                     value={formData.nama_barang}
-                                    onChange={(e) => setFormData({ ...formData, nama_barang: e.target.value })}
-                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            nama_barang: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Lembaga</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Lembaga
+                                    </label>
                                     <select
                                         value={formData.lembaga}
-                                        onChange={(e) => handleLembagaSelectInForm(e.target.value)}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            handleLembagaSelectInForm(
+                                                e.target.value,
+                                            )
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     >
                                         {lembagaList.map((lem) => (
-                                            <option key={lem} value={lem}>{lem}</option>
+                                            <option key={lem} value={lem}>
+                                                {lem}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Kategori</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Kategori
+                                    </label>
                                     <select
                                         value={formData.kategori}
-                                        onChange={(e) => setFormData({ ...formData, kategori: e.target.value })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                kategori: e.target.value,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     >
                                         {options.kategori.map((k) => (
-                                            <option key={k} value={k}>{k}</option>
+                                            <option key={k} value={k}>
+                                                {k}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="mb-1 block text-xs font-medium text-slate-700">Lokasi / Ruangan Tujuan ({formData.lembaga})</label>
+                                <label className="mb-1 block text-xs font-medium text-slate-700">
+                                    Lokasi / Ruangan Tujuan ({formData.lembaga})
+                                </label>
                                 <select
                                     value={formData.lokasi_tujuan}
-                                    onChange={(e) => setFormData({ ...formData, lokasi_tujuan: e.target.value })}
-                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            lokasi_tujuan: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                 >
-                                    {getRoomsForLembaga(formData.lembaga).map((l) => (
-                                        <option key={l} value={l}>{l}</option>
-                                    ))}
+                                    {getRoomsForLembaga(formData.lembaga).map(
+                                        (l) => (
+                                            <option key={l} value={l}>
+                                                {l}
+                                            </option>
+                                        ),
+                                    )}
                                 </select>
                             </div>
 
                             <div className="grid grid-cols-3 gap-3">
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Jumlah</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Jumlah
+                                    </label>
                                     <input
                                         type="number"
                                         min="1"
                                         required
                                         value={formData.jumlah}
-                                        onChange={(e) => setFormData({ ...formData, jumlah: parseInt(e.target.value) || 1 })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                jumlah:
+                                                    parseInt(e.target.value) ||
+                                                    1,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Satuan</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Satuan
+                                    </label>
                                     <input
                                         type="text"
                                         required
                                         placeholder="Unit, Pcs, Set"
                                         value={formData.satuan}
-                                        onChange={(e) => setFormData({ ...formData, satuan: e.target.value })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                satuan: e.target.value,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Total Biaya (Rp)</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Total Biaya (Rp)
+                                    </label>
                                     <input
                                         type="number"
                                         min="0"
                                         placeholder="0"
                                         value={formData.estimasi_biaya}
-                                        onChange={(e) => setFormData({ ...formData, estimasi_biaya: e.target.value })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                estimasi_biaya: e.target.value,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     />
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Sumber Dana</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Sumber Dana
+                                    </label>
                                     <input
                                         type="text"
                                         value={formData.sumber_dana}
-                                        onChange={(e) => setFormData({ ...formData, sumber_dana: e.target.value })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                sumber_dana: e.target.value,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="mb-1 block text-xs font-medium text-slate-700">Tanggal Beli / Perolehan</label>
+                                    <label className="mb-1 block text-xs font-medium text-slate-700">
+                                        Tanggal Beli / Perolehan
+                                    </label>
                                     <input
                                         type="date"
                                         required
                                         value={formData.tanggal_pengajuan}
-                                        onChange={(e) => setFormData({ ...formData, tanggal_pengajuan: e.target.value })}
-                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                tanggal_pengajuan:
+                                                    e.target.value,
+                                            })
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="mb-1 block text-xs font-medium text-slate-700">Keterangan / Spesifikasi</label>
+                                <label className="mb-1 block text-xs font-medium text-slate-700">
+                                    Keterangan / Spesifikasi
+                                </label>
                                 <textarea
                                     rows={2}
                                     placeholder="Merk, tipe, toko pembelian, garansi..."
                                     value={formData.keterangan}
-                                    onChange={(e) => setFormData({ ...formData, keterangan: e.target.value })}
-                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            keterangan: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                                 />
                             </div>
 
-                            <div className="rounded-lg bg-teal-50 p-3 text-xs text-teal-800 border border-teal-100 flex items-start gap-2">
-                                <CheckCircle2 className="h-4 w-4 text-teal-600 mt-0.5 shrink-0" />
-                                <span>Aset yang dicatat di sini akan otomatis langsung muncul di halaman <strong>Inventaris Aset</strong> dengan status <strong>Tersedia</strong> dan kondisi <strong>Baik</strong>.</span>
+                            <div className="flex items-start gap-2 rounded-lg border border-teal-100 bg-teal-50 p-3 text-xs text-teal-800">
+                                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-teal-600" />
+                                <span>
+                                    Aset yang dicatat di sini akan otomatis
+                                    langsung muncul di halaman{' '}
+                                    <strong>Inventaris Aset</strong> dengan
+                                    status <strong>Tersedia</strong> dan kondisi{' '}
+                                    <strong>Baik</strong>.
+                                </span>
                             </div>
 
                             <div className="flex justify-end gap-2 pt-2">

@@ -27,7 +27,8 @@ class ActivityTracking
         $availableWeeks = [];
 
         for ($d = 1; $d <= $carbonMonth->daysInMonth; $d++) {
-            $cDay = Carbon::create($carbonMonth->year, $carbonMonth->month, $d)->locale('id');
+            $cDay = Carbon::create($carbonMonth->year, $carbonMonth->month, $d) ?? Carbon::now();
+            $cDay->locale('id');
             $wNum = $cDay->weekOfMonth;
 
             if (! isset($availableWeeks[$wNum])) {
@@ -93,7 +94,7 @@ class ActivityTracking
      * Menghitung akumulasi statistik presensi (mingguan dan bulanan) per Gelara.
      *
      * @param  Collection<int, mixed>  $gelaras
-     * @param  Collection<int, Collection<int, DailyActivity>>  $monthlyActivitiesGrouped
+     * @param  Collection<(int|string), mixed>  $monthlyActivitiesGrouped
      * @return array<int, array<string, mixed>>
      */
     public static function compileRekap(
@@ -177,7 +178,7 @@ class ActivityTracking
     /**
      * Mengompilasi data deret waktu tren harian untuk grafik bulan terpilih.
      *
-     * @param  Collection<string, Collection<int, DailyActivity>>  $monthRecordsByDate
+     * @param  Collection<(int|string), mixed>  $monthRecordsByDate
      * @return array<int, array<string, mixed>>
      */
     public static function compileDailyTrends(Carbon $carbonMonth, Collection $monthRecordsByDate): array
@@ -185,7 +186,8 @@ class ActivityTracking
         $trendData = [];
 
         for ($d = 1; $d <= $carbonMonth->daysInMonth; $d++) {
-            $cDay = Carbon::create($carbonMonth->year, $carbonMonth->month, $d)->locale('id');
+            $cDay = Carbon::create($carbonMonth->year, $carbonMonth->month, $d) ?? Carbon::now();
+            $cDay->locale('id');
             $dateStr = $cDay->toDateString();
 
             $dayRecords = $monthRecordsByDate->get($dateStr, collect());
@@ -234,6 +236,8 @@ class ActivityTracking
 
     /**
      * Mencatat presensi harian untuk satu orang santri (Gelara).
+     *
+     * @param  array<string, mixed>  $activities
      */
     public static function recordAttendance(int $gelaraId, string $date, array $activities, string $lembaga): DailyActivity
     {
@@ -246,7 +250,7 @@ class ActivityTracking
     /**
      * Mencatat presensi harian santri secara massal (bulk).
      *
-     * @param  array<int, array{gelara_id: int, activities?: array}>  $bulkData
+     * @param  array<int, array{gelara_id: int, activities?: array<string, mixed>}>  $bulkData
      */
     public static function recordBulkAttendance(array $bulkData, string $date, string $lembaga): void
     {

@@ -19,9 +19,9 @@ trait BelongsToLembaga
     public static function bootBelongsToLembaga(): void
     {
         static::creating(function (Model $model) {
-            if (empty($model->lembaga)) {
+            if (empty($model->getAttribute('lembaga'))) {
                 $user = Auth::user();
-                $model->lembaga = static::resolveLembagaForUser($user instanceof User ? $user : null);
+                $model->setAttribute('lembaga', static::resolveLembagaForUser($user instanceof User ? $user : null));
             }
         });
     }
@@ -44,6 +44,9 @@ trait BelongsToLembaga
 
     /**
      * Scope query to the institution for the given user and optional explicit filter.
+     *
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeForUser(Builder $query, ?User $user = null, ?string $selectedLembaga = null): Builder
     {
@@ -67,6 +70,9 @@ trait BelongsToLembaga
 
     /**
      * Scope query directly to an institution name.
+     *
+     * @param  Builder<static>  $query
+     * @return Builder<static>
      */
     public function scopeForLembaga(Builder $query, ?string $lembaga): Builder
     {
