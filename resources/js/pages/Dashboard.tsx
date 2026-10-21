@@ -269,19 +269,28 @@ export default function Dashboard({
                                         Belum ada agenda kegiatan
                                     </h3>
                                     <p className="mt-1 text-xs text-gray-500">
-                                        Jadwal kegiatan dari modul Kegelaraan dan Kurikulum akan tampil di sini.
+                                        Jadwal kegiatan dari modul Kegelaraan
+                                        dan Kurikulum akan tampil di sini.
                                     </p>
                                 </div>
                             ) : (
                                 <div className="relative ml-5 space-y-8 border-l-2 border-gray-100">
                                     {agendas.map((item, idx) => {
-                                        const dateParts = item.date ? item.date.split(' ') : [];
+                                        const dateParts = item.date
+                                            ? item.date.split(' ')
+                                            : [];
                                         const dayText = dateParts[0] || '';
                                         const monthText = dateParts[1] || '';
-                                        const Icon = item.source === 'kurikulum' ? BookOpen : Users;
+                                        const Icon =
+                                            item.source === 'kurikulum'
+                                                ? BookOpen
+                                                : Users;
 
                                         return (
-                                            <div key={item.id || idx} className="relative pl-8">
+                                            <div
+                                                key={item.id || idx}
+                                                className="relative pl-8"
+                                            >
                                                 <div className="absolute top-1 -left-[30px] flex h-14 w-14 flex-col items-center justify-center rounded-full border border-gray-100 bg-white text-blue-600 shadow-sm">
                                                     <span className="text-lg leading-none font-bold">
                                                         {dayText}
@@ -294,9 +303,11 @@ export default function Dashboard({
                                                     <div>
                                                         <div className="flex items-center space-x-2">
                                                             <div
-                                                                className={`rounded-full p-1.5 ${item.badgeColor || 'bg-blue-50 text-blue-700 border border-blue-200'}`}
+                                                                className={`rounded-full p-1.5 ${item.badgeColor || 'border border-blue-200 bg-blue-50 text-blue-700'}`}
                                                             >
-                                                                <Icon size={14} />
+                                                                <Icon
+                                                                    size={14}
+                                                                />
                                                             </div>
                                                             <h3 className="text-sm font-bold text-gray-900">
                                                                 {item.title}
@@ -319,7 +330,7 @@ export default function Dashboard({
                                                         </div>
                                                     </div>
                                                     <span
-                                                        className={`rounded-full px-3 py-1 text-[10px] font-bold ${item.badgeColor || 'bg-blue-50 text-blue-700 border border-blue-200'}`}
+                                                        className={`rounded-full px-3 py-1 text-[10px] font-bold ${item.badgeColor || 'border border-blue-200 bg-blue-50 text-blue-700'}`}
                                                     >
                                                         {item.badge}
                                                     </span>

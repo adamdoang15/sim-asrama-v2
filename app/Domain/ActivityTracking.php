@@ -324,8 +324,12 @@ class ActivityTracking
         }
 
         $itemsKegiatan = $kegiatans->map(function ($k) {
-            $start = Carbon::parse($k->start_date)->locale('id');
-            $end = ! empty($k->end_date) ? Carbon::parse($k->end_date)->locale('id') : null;
+            $start = Carbon::parse($k->start_date);
+            $start->locale('id');
+            $end = ! empty($k->end_date) ? Carbon::parse($k->end_date) : null;
+            if ($end) {
+                $end->locale('id');
+            }
 
             $timeLabel = $end && ! $end->isSameDay($start)
                 ? $start->translatedFormat('d M').' - '.$end->translatedFormat('d M Y')
@@ -345,8 +349,12 @@ class ActivityTracking
         });
 
         $itemsKalender = $kalenders->map(function ($ka) {
-            $start = Carbon::parse($ka->start_date)->locale('id');
-            $end = ! empty($ka->end_date) ? Carbon::parse($ka->end_date)->locale('id') : null;
+            $start = Carbon::parse($ka->start_date);
+            $start->locale('id');
+            $end = ! empty($ka->end_date) ? Carbon::parse($ka->end_date) : null;
+            if ($end) {
+                $end->locale('id');
+            }
 
             $timeLabel = $end && ! $end->isSameDay($start)
                 ? $start->translatedFormat('d M').' - '.$end->translatedFormat('d M Y')
