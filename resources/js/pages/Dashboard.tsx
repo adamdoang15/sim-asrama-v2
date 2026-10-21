@@ -1,5 +1,5 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import {
     BookOpen,
     BriefcaseMedical,
@@ -95,55 +95,25 @@ const ANNOUNCEMENTS = [
     },
 ];
 
-const AGENDA = [
-    {
-        date: '05 Okt',
-        title: 'Peringatan Sumpah Pemuda',
-        time: '07.00 - 10.00 WIB',
-        location: 'Lapangan Sekolah',
-        badge: 'Upacara',
-        badgeColor: 'bg-blue-50 text-blue-700 border border-blue-200',
-        icon: Users,
-    },
-    {
-        date: '08 Okt',
-        title: 'Ujian karate',
-        time: '08.00 - 11.00 WIB',
-        location: 'Gedung Serbaguna',
-        badge: 'Ekstrakurikuler',
-        badgeColor: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-        icon: UserPlus,
-    },
-    {
-        date: '12 Okt',
-        title: 'Rapat Orang Tua/Wali Murid',
-        time: '09.00 - 12.00 WIB',
-        location: 'Aula Sekolah',
-        badge: 'Kegiatan Sekolah',
-        badgeColor: 'bg-indigo-50 text-indigo-700 border border-indigo-200',
-        icon: Users,
-    },
-    {
-        date: '15 Okt',
-        title: 'Pekan Literasi',
-        time: '07.00 - 15.00 WIB',
-        location: 'Perpustakaan',
-        badge: 'Kurikulum',
-        badgeColor: 'bg-amber-50 text-amber-700 border border-amber-200',
-        icon: BookOpen,
-    },
-    {
-        date: '20 Okt',
-        title: 'Lomba Cerdas Cermat',
-        time: '08.30 - 12.00 WIB',
-        location: 'Ruang Serbaguna',
-        badge: 'Kesiswaan',
-        badgeColor: 'bg-sky-50 text-sky-700 border border-sky-200',
-        icon: Calendar,
-    },
-];
+interface AgendaItem {
+    id: string | number;
+    title: string;
+    date: string;
+    time: string;
+    location: string;
+    badge: string;
+    badgeColor: string;
+    source: 'kegelaraan' | 'kurikulum';
+    raw_date: string;
+}
 
-export default function Dashboard({ stats }: { stats?: any }) {
+export default function Dashboard({
+    stats,
+    agendas = [],
+}: {
+    stats?: any;
+    agendas?: AgendaItem[];
+}) {
     return (
         <DashboardLayout title="Dashboard">
             <Head title="Dashboard" />
@@ -158,6 +128,8 @@ export default function Dashboard({ stats }: { stats?: any }) {
                                 finalValue = stats.total_gelara;
                             if (stat.title === 'Total Petugas')
                                 finalValue = stats.total_petugas;
+                            if (stat.title === 'Gelara Sakit')
+                                finalValue = stats.gelara_sakit ?? 0;
                         }
 
                         return (
@@ -273,66 +245,101 @@ export default function Dashboard({ stats }: { stats?: any }) {
                                 </div>
                                 <div>
                                     <h2 className="text-lg font-bold text-gray-900">
-                                        Agenda Oktober
+                                        Agenda Kegiatan
                                     </h2>
                                     <p className="text-sm text-gray-500">
                                         Kegiatan penting dan jadwal asrama
                                     </p>
                                 </div>
                             </div>
-                            <button className="flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700">
+                            <Link
+                                href="/kegelaraan/kalender"
+                                className="flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700"
+                            >
                                 Lihat Semua &rarr;
-                            </button>
+                            </Link>
                         </div>
                         <div className="relative z-10 p-6">
-                            <div className="relative ml-5 space-y-8 border-l-2 border-gray-100">
-                                {AGENDA.map((item, idx) => (
-                                    <div key={idx} className="relative pl-8">
-                                        <div className="absolute top-1 -left-[30px] flex h-14 w-14 flex-col items-center justify-center rounded-full border border-gray-100 bg-white text-blue-600 shadow-sm">
-                                            <span className="text-lg leading-none font-bold">
-                                                {item.date.split(' ')[0]}
-                                            </span>
-                                            <span className="text-[10px] font-medium">
-                                                {item.date.split(' ')[1]}
-                                            </span>
-                                        </div>
-                                        <div className="ml-4 flex items-start justify-between">
-                                            <div>
-                                                <div className="flex items-center space-x-2">
-                                                    <div
-                                                        className={`rounded-full p-1.5 ${item.badgeColor}`}
-                                                    >
-                                                        <item.icon size={14} />
-                                                    </div>
-                                                    <h3 className="text-sm font-bold text-gray-900">
-                                                        {item.title}
-                                                    </h3>
+                            {agendas.length === 0 ? (
+                                <div className="py-10 text-center">
+                                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-500">
+                                        <Calendar size={24} />
+                                    </div>
+                                    <h3 className="mt-3 text-sm font-semibold text-gray-900">
+                                        Belum ada agenda kegiatan
+                                    </h3>
+                                    <p className="mt-1 text-xs text-gray-500">
+                                        Jadwal kegiatan dari modul Kegelaraan
+                                        dan Kurikulum akan tampil di sini.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="relative ml-5 space-y-8 border-l-2 border-gray-100">
+                                    {agendas.map((item, idx) => {
+                                        const dateParts = item.date
+                                            ? item.date.split(' ')
+                                            : [];
+                                        const dayText = dateParts[0] || '';
+                                        const monthText = dateParts[1] || '';
+                                        const Icon =
+                                            item.source === 'kurikulum'
+                                                ? BookOpen
+                                                : Users;
+
+                                        return (
+                                            <div
+                                                key={item.id || idx}
+                                                className="relative pl-8"
+                                            >
+                                                <div className="absolute top-1 -left-[30px] flex h-14 w-14 flex-col items-center justify-center rounded-full border border-gray-100 bg-white text-blue-600 shadow-sm">
+                                                    <span className="text-lg leading-none font-bold">
+                                                        {dayText}
+                                                    </span>
+                                                    <span className="text-[10px] font-medium">
+                                                        {monthText}
+                                                    </span>
                                                 </div>
-                                                <div className="mt-2 space-y-1 text-xs text-gray-500">
-                                                    <p className="flex items-center">
-                                                        <Calendar
-                                                            size={12}
-                                                            className="mr-2"
-                                                        />{' '}
-                                                        {item.time}
-                                                    </p>
-                                                    <p className="flex items-center">
-                                                        <span className="mr-1 inline-block w-3 text-center">
-                                                            📍
-                                                        </span>{' '}
-                                                        {item.location}
-                                                    </p>
+                                                <div className="ml-4 flex items-start justify-between">
+                                                    <div>
+                                                        <div className="flex items-center space-x-2">
+                                                            <div
+                                                                className={`rounded-full p-1.5 ${item.badgeColor || 'border border-blue-200 bg-blue-50 text-blue-700'}`}
+                                                            >
+                                                                <Icon
+                                                                    size={14}
+                                                                />
+                                                            </div>
+                                                            <h3 className="text-sm font-bold text-gray-900">
+                                                                {item.title}
+                                                            </h3>
+                                                        </div>
+                                                        <div className="mt-2 space-y-1 text-xs text-gray-500">
+                                                            <p className="flex items-center">
+                                                                <Calendar
+                                                                    size={12}
+                                                                    className="mr-2"
+                                                                />{' '}
+                                                                {item.time}
+                                                            </p>
+                                                            <p className="flex items-center">
+                                                                <span className="mr-1 inline-block w-3 text-center">
+                                                                    📍
+                                                                </span>{' '}
+                                                                {item.location}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <span
+                                                        className={`rounded-full px-3 py-1 text-[10px] font-bold ${item.badgeColor || 'border border-blue-200 bg-blue-50 text-blue-700'}`}
+                                                    >
+                                                        {item.badge}
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <span
-                                                className={`rounded-full px-3 py-1 text-[10px] font-bold ${item.badgeColor}`}
-                                            >
-                                                {item.badge}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                         {/* Decorative background building vector could be added here */}
                         <div className="absolute right-0 bottom-0 z-0 h-32 w-full bg-gradient-to-t from-blue-50 to-transparent opacity-50"></div>

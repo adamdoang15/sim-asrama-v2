@@ -3,6 +3,9 @@
 namespace App\Domain;
 
 use App\Models\DailyActivity;
+use App\Models\KalenderAkademik;
+use App\Models\Kegiatan;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -262,5 +265,120 @@ class ActivityTracking
                 $lembaga
             );
         }
+    }
+
+    /**
+     * Mengambil agenda mendatang gabungan dari Kegiatan (Kegelaraan) dan KalenderAkademik (Kurikulum)
+     * yang sudah terformat dan terurut berdasarkan tanggal terdekat.
+     *
+     * @return array<int, array{
+     *     id: int|string,
+     *     title: string,
+     *     date: string,
+     *     time: string,
+     *     location: string,
+     *     badge: string,
+     *     badgeColor: string,
+     *     source: string,
+     *     raw_date: string
+     * }>
+     */
+    public static function getUpcomingAgendas(?User $user = null, int $limit = 5): array
+    {
+        $today = Carbon::today()->toDateString();
+
+        $kegiatans = Kegiatan::forUser($user)
+            ->where(function ($query) use ($today) {
+                $query->where('start_date', '>=', $today)
+                    ->orWhere(function ($q) use ($today) {
+                        $q->whereNotNull('end_date')->where('end_date', '>=', $today);
+                    });
+            })
+            ->orderBy('start_date', 'asc')
+            ->limit($limit)
+            ->get();
+
+        $kalenders = KalenderAkademik::forUser($user)
+            ->where(function ($query) use ($today) {
+                $query->where('start_date', '>=', $today)
+                    ->orWhere(function ($q) use ($today) {
+                        $q->whereNotNull('end_date')->where('end_date', '>=', $today);
+                    });
+            })
+            ->orderBy('start_date', 'asc')
+            ->limit($limit)
+            ->get();
+
+        $isFallback = $kegiatans->isEmpty() && $kalenders->isEmpty();
+
+        if ($isFallback) {
+            $kegiatans = Kegiatan::forUser($user)
+                ->orderBy('start_date', 'desc')
+                ->limit($limit)
+                ->get();
+
+            $kalenders = KalenderAkademik::forUser($user)
+                ->orderBy('start_date', 'desc')
+                ->limit($limit)
+                ->get();
+        }
+
+        $itemsKegiatan = $kegiatans->map(function ($k) {
+            $start = Carbon::parse($k->start_date);
+            $start->locale('id');
+            $end = ! empty($k->end_date) ? Carbon::parse($k->end_date) : null;
+            if ($end) {
+                $end->locale('id');
+            }
+
+            $timeLabel = $end && ! $end->isSameDay($start)
+                ? $start->translatedFormat('d M').' - '.$end->translatedFormat('d M Y')
+                : $start->translatedFormat('d F Y');
+
+            return [
+                'id' => 'keg-'.$k->id,
+                'title' => $k->title,
+                'date' => $start->translatedFormat('d M'),
+                'time' => $timeLabel,
+                'location' => ! empty($k->location) ? $k->location : 'Asrama',
+                'badge' => ! empty($k->type) ? $k->type : 'Kegelaraan',
+                'badgeColor' => 'bg-blue-50 text-blue-700 border border-blue-200',
+                'source' => 'kegelaraan',
+                'raw_date' => Carbon::parse($k->start_date)->toDateString(),
+            ];
+        });
+
+        $itemsKalender = $kalenders->map(function ($ka) {
+            $start = Carbon::parse($ka->start_date);
+            $start->locale('id');
+            $end = ! empty($ka->end_date) ? Carbon::parse($ka->end_date) : null;
+            if ($end) {
+                $end->locale('id');
+            }
+
+            $timeLabel = $end && ! $end->isSameDay($start)
+                ? $start->translatedFormat('d M').' - '.$end->translatedFormat('d M Y')
+                : $start->translatedFormat('d F Y');
+
+            return [
+                'id' => 'kal-'.$ka->id,
+                'title' => $ka->title,
+                'date' => $start->translatedFormat('d M'),
+                'time' => $timeLabel,
+                'location' => ! empty($ka->location) ? $ka->location : 'Sekolah',
+                'badge' => ! empty($ka->type) ? $ka->type : 'Kurikulum',
+                'badgeColor' => 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+                'source' => 'kurikulum',
+                'raw_date' => Carbon::parse($ka->start_date)->toDateString(),
+            ];
+        });
+
+        $combined = $itemsKegiatan->concat($itemsKalender);
+
+        if ($isFallback) {
+            return $combined->sortByDesc('raw_date')->values()->take($limit)->all();
+        }
+
+        return $combined->sortBy('raw_date')->values()->take($limit)->all();
     }
 }

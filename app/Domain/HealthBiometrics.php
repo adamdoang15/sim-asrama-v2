@@ -4,6 +4,7 @@ namespace App\Domain;
 
 use App\Models\Gelara;
 use App\Models\Kesehatan;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class HealthBiometrics
@@ -227,5 +228,25 @@ class HealthBiometrics
             ],
             $validated
         );
+    }
+
+    /**
+     * Hitung jumlah santri (Gelara) unik yang tercatat sakit berdasarkan rekam kesehatan lembaga.
+     */
+    public static function countSickStudents(?User $user = null): int
+    {
+        $records = Kesehatan::forUser($user)
+            ->whereNotNull('riwayat_sakit')
+            ->get();
+
+        $sickGelaraIds = [];
+        foreach ($records as $record) {
+            $parsed = self::parseSicknessHistory($record->riwayat_sakit);
+            if ($parsed['total'] > 0) {
+                $sickGelaraIds[$record->gelara_id] = true;
+            }
+        }
+
+        return count($sickGelaraIds);
     }
 }
