@@ -12,8 +12,8 @@ class CheckViewOnly
     {
         $user = $request->user();
 
-        // Abaikan route logout
-        if ($request->routeIs('logout') || $request->is('logout')) {
+        // Abaikan route logout dan ganti password akun mandiri
+        if ($request->routeIs('logout', 'profile.password') || $request->is('logout', 'profile/password')) {
             return $next($request);
         }
 

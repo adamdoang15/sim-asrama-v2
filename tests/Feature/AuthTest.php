@@ -3,6 +3,7 @@
 use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 test('unauthenticated guest is redirected to login page when accessing dashboard', function () {
     Auth::logout();
@@ -97,4 +98,66 @@ test('active institution account can perform mutations normally', function () {
     $this->assertDatabaseHas('asets', [
         'nama_aset' => 'Laptop Lab Cicantayan',
     ]);
+});
+
+test('authenticated user can update their password with valid current password', function () {
+    $user = User::factory()->create([
+        'password' => Hash::make('old-password-123'),
+    ]);
+
+    $response = $this->actingAs($user)->put('/profile/password', [
+        'current_password' => 'old-password-123',
+        'password' => 'new-password-456',
+        'password_confirmation' => 'new-password-456',
+    ]);
+
+    $response->assertSessionHas('success');
+    expect(Hash::check('new-password-456', $user->fresh()->password))->toBeTrue();
+});
+
+test('user cannot update password with invalid current password', function () {
+    $user = User::factory()->create([
+        'password' => Hash::make('old-password-123'),
+    ]);
+
+    $response = $this->actingAs($user)->put('/profile/password', [
+        'current_password' => 'wrong-password',
+        'password' => 'new-password-456',
+        'password_confirmation' => 'new-password-456',
+    ]);
+
+    $response->assertSessionHasErrors('current_password');
+    expect(Hash::check('old-password-123', $user->fresh()->password))->toBeTrue();
+});
+
+test('user cannot update password if confirmation does not match', function () {
+    $user = User::factory()->create([
+        'password' => Hash::make('old-password-123'),
+    ]);
+
+    $response = $this->actingAs($user)->put('/profile/password', [
+        'current_password' => 'old-password-123',
+        'password' => 'new-password-456',
+        'password_confirmation' => 'mismatch-password',
+    ]);
+
+    $response->assertSessionHasErrors('password');
+    expect(Hash::check('old-password-123', $user->fresh()->password))->toBeTrue();
+});
+
+test('yayasan user can update their own password without being blocked by view only middleware', function () {
+    $yayasanUser = User::factory()->create([
+        'lembaga' => 'Yayasan',
+        'role' => 'viewer',
+        'password' => Hash::make('old-password-123'),
+    ]);
+
+    $response = $this->actingAs($yayasanUser)->put('/profile/password', [
+        'current_password' => 'old-password-123',
+        'password' => 'new-password-456',
+        'password_confirmation' => 'new-password-456',
+    ]);
+
+    $response->assertSessionHas('success');
+    expect(Hash::check('new-password-456', $yayasanUser->fresh()->password))->toBeTrue();
 });

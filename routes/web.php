@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\ActivityTracking;
+use App\Domain\HealthBiometrics;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DailyActivityController;
@@ -36,9 +38,13 @@ Route::middleware(['auth', CheckViewOnly::class])->group(function () {
             'stats' => [
                 'total_gelara' => Gelara::forUser($user)->count(),
                 'total_petugas' => Pegawai::forUser($user)->count(),
+                'gelara_sakit' => HealthBiometrics::countSickStudents($user),
             ],
+            'agendas' => ActivityTracking::getUpcomingAgendas($user),
         ]);
     })->name('dashboard');
+
+    Route::put('/profile/password', [AuthController::class, 'updatePassword'])->name('profile.password');
 
     Route::prefix('kegelaraan')->name('kegelaraan.')->middleware('role:kegelaraan')->group(function () {
         Route::get('/analytics', [AnalyticsController::class, 'kegelaraan'])->name('analytics');
